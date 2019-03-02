@@ -1,0 +1,13 @@
+.Game {
+    position: absolute;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+.Game .layer {
+    position: absolute;
+
+    width: 100vw;
+    height: 100vh;
+}
