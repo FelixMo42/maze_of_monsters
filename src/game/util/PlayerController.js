@@ -8,11 +8,11 @@ export default class extends React.Component {
 
         for (var player of props.players) {
             player.registerStartTurnCallback(
-                (player) => this.setState(this.onStartTurnCallback)
+                (player) => {this.onStartTurnCallback(player)}
             )
 
             player.registerEndTurnCallback(
-                (player) => this.setState(this.onEndTurnCallback)
+                (player) => {this.onEndTurnCallback(player)}
             )
         }
     }
@@ -37,13 +37,17 @@ export default class extends React.Component {
      * 
      */
     render() {
+        if (this.state.player) {
+            return this.playerUi()
+        } else {
+            return <p>not your turn :(</p>
+        }
+    }
+
+    playerUi() {
         return (
             <div>
-                {this.state.player ?
-                    <input type="button" value="action" />
-                :
-                    "not your turn :("
-                }
+                <input type="button" value="actions"/>
             </div>
         )
     }

@@ -20,6 +20,15 @@ export default class Player extends GameObject.uses(
             setter: false,
         })
 
+        this.addVariable({
+            name: "name"
+        })
+
+        this.addVariable({
+            name: "color",
+            default: "blue"
+        })
+
         this.addCallback({
             name: "startTurnCallback"
         });
@@ -27,6 +36,8 @@ export default class Player extends GameObject.uses(
         this.addCallback({
             name: "endTurnCallback"
         });
+
+        this.controller = config.controller
 
         // register callbacks
 
@@ -36,7 +47,7 @@ export default class Player extends GameObject.uses(
     /// turn ///
 
     startTurn() {
-        console.debug(this.name + " has started their turn.")
+        console.debug(this.getName() + " has started their turn.")
 
         // 
 
@@ -47,14 +58,18 @@ export default class Player extends GameObject.uses(
                 }
             )
         }
+
+        this.callStartTurnCallback(this)
     }
 
     endTurn() {
-        console.debug(this.name + " has ended their turn.")
+        console.debug(this.getName() + " has ended their turn.")
 
         this.isTurn = false
 
         this.getMap().nextTurn()
+
+        this.callEndTurnCallback(this)
     }
 
     isTurn() {
@@ -88,7 +103,7 @@ export default class Player extends GameObject.uses(
         Draw.circle({
             x: this.getX(),
             y: this.getY(),
-            fill: "blue",
+            fill: this.getColor(),
             outline: "black"
         })
     }

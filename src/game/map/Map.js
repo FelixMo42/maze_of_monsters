@@ -4,10 +4,10 @@ import Game from "../Game";
 import Node from "./Node";
 
 export default class Map extends GameObject {
+    players = []
+
     constructor(config={}) {
         super(config)
-
-        this.players = []
 
         // apply config
 
@@ -56,7 +56,6 @@ export default class Map extends GameObject {
      * 
      */
     manageTurn(dt) {
-        // update player if needed
         if (!this.player && this.getPlayers().length > 0) {
             this.player = this.getPlayers()[this.getTurn() % this.getPlayers().length]
             this.player.startTurn()
@@ -158,10 +157,10 @@ export default class Map extends GameObject {
      * @param {[() => boolean]} queue 
      */
     addPlayer(player, position, queue) {
-        console.log(" " + position)
         if (this.hasPlayer(position)) {
             throw new Error("allready a player at position " + position)
         }
+        this.players.push(player)
         this.getNode(position).setPlayer(player, queue)
         return player
     }

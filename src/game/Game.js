@@ -39,8 +39,11 @@ export default class Game extends React.Component {
         var world = this.state.world = new Map()
         var players = this.state.players = [
             world.addPlayer(
-                new Player(),
-                new Vec2(0,0)
+                new Player({
+                    controller: "player",
+                    name: "Eden Black"
+                }),
+                new Vec2(2,2)
             )
         ]
     }
@@ -110,8 +113,7 @@ export default class Game extends React.Component {
                     ref="layer"
                     className="layer"
 
-                    onContextMenu={this.contextMenu}
-
+                    onContextMenu={(e) => {this.contextMenu(e)}}
                     onClick={(e) => {this.onMouseDown(e)}}
                     onMouseMove={(e) => {this.onMouseMoved(e)}}
                     onKeyPress={(e) => {this.onKeyDown(e)}}
