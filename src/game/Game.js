@@ -4,6 +4,7 @@ import Map from "./map/Map"
 import Callback from "./util/Callback"
 import Vec2 from "./util/Vec2"
 import PlayerController from "./util/PlayerController"
+import Player from "./player/player";
 
 let instance = undefined
 
@@ -24,11 +25,11 @@ export default class Game extends React.Component {
         super(props)
         instance = this
 
-        this.onUpdateCallback.setup(this, "onUpdateCallback")
-        this.onDrawCallback.setup(this, "onDrawCallback")
-        this.onKeyDownCallback.setup(this, "onKeyDownCallback")
-        this.onMouseMovedCallback.setup(this, "onMouseMovedCallback")
-        this.onMouseDownCallback.setup(this, "onMouseDownCallback")
+        this.onUpdateCallback.setup(this, "UpdateCallback")
+        this.onDrawCallback.setup(this, "DrawCallback")
+        this.onKeyDownCallback.setup(this, "KeyDownCallback")
+        this.onMouseMovedCallback.setup(this, "MouseMovedCallback")
+        this.onMouseDownCallback.setup(this, "MouseDownCallback")
 
         this.state = {}
         this.createWorld()
@@ -36,18 +37,26 @@ export default class Game extends React.Component {
 
     createWorld() {
         var world = this.state.world = new Map()
-        var players = this.state.players = []
-
+        var players = this.state.players = [
+            world.addPlayer(
+                new Player(),
+                new Vec2(0,0)
+            )
+        ]
     }
 
     /// mount callbacks ///
 
     componentDidMount() {
-        this.layer = this.refs.layer
+        this.canvas = this.refs.layer
         this.graphics = this.canvas.getContext("2d")
         this.graphics.mousePos = new Vec2(0,0)
+        this.graphics.size = 60
 
         this.drawLoop = setInterval(() => this.draw(), 1000/this.FPS)
+
+        this.resize()
+        window.addEventListener("resize", this.resize.bind(this))
     }
 
     componentWillUnmount() {
@@ -85,6 +94,11 @@ export default class Game extends React.Component {
 
     contextMenu(e) {
         e.preventDefault()
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth * devicePixelRatio
+        this.canvas.height = window.innerHeight * devicePixelRatio
     }
 
     // render it all

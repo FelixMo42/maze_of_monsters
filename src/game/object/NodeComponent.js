@@ -27,10 +27,10 @@ export default class NodeComponent extends GameObject {
      * @param Node node 
      */
     setNode(node) {
-        this.updateData({
+        this.setData({
             node: node
         })
-        this.updateState({
+        this.setState({
             node: node
         })
     }

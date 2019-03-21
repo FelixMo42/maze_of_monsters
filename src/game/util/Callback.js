@@ -6,7 +6,7 @@ export default class Callback {
      * @param  {...any} params Parameters to pass to callbacks.
      */
     call(...params) {
-        for (var callback in this.callbacks) {
+        for (var callback of this.callbacks) {
             callback(...params)
         }
     }
@@ -61,14 +61,14 @@ export default class Callback {
      */
     setup(gameObject, name) {
         if (!gameObject) {
-            throw new Error("Callback.setup must have parameter gameObject!")
+            throw new Error("Callback.setup must have gameObject parameter!")
         }
         if (!name) {
-            throw new Error("Callback.setup must have parameter name!")
+            throw new Error("Callback.setup must have name parameter!")
         }
 
         // capitilize first letter of name
-        name = name.charAt(0).toUpperCase() + name.slice(1) + "Callback"
+        name = name.charAt(0).toUpperCase() + name.slice(1)
 
         // add register callback function
         gameObject["register" + name] = (callback) => {

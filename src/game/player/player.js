@@ -1,10 +1,10 @@
-import GameObject from "../component/GameObject"
-import NodeComponent from "../component/NodeComponent";
-import ColorComponent from "../component/ColorComponent";
+import GameObject from "../object/GameObject"
+import NodeComponent from "../object/NodeComponent";
 import Game from "../Game";
+import Draw from "../util/Draw";
 
 export default class Player extends GameObject.uses(
-    NodeComponent, ColorComponent
+    NodeComponent
 ) {
     constructor(config={}) {
         super(config)
@@ -14,25 +14,31 @@ export default class Player extends GameObject.uses(
         this.data.controller = config.controller || this.controller
         this.state.controller = this.data.controller
 
+        this.addVariable({
+            name: "turn",
+            getterName: "isTurn",
+            setter: false,
+        })
+
+        this.addCallback({
+            name: "startTurnCallback"
+        });
+
+        this.addCallback({
+            name: "endTurnCallback"
+        });
+
         // register callbacks
 
-        Game.getInstance().registerOnUpdateCallback((dt) => this.processStack(dt))
+        Game.getInstance().registerUpdateCallback((dt) => this.processStack(dt))
     }
 
-    /* turn */
-    
-    isTurn = false
-    onStartTurnCallback = []
-    onEndTurnCallback = []
-
-    controller = "robot"
+    /// turn ///
 
     startTurn() {
         console.debug(this.name + " has started their turn.")
 
-        this.isTurn = true
-
-        //
+        // 
 
         if (this.controller !== "player") {
             this.pushToStack(
@@ -41,20 +47,6 @@ export default class Player extends GameObject.uses(
                 }
             )
         }
-
-        //
-
-        for (var callback of this.onStartTurnCallback) {
-            callback(this)
-        }
-    }
-
-    registerStartTurnCallback(callback) {
-        this.onStartTurnCallback.push(callback)
-    }
-
-    unregisterStartTurnCallback(callback) {
-        
     }
 
     endTurn() {
@@ -62,19 +54,7 @@ export default class Player extends GameObject.uses(
 
         this.isTurn = false
 
-        for (var callback of this.onEndTurnCallback) {
-            callback(this)
-        }
-
         this.getMap().nextTurn()
-    }
-
-    registerEndTurnCallback(callback) {
-        this.onEndTurnCallback.push(callback)
-    }
-
-    unregisterEndTurnCallback(callback) {
-        
     }
 
     isTurn() {
@@ -82,9 +62,9 @@ export default class Player extends GameObject.uses(
     }
    
 
-   /* stack */
+    /// stack ///
 
-   stack = []
+    stack = []
 
     pushToStack(func) {
        this.stack.push(func)
@@ -100,5 +80,16 @@ export default class Player extends GameObject.uses(
                 return
             }
         }
+    }
+
+    /// graphics ///
+
+    draw() {
+        Draw.circle({
+            x: this.getX(),
+            y: this.getY(),
+            fill: "blue",
+            outline: "black"
+        })
     }
 }

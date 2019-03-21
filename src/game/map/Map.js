@@ -1,74 +1,94 @@
 import GameObject from "../object/GameObject"
 import Vec2 from "../util/Vec2";
 import Game from "../Game";
+import Node from "./Node";
 
 export default class Map extends GameObject {
     constructor(config={}) {
         super(config)
 
+        this.players = []
+
         // apply config
 
-        this.data.turn = config.data || 0
-        this.data.width = config.width || 10
-        this.data.height = config.height || 10
-        this.data.nodes = config.nodes || []
+        this.addVariable({
+            name: "turn",
+            default: 0,
+            setter: false
+        })
 
-        for (var x = 0; x < this.width; x++) {
-            this.data.nodes[x] = this.data.nodes[x] || []
-            for (var y = 0; y < this.height; y++) {
-                this.data.nodes[x][y] = new Node(this.data.nodes[x][y] || {
+        this.addVariable({
+            name: "width",
+            default: 10,
+            setter: false
+        })
+
+        this.addVariable({
+            name: "height",
+            default: 10,
+            setter: false
+        })
+
+        //TODO: better intale setter system
+        this.data.nodes = []
+        config.nodes = config.nodes || []
+        for (var x = 0; x < this.getWidth(); x++) {
+            this.data.nodes[x] = config.nodes[x] || []
+            for (var y = 0; y < this.getHeight(); y++) {
+                this.data.nodes[x][y] = new Node({
+                    ...this.data.nodes[x][y],
                     position: new Vec2(x, y),
                     map: this,
                     tile: {} // config for tile
                 })
             }
         }
-
-        // initilize state
-
-        this.state.turn = this.data.turn
-        this.state.width = this.data.width
-        this.state.height = this.data.height
         this.state.nodes = this.data.nodes
-        this.state.actions = this.data.actions
 
         // register callbacks
 
-        Game.getInstance().registerUpdateCallback( (dt) => this.manageTurn(dt) )
+        Game.getInstance().registerUpdateCallback( (dt) => {this.manageTurn(dt)} )
     }
 
     /// Turn Managment Functions ///
 
+    /**
+     * 
+     */
     manageTurn(dt) {
+        // update player if needed
         if (!this.player && this.getPlayers().length > 0) {
-            this.player = this.getPlayers()[this.getTurn() % this.players.length]
+            this.player = this.getPlayers()[this.getTurn() % this.getPlayers().length]
             this.player.startTurn()
             this.turn++
         }
+
+        this.draw()
     }
 
+    /**
+     * 
+     */
+    draw() {
+        var start = new Vec2(0,0)
+        var end = new Vec2(this.getWidth() - 1, this.getHeight() - 1)
+
+        Vec2.forEach(start, end, (position) => {
+            this.getTile(position).draw()
+        })
+
+        Vec2.forEach(start, end, (position) => {
+            if (this.hasPlayer(position)) {
+                this.getPlayer(position).draw()
+            }
+        })
+    }
+
+    /**
+     * 
+     */
     nextTurn() {
         this.player = undefined
-    }
-
-    getTurn() {
-        return this.data.turn
-    }
-
-    /// Position Getters ///
-
-    /**
-     * 
-     */
-    getWidth() {
-        return this.data.width
-    }
-
-    /**
-     * 
-     */
-    getHeight() {
-        return this.data.height
     }
 
     /// Node Getters ///
@@ -88,9 +108,61 @@ export default class Map extends GameObject {
         return this.data.nodes[position.x][position.y]
     }
 
+    /// Tile Getters/Setters ///
+
+    /**
+     * 
+     * @param {Vec2} position 
+     */
+    hasTile(position) {
+        return this.getTile(position) !== undefined
+    }
+
+    /**
+     * 
+     * @param {Vec2} position 
+     */
+    getTile(position) {
+        return this.getNode(position).getTile()
+    }
+
     /// Player Getters/Setters ///
 
+    /**
+     * 
+     * @param {Vec2} position 
+     */
+    hasPlayer(position) {
+        return this.getPlayer(position) !== undefined
+    }
+
+    /**
+     * 
+     * @param {Vec2} position 
+     */
+    getPlayer(position) {
+        return this.getNode(position).getPlayer()
+    }
+
+    /**
+     * 
+     */
     getPlayers() {
-        return this.data.players
+        return this.players
+    }
+
+    /**
+     * 
+     * @param {Player} player 
+     * @param {Vec2} position 
+     * @param {[() => boolean]} queue 
+     */
+    addPlayer(player, position, queue) {
+        console.log(" " + position)
+        if (this.hasPlayer(position)) {
+            throw new Error("allready a player at position " + position)
+        }
+        this.getNode(position).setPlayer(player, queue)
+        return player
     }
 }

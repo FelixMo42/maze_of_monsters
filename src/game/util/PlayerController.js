@@ -17,14 +17,25 @@ export default class extends React.Component {
         }
     }
 
+    /**
+     * 
+     * @param {*} player 
+     */
     onStartTurnCallback(player) {
         this.setState({player: player})
     }
 
+    /**
+     * 
+     * @param {*} player 
+     */
     onEndTurnCallback(player) {
         this.setState({player: undefined})
     }
 
+    /**
+     * 
+     */
     render() {
         return (
             <div>

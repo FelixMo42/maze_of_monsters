@@ -1,5 +1,3 @@
-import Callback from "../util/Callback"
-
 let uid = 0;
 
 export default class GameObject {
@@ -30,18 +28,23 @@ export default class GameObject {
         return base
     }
 
-    constructor(config={}) {
-        this.onUpdateData = new Callback()
-        this.onUpdateState = new Callback()
+    /// ///
 
-        this.onUpdateData.setup(this, "onUpdateData")
-        this.onUpdateState.setup(this, "onUpdateState")
+    constructor(config={}) {
+        this.addCallback({
+            name: "updateDataCallback"
+        })
+        this.addCallback({
+            name: "updateStateCallback"
+        })
+
+        this.config = config
 
         this.data = {
             name: config.name,
             id: config.id
         }
-        // set inital state to be the same as object data 
+        
         this.state = {...this.data}
 
         this.key = uid;
@@ -50,6 +53,9 @@ export default class GameObject {
 
     /// key and id functions ///
 
+    /**
+     * 
+     */
     getKey() {
         return this.key
     }
@@ -70,14 +76,14 @@ export default class GameObject {
     setState(update, queue) {
         if (queue) {
             queue.push(() => {
-                this.updateState(update)
+                this.setState(update)
                 return true
             })
         } else {
             for (var key in update) {
                 this.state[key] = update[key]
             }
-            this.onUpdateState.call(update)
+            this.callUpdateStateCallback(update)
         }
     }
 
@@ -92,10 +98,99 @@ export default class GameObject {
      * 
      * @param {*} update 
      */
-    setData(update) {
-        for (var key in update) {
-            this.data[key] = update[key]
+    setData(updates) {
+        for (var key in updates) {
+            this.data[key] = updates[key]
         }
-        this.onUpdateData.call(update)
+        this.callUpdateDataCallback(updates)
+    }
+
+    /// creator functions ///
+
+    /**
+     * 
+     * @param {string} key 
+     * @param {boolean} flip 
+     */
+    get(key, flip=false) {
+        if (flip) {
+            return this.state[key]
+        } else {
+            return this.data[key]
+        }
+    }
+
+    /**
+     * 
+     * @param {string} key
+     * @param {*} value 
+     * @param {[() => boolean]} queue 
+     */
+    set(key, value, queue) {
+        this.setData({[key]: value})
+        this.setState({[key]: value}, queue)
+    }
+
+    /// constructor functions ///
+
+    /**
+     * 
+     * @param {*} opts 
+     * @param {*} config 
+     */
+    addVariable(opts, config) {
+        var name = opts.name.charAt(0).toUpperCase() + opts.name.slice(1)
+
+        // add getter
+        if (opts.getter !== false) {
+            this[opts.getterName || "get" + name] = opts.getter || ((flip) => {
+                return this.get(opts.name, flip)
+            })
+        }
+
+        // add setter
+        if (opts.setter !== false) {
+            this[opts.setterName || "set" + name] = opts.setter || ((value, queue) => {
+                return this.set(opts.name, value, queue)
+            })
+        }
+
+        this.data[opts.name] = this.config[opts.name] || opts.default;
+        this.state[opts.name] = this.data[opts.name]
+    }
+
+    /**
+     * 
+     * @param {{}} opts 
+     */
+    addCallback(opts) {
+        var callbacks = []
+        var name = opts.name.charAt(0).toUpperCase() + opts.name.slice(1)
+        
+        this["call" + name] = (...params) => {
+            for (var callback of callbacks) {
+                callback(...params)
+            }
+        }
+
+        // add register callback function
+        this["register" + name] = (callback) => {
+            callbacks.push(callback)
+        }
+
+        // add deregister callback function
+        this["deregister" + name] = (callback) => {
+            var indexOfCallback = callbacks.indexOf(callback);
+            if (indexOfCallback > -1) {
+                callbacks.splice(indexOfCallback, 1);
+                return true;
+            }
+            return false;
+        }
+
+        // add has callback function
+        this["has" + name] = (callback) => {
+            return callbacks.indexOf(callback) > -1
+        }
     }
 }
