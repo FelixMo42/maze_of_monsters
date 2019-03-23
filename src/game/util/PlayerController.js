@@ -47,7 +47,7 @@ export default class extends React.Component {
     playerUi() {
         return (
             <div>
-                <input type="button" value="actions"/>
+                <input type="button" value="actions" />
             </div>
         )
     }

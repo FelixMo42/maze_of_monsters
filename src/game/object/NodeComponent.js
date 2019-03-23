@@ -11,35 +11,40 @@ export default class NodeComponent extends GameObject {
     /**
      * 
      */
-    hasNode() {
-        return this.data.node !== undefined
+    hasNode(flip) {
+        return this.getNode(flip) !== undefined
     }
 
     /**
      * 
      */
-    getNode() {
-        return this.data.node //TODO: undefined error 
+    getNode(flip) {
+        return this.get("node", flip) //TODO: undefined error 
     }
 
     /**
      * 
      * @param Node node 
      */
-    setNode(node) {
+    setNode(node, queue) {
         this.setData({
             node: node
         })
         this.setState({
             node: node
-        })
+        }, queue)
     }
 
     /**
      * 
      */
-    removeNode() {
-        delete this.node
+    removeNode(queue) {
+        this.setData({
+            node: undefined
+        })
+        this.setState({
+            node: undefined
+        }, queue)
     }
 
     /// Position Getter/Setter ///
@@ -47,22 +52,22 @@ export default class NodeComponent extends GameObject {
     /**
      * 
      */
-    getPosition() {
-        return this.data.node.getPosition() //TODO: undefined error
+    getPosition(flip) {
+        return this.getNode(flip).getPosition(flip) //TODO: undefined error
     }
 
     /**
      * 
      */
-    getX() {
-        return this.data.node.getX() //TODO: undefined error
+    getX(flip) {
+        return this.getNode(flip).getX(flip) //TODO: undefined error
     }
 
     /**
      * 
      */
-    getY() {
-        return this.data.node.getY() //TODO: undefined error
+    getY(flip) {
+        return this.getNode(flip).getY(flip) //TODO: undefined error
     }
 
     /// Map Getter ///
@@ -70,8 +75,8 @@ export default class NodeComponent extends GameObject {
     /**
      * 
      */
-    getMap() {
-        return this.data.node.getMap() //TODO: undefined error
+    getMap(flip) {
+        return this.getNode(flip).getMap(flip) //TODO: undefined error
     }
 
     /// Tile Getter ///
@@ -79,8 +84,8 @@ export default class NodeComponent extends GameObject {
     /**
      * 
      */
-    getTile() {
-        return this.data.node.getTile() //TODO: undefined error
+    getTile(flip) {
+        return this.getNode(flip).getTile(flip) //TODO: undefined error
     }
 
     /// Player Getter ///
@@ -88,14 +93,14 @@ export default class NodeComponent extends GameObject {
     /**
      * 
      */
-    hasPlayer() {
-        return this.data.node.hasPlayer()
+    hasPlayer(flip) {
+        return this.getNode(flip).hasPlayer(flip) !== undefined
     }
 
     /**
      * 
      */
-    getPlayer() {
-        return this.data.node.getPlayer() //TODO: undefined error
+    getPlayer(flip) {
+        return this.getNode(flip).getPlayer(flip) //TODO: undefined error
     }
 }

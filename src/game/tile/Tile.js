@@ -12,6 +12,18 @@ export default class Tile extends GameObject.uses(NodeComponent) {
         })
     }
 
+    /**
+     * 
+     * @param {TileEffect} effect 
+     */
+    affect(effect) {
+
+    }
+
+    /**
+     * 
+     * @param {number} dt 
+     */
     draw(dt) {
         Draw.rectangle({
             x: this.getX(),

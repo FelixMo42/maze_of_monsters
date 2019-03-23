@@ -135,10 +135,9 @@ export default class GameObject {
 
     /**
      * 
-     * @param {*} opts 
-     * @param {*} config 
+     * @param {*} opts
      */
-    addVariable(opts, config) {
+    addVariable(opts) {
         var name = opts.name.charAt(0).toUpperCase() + opts.name.slice(1)
 
         // add getter
@@ -156,6 +155,11 @@ export default class GameObject {
         }
 
         this.data[opts.name] = this.config[opts.name] || opts.default;
+
+        if (opts.init) {
+            this.data[opts.name] = opts.init(this.data[opts.name])
+        }
+
         this.state[opts.name] = this.data[opts.name]
     }
 

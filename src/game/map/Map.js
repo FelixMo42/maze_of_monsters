@@ -29,25 +29,29 @@ export default class Map extends GameObject {
             setter: false
         })
 
-        //TODO: better intale setter system
-        this.data.nodes = []
-        config.nodes = config.nodes || []
-        for (var x = 0; x < this.getWidth(); x++) {
-            this.data.nodes[x] = config.nodes[x] || []
-            for (var y = 0; y < this.getHeight(); y++) {
-                this.data.nodes[x][y] = new Node({
-                    ...this.data.nodes[x][y],
-                    position: new Vec2(x, y),
-                    map: this,
-                    tile: {} // config for tile
-                })
+        this.addVariable({
+            name: "nodes",
+            setter: false,
+            default: [],
+            init: (states) => {
+                var nodes = []
+                for (var x = 0; x < this.getWidth(); x++) {
+                    nodes[x] = states[x] || []
+                    for (var y = 0; y < this.getHeight(); y++) {
+                        nodes[x][y] = new Node({
+                            ...nodes[x][y],
+                            position: new Vec2(x, y),
+                            map: this
+                        })
+                    }
+                }
+                return nodes
             }
-        }
-        this.state.nodes = this.data.nodes
+        })
 
         // register callbacks
 
-        Game.getInstance().registerUpdateCallback( (dt) => {this.manageTurn(dt)} )
+        Game.getInstance().registerUpdateCallback((dt) => {this.manageTurn(dt)})
     }
 
     /// Turn Managment Functions ///
@@ -94,17 +98,10 @@ export default class Map extends GameObject {
 
     /**
      * 
-     */
-    getNodes() {
-        return this.data.nodes
-    }
-
-    /**
-     * 
      * @param {Vec2} position 
      */
-    getNode(position) {
-        return this.data.nodes[position.x][position.y]
+    getNode(position, flip) {
+        return this.getNodes(flip)[position.x][position.y]
     }
 
     /// Tile Getters/Setters ///

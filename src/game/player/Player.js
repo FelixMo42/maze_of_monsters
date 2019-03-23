@@ -2,17 +2,13 @@ import GameObject from "../object/GameObject"
 import NodeComponent from "../object/NodeComponent";
 import Game from "../Game";
 import Draw from "../util/Draw";
+import Action from "../action/Action";
 
 export default class Player extends GameObject.uses(
     NodeComponent
 ) {
     constructor(config={}) {
         super(config)
-
-        // apply config
-
-        this.data.controller = config.controller || this.controller
-        this.state.controller = this.data.controller
 
         this.addVariable({
             name: "turn",
@@ -25,8 +21,40 @@ export default class Player extends GameObject.uses(
         })
 
         this.addVariable({
+            name: "HP",
+            default: 100
+        })
+
+        this.addVariable({
+            name: "MP",
+            default: 100
+        })
+
+        this.addVariable({
+            name: "controller",
+            default: "robot"
+        })
+
+        this.addVariable({
             name: "color",
             default: "blue"
+        })
+
+        this.addVariable({
+            name: "actions",
+            setter: false,
+            init: (states) => {
+                var actions = []
+                
+                for (var state of states) {
+                    actions.push(new Action({
+                        ...state,
+                        player: this
+                    }))
+                }
+
+                return actions
+            }
         })
 
         this.addCallback({
@@ -37,21 +65,27 @@ export default class Player extends GameObject.uses(
             name: "endTurnCallback"
         });
 
-        this.controller = config.controller
-
         // register callbacks
 
         Game.getInstance().registerUpdateCallback((dt) => this.processStack(dt))
     }
 
+    /**
+     * 
+     * @param {PlayerEffect} effect 
+     */
+    affect(effect) {
+        if (effect.hasHP()) {
+            console.log(effect.getHP())
+        }
+    }
+
     /// turn ///
 
     startTurn() {
-        console.debug(this.getName() + " has started their turn.")
+        console.debug(this.getName() + " starts their turn.")
 
-        // 
-
-        if (this.controller !== "player") {
+        if (this.getController() !== "player") {
             this.pushToStack(
                 () => {
                     this.endTurn()
@@ -63,9 +97,9 @@ export default class Player extends GameObject.uses(
     }
 
     endTurn() {
-        console.debug(this.getName() + " has ended their turn.")
+        console.debug(this.getName() + " ends their turn.")
 
-        this.isTurn = false
+        this.set("isTurn", false, this.stack)
 
         this.getMap().nextTurn()
 

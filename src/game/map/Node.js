@@ -18,27 +18,47 @@ export default class Node extends GameObject {
         this.state.item = this.data.item
     }
 
+    /// ///
+
+    /**
+     * 
+     * @param {Effect} effect 
+     */
+    affect(effect) {
+        if (effect.hasTileEffect()) {
+            this.getTile().affect(effect.getTileEffect())
+        }
+
+        if (effect.hasPlayerEffect()) {
+            this.getPlayer().affect(effect.getPlayerEffect())
+        }
+
+        //TODO: add item effect
+
+        //TODO: add struct effect
+    }
+
     /// Position Getter/Setter ///
 
     /**
      * 
      */
-    getPosition() {
-        return this.data.position
+    getPosition(flip) {
+        return this.get("position", flip)
     }
 
     /**
      * 
      */
-    getX() {
-        return this.data.position.getX()
+    getX(flip) {
+        return this.getPosition(flip).getX()
     }
 
     /**
      * 
      */
-    getY() {
-        return this.data.position.getY()
+    getY(flip) {
+        return this.getPosition(flip).getY()
     }
 
     /// Map Getter/Setter ///
@@ -67,9 +87,7 @@ export default class Node extends GameObject {
     setTile(tile, queue) {
         this.getTile().removeNode(queue)
         this.setData({tile: tile})
-
         tile.setNode(this, queue)
-
         this.setState({tile: tile}, queue)
     }
 
@@ -91,7 +109,7 @@ export default class Node extends GameObject {
 
     /**
      * 
-     * @param {*} player 
+     * @param {Player} player 
      * @param {*} queue 
      */
     setPlayer(player, queue) {
@@ -134,7 +152,7 @@ export default class Node extends GameObject {
 
     /**
      * 
-     * @param {*} structure 
+     * @param {Structure} structure 
      * @param {*} queue 
      */
     setStructure(structure, queue) {

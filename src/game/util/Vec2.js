@@ -55,4 +55,13 @@ export default class Vec2 {
     setY(y) {
         this.y = y
     }
+
+    /// ///
+
+    distanceFrom(postion) {
+        return Math.sqrt(
+            (this.getX() - postion.getY()) ** 2 +
+            (this.getY() - postion.getY()) ** 2
+        )
+    }
 }

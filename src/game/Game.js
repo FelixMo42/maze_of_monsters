@@ -1,10 +1,11 @@
 import React from "react"
-import "./Game.css"
 import Map from "./map/Map"
 import Callback from "./util/Callback"
 import Vec2 from "./util/Vec2"
 import PlayerController from "./util/PlayerController"
-import Player from "./player/player";
+import Player from "./player/Player";
+
+import "./Game.css"
 
 let instance = undefined
 
@@ -31,21 +32,38 @@ export default class Game extends React.Component {
         this.onMouseMovedCallback.setup(this, "MouseMovedCallback")
         this.onMouseDownCallback.setup(this, "MouseDownCallback")
 
-        this.state = {}
-        this.createWorld()
+        this.state = this.createWorld()
     }
 
     createWorld() {
-        var world = this.state.world = new Map()
-        var players = this.state.players = [
+        var state = {}
+
+        var world = state.world = new Map()
+        var players = state.players = [
             world.addPlayer(
                 new Player({
                     controller: "player",
-                    name: "Eden Black"
+                    name: "Eden Black",
+                    actions: [
+                        {
+                            name: "testAction",
+                            effects: [
+                                {
+                                    playerEffect: {
+                                        HP: 10
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 }),
                 new Vec2(2,2)
             )
         ]
+
+        players[0].getActions()[0].call(players[0].getPosition())
+
+        return state
     }
 
     /// mount callbacks ///
