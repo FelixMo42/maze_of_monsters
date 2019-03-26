@@ -10,10 +10,13 @@ export default class Player extends GameObject.uses(
     constructor(config={}) {
         super(config)
 
+        this.stack = []
+
         this.addVariable({
             name: "turn",
             getterName: "isTurn",
             setter: false,
+            default: false
         })
 
         this.addVariable({
@@ -74,16 +77,35 @@ export default class Player extends GameObject.uses(
      * 
      * @param {PlayerEffect} effect 
      */
-    affect(effect) {
+    affect(effect) {        
         if (effect.hasHP()) {
-            console.log(effect.getHP())
+            console.log(effect.getHP()) //TODO: make it
         }
+
+        if (effect.hasPull()) {
+            this.move(effect.getTargetPositon()) //TODO: make it not teleportation
+        }
+
+        if (effect.hasPush()) {
+            console.log(effect.getPush()) //TODO: make it
+        }
+    }
+
+    move(position) {
+        console.debug(this.getName() + " moves to " + position)
+
+        var map = this.getMap()
+        this.getNode().removePlayer()
+        map.getNode(position).setPlayer(this)
     }
 
     /// turn ///
 
+    /**
+     * 
+     */
     startTurn() {
-        console.debug(this.getName() + " starts their turn.")
+        console.debug(this.getName() + " starts their turn")
 
         if (this.getController() !== "player") {
             this.pushToStack(
@@ -96,8 +118,11 @@ export default class Player extends GameObject.uses(
         this.callStartTurnCallback(this)
     }
 
+    /**
+     * 
+     */
     endTurn() {
-        console.debug(this.getName() + " ends their turn.")
+        console.debug(this.getName() + " ends their turn")
 
         this.set("isTurn", false, this.stack)
 
@@ -106,19 +131,21 @@ export default class Player extends GameObject.uses(
         this.callEndTurnCallback(this)
     }
 
-    isTurn() {
-        return this.isTurn
-    }
-   
-
     /// stack ///
 
-    stack = []
-
+    
+    /**
+     * 
+     * @param {() => boolean} func
+     */
     pushToStack(func) {
        this.stack.push(func)
     }
 
+    /**
+     * 
+     * @param {number} dt
+     */
     processStack(dt) {
         if (this.stack.length === 0) {
             return
@@ -135,8 +162,7 @@ export default class Player extends GameObject.uses(
 
     draw() {
         Draw.circle({
-            x: this.getX(),
-            y: this.getY(),
+            position: this.getPosition(),
             fill: this.getColor(),
             outline: "black"
         })

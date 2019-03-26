@@ -29,12 +29,14 @@ export default class Action extends GameObject {
 
         // default style of effect
         this.addVariable({
-            name: "defaultStyle"
+            name: "defaultStyle",
+            default: "ball"
         })
 
         // default size of effect
         this.addVariable({
-            name: "defaultSize"
+            name: "defaultSize",
+            default: 1
         })
 
         // list of effects the action has
@@ -81,7 +83,7 @@ export default class Action extends GameObject {
      * @param {Vec2} position 
      */
     cheak(position) {
-        if (this.getPosition().distanceFrom(position) > this.getRange()) {
+        if (this.getPosition().distanceFrom(position) > this.getRange() + .5) {
             return false
         }
 
@@ -101,7 +103,6 @@ export default class Action extends GameObject {
         console.debug(this.getPlayer().getName() + " uses " + this.getName())
 
         for (var effect of this.getEffects()) {
-            //console.log(effect)          
             new Effect({
                 ...effect,
                 target: position,

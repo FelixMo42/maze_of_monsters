@@ -26,8 +26,7 @@ export default class Tile extends GameObject.uses(NodeComponent) {
      */
     draw(dt) {
         Draw.rectangle({
-            x: this.getX(),
-            y: this.getY(),
+            position: this.getPosition(),
             fill: this.getColor(true),
             //outline: "black"
         })

@@ -1,3 +1,6 @@
 import Game from './game/Game'
 
-export default Game
+// change name of game to app
+var App = Game
+
+export default App 

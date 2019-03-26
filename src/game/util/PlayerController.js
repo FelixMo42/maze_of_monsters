@@ -1,4 +1,6 @@
 import React from "react"
+import Game from "../Game";
+import Draw from "./Draw";
 
 export default class extends React.Component {
     constructor(props) {
@@ -15,11 +17,28 @@ export default class extends React.Component {
                 (player) => {this.onEndTurnCallback(player)}
             )
         }
+
+        Game.getInstance().registerDrawCallback(() => {this.drawActionOverlay()})
+        Game.getInstance().registerMouseDownCallback(() => {this.activateAction()})
+    }
+
+    drawActionOverlay() {
+        Draw.rectangle({
+            position: Draw.getMousePos(),
+            //fill: "rgba(255,255,255,.5)",
+            outline: "black",
+        })
+    }
+
+    activateAction() {
+        if (this.state.action) {
+            this.state.action.call(Draw.getMousePos())
+        }
     }
 
     /**
      * 
-     * @param {*} player 
+     * @param {Player} player 
      */
     onStartTurnCallback(player) {
         this.setState({player: player})
@@ -27,7 +46,7 @@ export default class extends React.Component {
 
     /**
      * 
-     * @param {*} player 
+     * @param {Player} player 
      */
     onEndTurnCallback(player) {
         this.setState({player: undefined})
@@ -44,10 +63,39 @@ export default class extends React.Component {
         }
     }
 
+    /**
+     * 
+     * @param {Action} action 
+     */
+    selectAction(action) {
+        this.setState({action: action})
+    }
+
+    /**
+     * 
+     */
     playerUi() {
         return (
             <div>
-                <input type="button" value="actions" />
+                <div>
+                    <input type="button" value="actions" />
+                    <div>
+                        {
+                            this.state.player.getActions().map(action =>
+                                <span key={action.getKey(true)}><input
+                                    type="button"
+                                    style={
+                                        action === this.state.action ? {
+                                            backgroundColor: "blue"
+                                        } : {}
+                                    }
+                                    value={action.getName(true)}
+                                    onClick={() => {this.selectAction(action)}}
+                                /><br/></span>
+                            )
+                        }
+                    </div>
+                </div>
             </div>
         )
     }

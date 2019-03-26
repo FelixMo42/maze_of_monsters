@@ -7,9 +7,17 @@ export default class extends SubEffect {
         this.addParamater({
             name: "HP"
         })
-        
+
         this.addParamater({
             name: "MP"
+        })
+
+        this.addParamater({
+            name: "pull"
+        })
+
+        this.addParamater({
+            name: "push"
         })
     }
 }

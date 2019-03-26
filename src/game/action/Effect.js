@@ -25,7 +25,14 @@ export default class {
      * 
      */
     activate() {
-        this.getTargetNode().affect(this) //TODO: implement style
+        //TODO: better style code
+
+        if (this.style === "self") {
+            this.getSourceNode().affect(this)
+        }
+        if (this.style === "ball") {
+            this.getTargetNode().affect(this) //TODO: implement style
+        }
 
         // clear function so it cant be reused
         this.activate = () => {
@@ -136,5 +143,9 @@ export default class {
      */
     getSize() {
         return this.range
+    }
+
+    getStyle() {
+        return this.style
     }
 }

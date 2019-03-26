@@ -38,30 +38,53 @@ export default class Game extends React.Component {
     createWorld() {
         var state = {}
 
+        // create actions
+
+        var move = {
+            name: "move",
+            range: 1,
+            effects: [
+                {
+                    style: "self",
+                    playerEffect: {
+                        pull: 1
+                    }
+                }
+            ],
+            cost: {
+                moves: {
+                    movement: -1
+                }
+            }
+        }
+
+        var punch = {
+            name: "Test Action",
+            effects: [
+                {
+                    playerEffect: {
+                        HP: -10
+                    }
+                }
+            ]
+        }
+
+        // set up world
+
         var world = state.world = new Map()
-        var players = state.players = [
+        /*var players = */state.players = [
             world.addPlayer(
                 new Player({
                     controller: "player",
                     name: "Eden Black",
                     actions: [
-                        {
-                            name: "testAction",
-                            effects: [
-                                {
-                                    playerEffect: {
-                                        HP: 10
-                                    }
-                                }
-                            ]
-                        }
+                        punch,
+                        move
                     ]
                 }),
-                new Vec2(2,2)
+                new Vec2(1,1)
             )
         ]
-
-        players[0].getActions()[0].call(players[0].getPosition())
 
         return state
     }
@@ -69,10 +92,11 @@ export default class Game extends React.Component {
     /// mount callbacks ///
 
     componentDidMount() {
-        this.canvas = this.refs.layer
-        this.graphics = this.canvas.getContext("2d")
-        this.graphics.mousePos = new Vec2(0,0)
-        this.graphics.size = 60
+        this.canvas = this.refs.canvas
+        this.context = this.canvas.getContext("2d")
+
+        this.mousePos = new Vec2(0,0)
+        this.scale = 60
 
         this.drawLoop = setInterval(() => this.draw(), 1000/this.FPS)
 
@@ -91,26 +115,31 @@ export default class Game extends React.Component {
         var dt = (now - this.lastUpdate) / 1000
         this.lastUpdate = now
 
-        this.graphics.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
         
         this.onUpdateCallback.call(dt)
+        this.onDrawCallback.call(dt)
     }
 
     /// using input callbacks ///
 
     onMouseDown(e) {
         e.preventDefault()
-        this.onMouseDownCallback.call() //TODO: prosese mouse
+        this.onMouseDownCallback.call()
     }
 
     onMouseMoved(e) {
         e.preventDefault()
-        this.onMouseMovedCallback.call() //TODO: prosese mouse
+        this.mousePos = new Vec2(
+            Math.floor(e.clientX/this.scale),
+            Math.floor(e.clientY/this.scale)
+        )
+        this.onMouseMovedCallback.call()
     }
 
     onKeyDown(e) {
         e.preventDefault()
-        this.onKeyDownCallback.call() //TODO: prosese key
+        this.onKeyDownCallback.call()
     }
 
     contextMenu(e) {
@@ -126,14 +155,15 @@ export default class Game extends React.Component {
 
     render() {
         return (
-            <div className="Game">
+            <div className="Game"
+                onMouseMove={(e) => {this.onMouseMoved(e)}}
+                onClick={(e) => {this.onMouseDown(e)}}
+            >
                 <canvas
-                    ref="layer"
+                    ref="canvas"
                     className="layer"
 
                     onContextMenu={(e) => {this.contextMenu(e)}}
-                    onClick={(e) => {this.onMouseDown(e)}}
-                    onMouseMove={(e) => {this.onMouseMoved(e)}}
                     onKeyPress={(e) => {this.onKeyDown(e)}}
                 />
 

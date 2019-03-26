@@ -60,7 +60,7 @@ export default class Vec2 {
 
     distanceFrom(postion) {
         return Math.sqrt(
-            (this.getX() - postion.getY()) ** 2 +
+            (this.getX() - postion.getX()) ** 2 +
             (this.getY() - postion.getY()) ** 2
         )
     }

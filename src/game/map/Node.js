@@ -25,11 +25,11 @@ export default class Node extends GameObject {
      * @param {Effect} effect 
      */
     affect(effect) {
-        if (effect.hasTileEffect()) {
+        if (this.hasTile() && effect.hasTileEffect()) {
             this.getTile().affect(effect.getTileEffect())
         }
 
-        if (effect.hasPlayerEffect()) {
+        if (this.hasPlayer() && effect.hasPlayerEffect()) {
             this.getPlayer().affect(effect.getPlayerEffect())
         }
 
@@ -72,11 +72,15 @@ export default class Node extends GameObject {
 
     /// Tile Getter/Setter ///
 
+    hasTile(flip) {
+        return this.getTile(flip) !== undefined
+    }
+
     /**
      * 
      */
-    getTile() {
-        return this.data.tile
+    getTile(flip) {
+        return this.get("tile", flip)
     }
 
     /**
@@ -96,15 +100,15 @@ export default class Node extends GameObject {
     /**
      * 
      */
-    hasPlayer() {
-        return this.data.player !== undefined
+    hasPlayer(flip) {
+        return this.getPlayer(flip) !== undefined
     }
 
     /**
      * 
      */
-    getPlayer() {
-        return this.data.player
+    getPlayer(flip) {
+        return this.get("player", flip)
     }
 
     /**
@@ -118,7 +122,6 @@ export default class Node extends GameObject {
         }
         this.setData({player: player})
         player.setNode(this, queue)
-
         this.setState({player: player}, queue)
     }
 
