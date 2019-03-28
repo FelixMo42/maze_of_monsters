@@ -43,6 +43,34 @@ export default class Player extends GameObject.uses(
             default: "blue"
         })
 
+        //TODO: more unified move type list
+
+        this.addVariable({
+            name: "maxMoves",
+            default: {},
+            setter: false,
+            init: (state) => {
+                return {
+                    "movement": 5,
+                    "main": 1,
+                    "quick": 2,
+                    "reaction": 1,
+                    ...state
+                }
+            }
+        })
+
+        this.addVariable({
+            name: "moves",
+            default: {},
+            init: (state) => {
+                return {
+                    ...this.getMaxMoves(),
+                    ...state
+                }
+            }
+        })
+
         this.addVariable({
             name: "actions",
             setter: false,
@@ -77,26 +105,30 @@ export default class Player extends GameObject.uses(
      * 
      * @param {PlayerEffect} effect 
      */
-    affect(effect) {        
+    affect(effect) {
         if (effect.hasHP()) {
             console.log(effect.getHP()) //TODO: make it
         }
 
         if (effect.hasPull()) {
-            this.move(effect.getTargetPositon()) //TODO: make it not teleportation
+            this.move(effect.getTargetPositon(), effect.getQueue()) //TODO: make it not teleportation
         }
 
         if (effect.hasPush()) {
             console.log(effect.getPush()) //TODO: make it
         }
+
+        if (effect.hasMoves()) {
+            this.useMoves(effect.getMoves(), effect.getQueue())
+        }
     }
 
-    move(position) {
+    move(position, queue) {
         console.debug(this.getName() + " moves to " + position)
 
         var map = this.getMap()
-        this.getNode().removePlayer()
-        map.getNode(position).setPlayer(this)
+        this.getNode().removePlayer(queue)
+        map.getNode(position).setPlayer(this, queue)
     }
 
     /// turn ///
@@ -106,6 +138,8 @@ export default class Player extends GameObject.uses(
      */
     startTurn() {
         console.debug(this.getName() + " starts their turn")
+
+        this.setMoves({...this.getMaxMoves()})
 
         if (this.getController() !== "player") {
             this.pushToStack(
@@ -131,9 +165,51 @@ export default class Player extends GameObject.uses(
         this.callEndTurnCallback(this)
     }
 
+    /// moves and actions ///
+
+    getMove(move, flip) {
+        return this.getMoves(flip)[move]
+    }
+
+    getMovesLeft(move, flip) {
+        return this.getMoves(flip)[move]
+    }
+
+    useMoves(moves, queue) {
+        for (var move in moves) {
+            this.setMove(move, this.getMove(move) + moves[move], queue)
+        }
+    }
+
+    setMove(move, value, queue) {
+        this.data.moves[move] = value
+        this.callUpdateDataCallback({})
+
+        if (queue) {
+            queue.push(() => {
+                this.state.moves[move] = value
+                this.callUpdateStateCallback({})
+                return true
+            })
+        } else {
+            this.state.moves[move] = value
+            this.callUpdateStateCallback({})
+        }
+    }
+
+    getMaxMove(move, flip) {
+        return this.getMaxMoves(flip)[move]
+    }
+
     /// stack ///
 
-    
+    /**
+     * 
+     */
+    getQueue(flip) {
+        return this.stack
+    }
+
     /**
      * 
      * @param {() => boolean} func
@@ -147,13 +223,15 @@ export default class Player extends GameObject.uses(
      * @param {number} dt
      */
     processStack(dt) {
-        if (this.stack.length === 0) {
-            return
-        }
-
         while (true) {
+            if (this.stack.length === 0) {
+                return
+            }
+
             if (!this.stack[0]()) {
                 return
+            } else {
+                this.stack.pop()
             }
         }
     }

@@ -5,6 +5,7 @@ export default class {
     constructor(config) {
         this.source = config.source
         this.target = config.target
+        this.queue = config.queue || this.source.getQueue()
 
         // get effects
 
@@ -27,6 +28,9 @@ export default class {
     activate() {
         //TODO: better style code
 
+        if (this.style === "cost") {
+            this.getSourceNode().affect(this)
+        }
         if (this.style === "self") {
             this.getSourceNode().affect(this)
         }
@@ -38,6 +42,10 @@ export default class {
         this.activate = () => {
             console.error("Attempted to activate Effect twice!")
         }
+    }
+
+    getQueue() {
+        return this.queue
     }
 
     /// player effect getters  ///

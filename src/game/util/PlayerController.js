@@ -13,6 +13,10 @@ export default class extends React.Component {
                 (player) => {this.onStartTurnCallback(player)}
             )
 
+            player.registerUpdateStateCallback(
+                () => {this.forceUpdate()}
+            )
+
             player.registerEndTurnCallback(
                 (player) => {this.onEndTurnCallback(player)}
             )
@@ -78,20 +82,40 @@ export default class extends React.Component {
         return (
             <div>
                 <div>
-                    <input type="button" value="actions" />
                     <div>
+                        actions: 
                         {
                             this.state.player.getActions().map(action =>
-                                <span key={action.getKey(true)}><input
+                                <input
                                     type="button"
                                     style={
                                         action === this.state.action ? {
                                             backgroundColor: "blue"
                                         } : {}
                                     }
+                                    key={action.getKey(true)}
                                     value={action.getName(true)}
                                     onClick={() => {this.selectAction(action)}}
-                                /><br/></span>
+                                />
+                            )
+                        }
+                        <input type="button" value="end turn" onClick={() => {
+                            this.state.player.endTurn()
+                        }}/>
+                    </div>
+
+                    <div>
+                        moves: 
+                        {
+                            Object.keys(this.state.player.getMoves(true)).map(move =>
+                                <input
+                                    key={move}
+                                    type="button"
+                                    value={move + " : " + this.state.player.getMovesLeft(move, true)}
+                                    onClick={()=>{
+                                        this.state.player.setMove(move, 5)
+                                    }}
+                                />
                             )
                         }
                     </div>

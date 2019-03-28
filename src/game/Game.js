@@ -41,7 +41,7 @@ export default class Game extends React.Component {
         // create actions
 
         var move = {
-            name: "move",
+            name: "Move",
             range: 1,
             effects: [
                 {
@@ -59,14 +59,19 @@ export default class Game extends React.Component {
         }
 
         var punch = {
-            name: "Test Action",
+            name: "Punch",
             effects: [
                 {
                     playerEffect: {
                         HP: -10
                     }
                 }
-            ]
+            ],
+            cost: {
+                moves: {
+                    main: -1
+                }
+            }
         }
 
         // set up world

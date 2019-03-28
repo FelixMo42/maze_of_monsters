@@ -19,5 +19,9 @@ export default class extends SubEffect {
         this.addParamater({
             name: "push"
         })
+
+        this.addParamater({
+            name: "moves"
+        })
     }
 }

@@ -20,6 +20,13 @@ export default class SubEffect {
         }
     }
 
+    /**
+     * 
+     */
+    getQueue() {
+        return this.effect.getQueue()
+    }
+
     /// location getters ///
 
     /**

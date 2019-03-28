@@ -24,7 +24,8 @@ export default class Action extends GameObject {
 
         // cost of using the action
         this.addVariable({
-            name: "cost"
+            name: "cost",
+            default: {}
         })
 
         // default style of effect
@@ -44,6 +45,15 @@ export default class Action extends GameObject {
             name: "effects",
             setter: false
         })
+    }
+
+    /// ///
+
+    /**
+     * 
+     */
+    getQueue(flip) {
+        return this.getPlayer(flip).getQueue(flip)
     }
 
     /// ///
@@ -87,6 +97,12 @@ export default class Action extends GameObject {
             return false
         }
 
+        for (var move in this.getCost().moves) {
+            if (this.getPlayer().getMovesLeft(move) + this.getCost().moves[move] < 0) {
+                return false
+            }
+        }
+
         return true
     }
 
@@ -111,7 +127,8 @@ export default class Action extends GameObject {
         }
 
         new Effect({
-            ...this.getCost(),
+            style: "cost",
+            playerEffect: this.getCost(),
             target: this.getPosition(),
             source: this
         })
