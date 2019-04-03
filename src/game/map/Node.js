@@ -66,8 +66,8 @@ export default class Node extends GameObject {
     /**
      * 
      */
-    getMap() {
-        return this.data.map
+    getMap(flip) {
+        return this.get("map", flip)
     }
 
     /// Tile Getter/Setter ///
@@ -118,7 +118,7 @@ export default class Node extends GameObject {
      */
     setPlayer(player, queue) {
         if (this.hasPlayer()) {
-            this.removePlayer(queue)
+            throw Error("Cant move to tile with a player allready on it!")
         }
         this.setData({player: player})
         player.setNode(this, queue)
@@ -221,5 +221,18 @@ export default class Node extends GameObject {
             this.setData({item: undefined})
             this.setState({item: undefined}, queue)
         }
+    }
+
+
+    /**
+     * 
+     * @param {boolean} flip 
+     */
+    isWalkable(flip) {
+        if (this.getPlayer(flip)) {
+            return false
+        }
+
+        return true
     }
 }

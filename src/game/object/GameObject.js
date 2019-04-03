@@ -2,30 +2,33 @@ let uid = 0;
 
 export default class GameObject {
     static uses(...mixins) {
-        let base = class _Combined extends this {
+        class Base extends this {
             constructor(...parms) {
                 super(...parms)
-                mixins.forEach((mixin) => {
+
+                for (var mixin of mixins) {
                     mixin.prototype.initializer.call(this, ...parms)
-                })
+                }
             }
         }
-        let copyProps = (target, source) => {
-            Object.getOwnPropertyNames(source)
-                .concat(Object.getOwnPropertySymbols(source))
+
+        let copyProps = (base, mixin) => {
+            Object.getOwnPropertyNames(mixin)
+                .concat(Object.getOwnPropertySymbols(mixin))
                 .forEach((prop) => {
                     Object.defineProperty(
-                        target,
+                        base,
                         prop,
-                        Object.getOwnPropertyDescriptor(source, prop)
+                        Object.getOwnPropertyDescriptor(mixin, prop)
                     )
                 })
         }
-        mixins.forEach((mixin) => {
-            copyProps(base.prototype, mixin.prototype)
-            copyProps(base, mixin)
-        })
-        return base
+
+        for (var mixin of mixins) {
+            copyProps(Base.prototype, mixin.prototype)
+        }
+
+        return Base
     }
 
     /// ///

@@ -1,6 +1,4 @@
-import GameObject from "./GameObject";
-
-export default class NodeComponent extends GameObject {
+export default class NodeComponent {
     initializer(config) {
         this.data.node = config.node
         this.state.node = config.node
@@ -19,7 +17,7 @@ export default class NodeComponent extends GameObject {
      * 
      */
     getNode(flip) {
-        return this.get("node", flip) //TODO: undefined error 
+        return this.get("node", flip) //TODO: undefined error
     }
 
     /**

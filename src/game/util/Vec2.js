@@ -64,4 +64,27 @@ export default class Vec2 {
             (this.getY() - postion.getY()) ** 2
         )
     }
+
+    subtract(a) {
+        return new Vec2(
+            this.getX() - a.getX(),
+            this.getY() - a.getY()
+
+        )
+    }
+
+    add(a) {
+        return new Vec2(
+            this.getX() + a.getX(),
+            this.getY() + a.getY()
+
+        )
+    }
+
+    sign() {
+        return new Vec2(
+            Math.sign(this.getX()),
+            Math.sign(this.getY())
+        )
+    }
 }

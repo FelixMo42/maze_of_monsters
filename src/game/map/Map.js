@@ -63,7 +63,7 @@ export default class Map extends GameObject {
         if (!this.player && this.getPlayers().length > 0) {
             this.player = this.getPlayers()[this.getTurn() % this.getPlayers().length]
             this.player.startTurn()
-            this.turn++
+            this.data.turn++
         }
 
         this.draw()
@@ -160,5 +160,15 @@ export default class Map extends GameObject {
         this.players.push(player)
         this.getNode(position).setPlayer(player, queue)
         return player
+    }
+
+    removePlayer(player, queue) {
+        if (player.hasNode()) {
+            player.getNode().removePlayer(queue)
+        }
+        for (var i = this.players.indexOf(player) + 1; i < this.players.length; i++) {
+            this.players[i - 1] = this.players[i]
+        }
+        this.players = this.players.slice(0,-1)
     }
 }

@@ -45,6 +45,11 @@ export default class Action extends GameObject {
             name: "effects",
             setter: false
         })
+
+        this.addVariable({
+            name: "requirments",
+            default: {}
+        })
     }
 
     /// ///
@@ -92,13 +97,19 @@ export default class Action extends GameObject {
      * 
      * @param {Vec2} position 
      */
-    cheak(position) {
-        if (this.getPosition().distanceFrom(position) > this.getRange() + .5) {
+    cheak(target) {
+        if (this.getPosition().distanceFrom(target) > this.getRange() + .5) {
             return false
         }
 
         for (var move in this.getCost().moves) {
-            if (this.getPlayer().getMovesLeft(move) + this.getCost().moves[move] < 0) {
+            if (this.getPlayer().getMove(move) + this.getCost().moves[move] < 0) {
+                return false
+            }
+        }
+
+        if ("walkable" in this.getRequirments()) {
+            if (this.getRequirments().walkable !== this.getMap().getNode(target).isWalkable()) {
                 return false
             }
         }
@@ -110,14 +121,23 @@ export default class Action extends GameObject {
      * 
      * @param {Vec2} flip 
      */
-    call(position) {
+    use(position) {
         if (!this.cheak(position)) {
-            console.debug(this.getPlayer().getName() + " failed to use " + this.getName())
+            console.debug(this.getPlayer().getName() + " failed to use " + this.getName() + " on " + position)
             return false
         }
 
-        console.debug(this.getPlayer().getName() + " uses " + this.getName())
+        console.debug(this.getPlayer().getName() + " uses " + this.getName() + " on " + position)
 
+        // apply cost
+        new Effect({
+            style: "cost",
+            playerEffect: this.getCost(),
+            target: this.getPosition(),
+            source: this
+        })
+
+        // apply effects
         for (var effect of this.getEffects()) {
             new Effect({
                 ...effect,
@@ -125,13 +145,6 @@ export default class Action extends GameObject {
                 source: this
             })
         }
-
-        new Effect({
-            style: "cost",
-            playerEffect: this.getCost(),
-            target: this.getPosition(),
-            source: this
-        })
 
         return true
     }

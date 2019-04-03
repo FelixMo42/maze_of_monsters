@@ -42,7 +42,9 @@ export default class Game extends React.Component {
 
         var move = {
             name: "Move",
-            range: 1,
+            requirments: {
+                walkable: true
+            },
             effects: [
                 {
                     style: "self",
@@ -63,7 +65,7 @@ export default class Game extends React.Component {
             effects: [
                 {
                     playerEffect: {
-                        HP: -10
+                        HP: -20
                     }
                 }
             ],
@@ -74,6 +76,10 @@ export default class Game extends React.Component {
             }
         }
 
+        var baseAiContoller = {
+            
+        }
+
         // set up world
 
         var world = state.world = new Map()
@@ -82,6 +88,7 @@ export default class Game extends React.Component {
                 new Player({
                     controller: "player",
                     name: "Eden Black",
+                    color: "black",
                     actions: [
                         punch,
                         move
@@ -90,6 +97,19 @@ export default class Game extends React.Component {
                 new Vec2(1,1)
             )
         ]
+
+        world.addPlayer(
+            new Player({
+                name: "Eden White",
+                color: "white",
+                controller: baseAiContoller,
+                actions: [
+                    punch,
+                    move
+                ]
+            }),
+            new Vec2(9,9)
+        )
 
         return state
     }

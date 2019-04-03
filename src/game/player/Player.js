@@ -3,9 +3,10 @@ import NodeComponent from "../object/NodeComponent";
 import Game from "../Game";
 import Draw from "../util/Draw";
 import Action from "../action/Action";
+import HealthComponent from "../object/HealthComponent";
 
 export default class Player extends GameObject.uses(
-    NodeComponent
+    HealthComponent, NodeComponent
 ) {
     constructor(config={}) {
         super(config)
@@ -21,11 +22,6 @@ export default class Player extends GameObject.uses(
 
         this.addVariable({
             name: "name"
-        })
-
-        this.addVariable({
-            name: "HP",
-            default: 100
         })
 
         this.addVariable({
@@ -107,7 +103,7 @@ export default class Player extends GameObject.uses(
      */
     affect(effect) {
         if (effect.hasHP()) {
-            console.log(effect.getHP()) //TODO: make it
+            this.damage(effect.getHP())
         }
 
         if (effect.hasPull()) {
@@ -131,6 +127,15 @@ export default class Player extends GameObject.uses(
         map.getNode(position).setPlayer(this, queue)
     }
 
+    die(queue) {
+        console.debug(this.getName() + " died!")
+
+        if (this.isTurn()) {
+            this.endTurn(queue)
+        }
+        this.getMap().removePlayer(this, queue)
+    }
+
     /// turn ///
 
     /**
@@ -139,9 +144,11 @@ export default class Player extends GameObject.uses(
     startTurn() {
         console.debug(this.getName() + " starts their turn")
 
+        this.set("turn", true)
         this.setMoves({...this.getMaxMoves()})
 
         if (this.getController() !== "player") {
+            this.doTurn()
             this.pushToStack(
                 () => {
                     this.endTurn()
@@ -152,26 +159,100 @@ export default class Player extends GameObject.uses(
         this.callStartTurnCallback(this)
     }
 
+    doTurn() {
+        var players = this.getMap().getPlayers()
+        
+        var enemies = []
+        var allies = []
+        var neutral = []
+
+        for (var player of players) {
+            if (player === this) {
+                continue
+            }
+
+            var relationship = this.relationship(player)
+
+            if (relationship > 0) {
+                allies.push(player)
+            }
+            if (relationship === 0) {
+                neutral.push(player)
+            }
+            if (relationship < 0) {
+                enemies.push(player)
+            }
+        }
+
+        var whatToDo = "fight"
+
+        //console.log(whatToDo, enemies[0])
+
+        if (whatToDo === "stay") {
+        }
+
+        if (whatToDo === "fight") {
+            var sucses;
+            var target = enemies[0]
+        
+            if (target === undefined) {
+                return
+            }
+
+            // move to target
+            while (true) {
+                sucses = this.getAction("Move").use(
+                    this.getPosition().add(target.getPosition().subtract(this.getPosition()).sign())
+                )
+                if (!sucses) {
+                    break
+                }
+            }
+
+            // attack target
+            while (true) {
+                sucses = this.getAction("Punch").use(
+                    target.getPosition()
+                )
+                if (!sucses || target.isDead()) {
+                    break
+                }
+            }
+        }
+
+        if (whatToDo === "run") {
+        }
+    }
+
     /**
      * 
      */
-    endTurn() {
+    endTurn(queue) {
+        if (!this.isTurn()) {
+            return
+        }
+
         console.debug(this.getName() + " ends their turn")
 
-        this.set("isTurn", false, this.stack)
+        this.set("turn", false, this.stack)
 
         this.getMap().nextTurn()
 
         this.callEndTurnCallback(this)
     }
 
+    /**
+     * 
+     * @param {Player} player 
+     * @param {boolean} flip 
+     */
+    relationship(player, flip) {
+        return -1
+    }
+
     /// moves and actions ///
 
     getMove(move, flip) {
-        return this.getMoves(flip)[move]
-    }
-
-    getMovesLeft(move, flip) {
         return this.getMoves(flip)[move]
     }
 
@@ -189,7 +270,6 @@ export default class Player extends GameObject.uses(
             queue.push(() => {
                 this.state.moves[move] = value
                 this.callUpdateStateCallback({})
-                return true
             })
         } else {
             this.state.moves[move] = value
@@ -199,6 +279,14 @@ export default class Player extends GameObject.uses(
 
     getMaxMove(move, flip) {
         return this.getMaxMoves(flip)[move]
+    }
+
+    getAction(name) {
+        for (var action of this.getActions()) {
+            if (action.getName() === name) {
+                return action
+            }
+        }
     }
 
     /// stack ///
@@ -215,7 +303,7 @@ export default class Player extends GameObject.uses(
      * @param {() => boolean} func
      */
     pushToStack(func) {
-       this.stack.push(func)
+        this.stack.push(func)
     }
 
     /**
@@ -228,10 +316,10 @@ export default class Player extends GameObject.uses(
                 return
             }
 
-            if (!this.stack[0]()) {
+            if (this.stack[0]() === false) {
                 return
             } else {
-                this.stack.pop()
+                this.stack.shift()
             }
         }
     }

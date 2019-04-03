@@ -36,7 +36,7 @@ export default class extends React.Component {
 
     activateAction() {
         if (this.state.action) {
-            this.state.action.call(Draw.getMousePos())
+            this.state.action.use(Draw.getMousePos())
         }
     }
 
@@ -111,10 +111,7 @@ export default class extends React.Component {
                                 <input
                                     key={move}
                                     type="button"
-                                    value={move + " : " + this.state.player.getMovesLeft(move, true)}
-                                    onClick={()=>{
-                                        this.state.player.setMove(move, 5)
-                                    }}
+                                    value={move + " : " + this.state.player.getMove(move, true)}
                                 />
                             )
                         }
