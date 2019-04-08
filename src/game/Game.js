@@ -6,6 +6,7 @@ import PlayerController from "./util/PlayerController"
 import Player from "./player/Player";
 
 import "./Game.css"
+import { RandomValue } from "./util/Value";
 
 let instance = undefined
 
@@ -55,7 +56,7 @@ export default class Game extends React.Component {
             ],
             cost: {
                 moves: {
-                    movement: -1
+                    main: -1
                 }
             }
         }
@@ -65,24 +66,39 @@ export default class Game extends React.Component {
             effects: [
                 {
                     playerEffect: {
-                        HP: -20
+                        HP: new RandomValue(-20, -10)
                     }
                 }
             ],
             cost: {
                 moves: {
-                    main: -1
+                    main: -5
                 }
             }
         }
 
-        var baseAiContoller = {
-            
+        var sword = {
+            name: "Sword"
+        }
+
+        var baseAiContoller = {}
+
+        var solder = {
+            name: "foor solder",
+            color: "gray",
+            controller: baseAiContoller,
+            actions: [
+                punch,
+                move
+            ]
         }
 
         // set up world
 
-        var world = state.world = new Map()
+        var world = state.world = new Map({
+            width: 10,
+            height: 11
+        })
         /*var players = */state.players = [
             world.addPlayer(
                 new Player({
@@ -92,23 +108,33 @@ export default class Game extends React.Component {
                     actions: [
                         punch,
                         move
+                    ],
+                    items: [
+                        sword
                     ]
                 }),
-                new Vec2(1,1)
+                new Vec2(0,5)
             )
         ]
 
         world.addPlayer(
-            new Player({
-                name: "Eden White",
-                color: "white",
-                controller: baseAiContoller,
-                actions: [
-                    punch,
-                    move
-                ]
-            }),
-            new Vec2(9,9)
+            new Player(solder),
+            new Vec2(9,10)
+        )
+
+        world.addPlayer(
+            new Player(solder),
+            new Vec2(9,0)
+        )
+
+        world.addPlayer(
+            new Player(solder),
+            new Vec2(2,10)
+        )
+
+        world.addPlayer(
+            new Player(solder),
+            new Vec2(2,0)
         )
 
         return state

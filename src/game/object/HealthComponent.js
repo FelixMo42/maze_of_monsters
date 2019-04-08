@@ -1,5 +1,5 @@
 export default class HealthComponent {
-    initializer(config) {
+    initializer() {
         this.addVariable({
             name: "maxHp",
             setterName: "setMaxHP",
@@ -24,12 +24,10 @@ export default class HealthComponent {
     }
 
     damage(hp, opts={}) {
-
         this.updateHP(hp, opts.queue)
     }
 
     heal(hp, opts={}) {
-        
         this.updateHP(hp, opts.queue)
     }
 

@@ -103,7 +103,18 @@ export default class extends React.Component {
                             this.state.player.endTurn()
                         }}/>
                     </div>
-
+                    <div>
+                        items: 
+                        {
+                            this.state.player.getItems().map(item =>
+                                <input
+                                    type="button"
+                                    key={item.getKey(true)}
+                                    value={item.getName(true)}
+                                />
+                            )
+                        }
+                    </div>
                     <div>
                         moves: 
                         {

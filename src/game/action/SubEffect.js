@@ -1,3 +1,5 @@
+import Value from "../util/Value";
+
 export default class SubEffect {
     constructor(config) {
         this.effect = config.effect
@@ -12,11 +14,11 @@ export default class SubEffect {
         var name = config.name.charAt(0).toUpperCase() + config.name.slice(1)
 
         this["has" + name] = () => {
-            return this.config[config.name] !== undefined
+            return config.name in this.config
         }
 
         this["get" + name] = () => {
-            return this.config[config.name]
+            return Value.cheak(this.config[config.name])
         }
     }
 

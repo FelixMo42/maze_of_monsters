@@ -4,6 +4,7 @@ import Game from "../Game";
 import Draw from "../util/Draw";
 import Action from "../action/Action";
 import HealthComponent from "../object/HealthComponent";
+import Item from "../item/Item";
 
 export default class Player extends GameObject.uses(
     HealthComponent, NodeComponent
@@ -47,10 +48,7 @@ export default class Player extends GameObject.uses(
             setter: false,
             init: (state) => {
                 return {
-                    "movement": 5,
-                    "main": 1,
-                    "quick": 2,
-                    "reaction": 1,
+                    "main": 5,
                     ...state
                 }
             }
@@ -81,6 +79,36 @@ export default class Player extends GameObject.uses(
                 }
 
                 return actions
+            }
+        })
+
+        this.addVariable({
+            name: "items",
+            setter: false,
+            default: [],
+            init: (states) => {
+                var items = []
+
+                for (var state of states) {
+                    items.push(new Item(state))
+                }
+
+                return items
+            }
+        })
+
+        this.addVariable({
+            name: "slots",
+            setter: false,
+            default: [],
+            init: (states) => {
+                var slots = []
+
+                for (var state of states) {
+                    slots.push(new Item(state))
+                }
+
+                return slots
             }
         })
 
@@ -250,6 +278,24 @@ export default class Player extends GameObject.uses(
         return -1
     }
 
+    /// items ///
+
+    storeItem(item, queue) {
+        this.appendArrayItem("items", item, queue)
+    }
+
+    removeItem(item, queue) {
+        this.removeArrayItem("items", item, queue)
+    }
+
+    equipItem(item, slot, queue) {
+
+    }
+
+    unequipItem(item, queue) {
+
+    }
+
     /// moves and actions ///
 
     getMove(move, flip) {
@@ -263,18 +309,7 @@ export default class Player extends GameObject.uses(
     }
 
     setMove(move, value, queue) {
-        this.data.moves[move] = value
-        this.callUpdateDataCallback({})
-
-        if (queue) {
-            queue.push(() => {
-                this.state.moves[move] = value
-                this.callUpdateStateCallback({})
-            })
-        } else {
-            this.state.moves[move] = value
-            this.callUpdateStateCallback({})
-        }
+        this.setArrayItem("moves",move,value, queue)
     }
 
     getMaxMove(move, flip) {

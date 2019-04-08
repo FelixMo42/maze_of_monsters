@@ -108,6 +108,85 @@ export default class GameObject {
         this.callUpdateDataCallback(updates)
     }
 
+    /**
+     * 
+     * @param {*} array 
+     * @param {*} key 
+     * @param {*} value 
+     * @param {*} queue 
+     */
+    setArrayItem(array, key, value, queue) {
+        this.data[array][key] = value
+        this.callUpdateDataCallback({[array]: this.data[array]})
+
+        if (queue) {
+            queue.push(() => {
+                this.state[array][key] = value
+                this.callUpdateStateCallback({[array]: this.state[array]})
+            })
+        } else {
+            this.state[array][key] = value
+            this.callUpdateStateCallback({[array]: this.state[array]})
+        }
+    }
+
+    /**
+     * 
+     * @param {*} array 
+     * @param {*} value 
+     * @param {*} queue 
+     */
+    appendArrayItem(array, value, queue) {
+        this.data[array].push(value)
+        this.callUpdateDataCallback({[array]: this.data[array]})
+
+        if (queue) {
+            queue.push(() => {
+                this.state[array].push(value)
+                this.callUpdateStateCallback({[array]: this.state[array]})
+            })
+        } else {
+            this.state[array].push(value)
+            this.callUpdateStateCallback({[array]: this.state[array]})
+        }
+    }
+
+    /**
+     * 
+     * @param {*} array 
+     * @param {*} value 
+     * @param {*} queue 
+     */
+    removeArrayItem(array, value, queue) {
+        var data = this.data[array]
+        for (var i = data.indexOf(value) + 1; i < data.length; i++) {
+            data[i - 1] = data[i]
+        }
+        data = data.slice(0,-1)
+        this.callUpdateDataCallback({[array]: data})
+
+        var state = this.state[array]
+        if (queue) {
+            queue.push(() => {
+                for (i = state.indexOf(value) + 1; i < state.length; i++) {
+                    data[i - 1] = data[i]
+                }
+                state = data.slice(0,-1)
+
+                this.state[array].push(value)
+                this.callUpdateStateCallback({[array]: state})
+            })
+        } else {
+            for (i = state.indexOf(value) + 1; i < state.length; i++) {
+                data[i - 1] = data[i]
+            }
+            state = data.slice(0,-1)
+
+            this.state[array].push(value)
+            this.callUpdateStateCallback({[array]: state})
+        }
+    }
+
     /// creator functions ///
 
     /**
