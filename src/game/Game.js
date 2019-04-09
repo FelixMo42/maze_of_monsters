@@ -78,7 +78,10 @@ export default class Game extends React.Component {
         }
 
         var sword = {
-            name: "Sword"
+            name: "Sword",
+            slot: {
+                hand: 1
+            }
         }
 
         var baseAiContoller = {}

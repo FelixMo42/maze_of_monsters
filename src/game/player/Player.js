@@ -5,6 +5,7 @@ import Draw from "../util/Draw";
 import Action from "../action/Action";
 import HealthComponent from "../object/HealthComponent";
 import Item from "../item/Item";
+import Slot from "./Slot";
 
 export default class Player extends GameObject.uses(
     HealthComponent, NodeComponent
@@ -13,6 +14,7 @@ export default class Player extends GameObject.uses(
         super(config)
 
         this.stack = []
+        this.itemData = {}
 
         this.addVariable({
             name: "turn",
@@ -90,7 +92,10 @@ export default class Player extends GameObject.uses(
                 var items = []
 
                 for (var state of states) {
-                    items.push(new Item(state))
+                    items.push(new Item({
+                        ...state,
+                        player: this
+                    }))
                 }
 
                 return items
@@ -100,12 +105,21 @@ export default class Player extends GameObject.uses(
         this.addVariable({
             name: "slots",
             setter: false,
-            default: [],
+            default: {
+                head: {
+                    name: "head",
+                    spots: 1
+                },
+                hand: {
+                    name: "hands",
+                    spots: 2
+                },
+            },
             init: (states) => {
-                var slots = []
+                var slots = {}
 
-                for (var state of states) {
-                    slots.push(new Item(state))
+                for (var state in states) {
+                    slots[state] = new Slot(states[state])
                 }
 
                 return slots
@@ -288,12 +302,18 @@ export default class Player extends GameObject.uses(
         this.removeArrayItem("items", item, queue)
     }
 
-    equipItem(item, slot, queue) {
-
+    equipItem(item, slots, queue) {
+        for (var slot in slots) {
+            this.getSlot(slot).addItem(item, slots[slot], queue)
+        }
     }
 
-    unequipItem(item, queue) {
+    unequipItem(item, slot, queue) {
+        this.getSlot(slot).removeItem(item, queue)
+    }
 
+    getSlot(slot, flip) {
+        return this.getSlots(flip)[slot]
     }
 
     /// moves and actions ///
@@ -361,6 +381,9 @@ export default class Player extends GameObject.uses(
 
     /// graphics ///
 
+    /**
+     * 
+     */
     draw() {
         Draw.circle({
             position: this.getPosition(),

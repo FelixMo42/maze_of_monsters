@@ -123,11 +123,11 @@ export default class Action extends GameObject {
      */
     use(position) {
         if (!this.cheak(position)) {
-            console.debug(this.getPlayer().getName() + " failed to use " + this.getName() + " on " + position)
+            console.debug(this.getPlayer() + " failed to use " + this + " on " + position)
             return false
         }
 
-        console.debug(this.getPlayer().getName() + " uses " + this.getName() + " on " + position)
+        console.debug(this.getPlayer() + " uses " + this + " on " + position)
 
         // apply cost
         new Effect({

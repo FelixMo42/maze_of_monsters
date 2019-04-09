@@ -29,8 +29,8 @@ export default class extends React.Component {
     drawActionOverlay() {
         Draw.rectangle({
             position: Draw.getMousePos(),
-            //fill: "rgba(255,255,255,.5)",
-            outline: "black",
+            fill: "rgba(255,255,255,.5)",
+            //outline: "black",
         })
     }
 
@@ -111,6 +111,9 @@ export default class extends React.Component {
                                     type="button"
                                     key={item.getKey(true)}
                                     value={item.getName(true)}
+                                    onClick={() => {
+                                        item.equip()
+                                    }}
                                 />
                             )
                         }

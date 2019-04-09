@@ -54,6 +54,10 @@ export default class GameObject {
         uid++;
     }
 
+    toString() {
+        return this.getName()
+    }
+
     /// key and id functions ///
 
     /**

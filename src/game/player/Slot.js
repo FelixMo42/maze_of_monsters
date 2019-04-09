@@ -41,11 +41,13 @@ export default class Slot extends GameObject {
      * @param {Item} item 
      * @param {*} queue 
      */
-    addItem(item, queue) {
+    addItem(item, size, queue) {
         if (this.getSpots() + item.getSize() <= this.getMaxSpots()) {
             return false
         }
-        this.appendArrayItem("items", item, queue)
+        for (var i = 0; i < size; i++) {
+            this.appendArrayItem("items", item, queue)
+        }
         return true
     }
 
@@ -55,6 +57,6 @@ export default class Slot extends GameObject {
      * @param {*} queue 
      */
     removeItem(item, queue) {
-        this.removeArrayItem("items", item, queue)
+        //TODO: remove multiple times
     }
 }

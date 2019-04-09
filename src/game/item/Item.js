@@ -18,7 +18,9 @@ export default class Item extends GameObject {
 
         this.addVariable({
             name: "slots",
-            default: []
+            init: (state) => {
+                return state || (this.config.slot ? [this.config.slot] : [])
+            }
         })
 
         this.addVariable({
@@ -35,6 +37,8 @@ export default class Item extends GameObject {
 
         this.setPlayer(player, queue)
         player.storeItem(this, queue)
+
+        console.debug(this.getPlayer() + " picked up " + this)
     }
 
     drop(queue) {
@@ -49,20 +53,28 @@ export default class Item extends GameObject {
 
         this.setPlayer(undefined, queue)
         this.getPlayer().removeItem(this, queue)
+
+        console.debug(this.getPlayer() + " droped " + this)
     }
 
-    equip(slot, queue) {
-        if (!this.hasPlayer()) {
-            console.error("attempted to equip an item thats dosent have player!")
-            return
-        }
+    equip(slot=0, queue) {
         if (this.isEquiped()) {
             console.error("attempted to equip an item thats allready equiped!")
             return
         }
+        if (!this.isEquipable()) {
+            console.error("attempted to equip an item thats unequipable!")
+            return
+        }
+        if (!this.hasPlayer()) {
+            console.error("attempted to equip an item thats dosent have player!")
+            return
+        }
 
-        this.setEquiped(slot, queue)
-        this.getPlayer().equipItem(this, queue)
+        this.setEquiped(this.getSlots()[slot], queue)
+        this.getPlayer().equipItem(this, this.getSlots()[slot], queue)
+
+        console.debug(this.getPlayer() + " equiped " + this)
     }
 
     unequip(queue) {
@@ -77,9 +89,19 @@ export default class Item extends GameObject {
 
         this.setEquiped(undefined, queue)
         this.getPlayer().unequipItem(this, queue)
+
+        console.debug(this.getPlayer() + " unequip " + this)
+    }
+
+    isEquipable(flip) {
+        return this.getSlots(flip).length > 0
     }
 
     isEquiped(flip) {
         return this.getEquiped(flip) !== undefined
+    }
+
+    hasPlayer(flip) {
+        return this.getPlayer(flip) !== undefined
     }
 }
