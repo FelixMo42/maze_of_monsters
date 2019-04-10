@@ -7,6 +7,7 @@ import Player from "./player/Player";
 
 import "./Game.css"
 import { RandomValue } from "./util/Value";
+import ActionRef from "./action/ActionRef";
 
 let instance = undefined
 
@@ -79,9 +80,19 @@ export default class Game extends React.Component {
 
         var sword = {
             name: "Sword",
+            type: "sword",
             slot: {
                 hand: 1
             }
+        }
+
+        var slice = {
+            name: "Slice",
+            itemTypes: ["sword"],
+            effects: [
+
+            ],
+            range: new ActionRef.item("range")
         }
 
         var baseAiContoller = {}
@@ -110,7 +121,8 @@ export default class Game extends React.Component {
                     color: "black",
                     actions: [
                         punch,
-                        move
+                        move,
+                        slice
                     ],
                     items: [
                         sword

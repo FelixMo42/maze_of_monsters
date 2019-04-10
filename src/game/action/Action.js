@@ -40,6 +40,12 @@ export default class Action extends GameObject {
             default: 1
         })
 
+        // default size of effect
+        this.addVariable({
+            name: "itemTypes",
+            default: []
+        })
+
         // list of effects the action has
         this.addVariable({
             name: "effects",

@@ -68,16 +68,27 @@ export default class Player extends GameObject.uses(
         })
 
         this.addVariable({
+            name: "itemBooks",
+            default: {}
+        })
+
+        this.addVariable({
             name: "actions",
             setter: false,
             init: (states) => {
                 var actions = []
                 
                 for (var state of states) {
-                    actions.push(new Action({
-                        ...state,
-                        player: this
-                    }))
+                    if (state.itemTypes) {
+                        for (var itemType of state.itemTypes) {
+                            this.addItemBookAction(itemType, state)
+                        }
+                    } else {
+                        actions.push(new Action({
+                            ...state,
+                            player: this
+                        }))
+                    }
                 }
 
                 return actions
@@ -306,6 +317,17 @@ export default class Player extends GameObject.uses(
         for (var slot in slots) {
             this.getSlot(slot).addItem(item, slots[slot], queue)
         }
+
+        if (item.hasType() && this.hasItemBook(item.getType())) {
+            for (var actionState of this.getItemBook(item.getType())) {
+                var action = new Action({
+                    ...actionState,
+                    item: item,
+                    player: this
+                })
+                this.addAction(action, queue)
+            }
+        }
     }
 
     unequipItem(item, slot, queue) {
@@ -342,6 +364,30 @@ export default class Player extends GameObject.uses(
                 return action
             }
         }
+    }
+
+    addAction(action, queue) {
+        this.appendArrayItem("actions", action, queue)
+    }
+
+    addItemBookAction(itemType, action, queue) {
+        this.mirror((data, mode) => {
+            if (!(itemType in data.itemBooks)) {
+                data.itemBooks[itemType] = []
+            }
+            data.itemBooks[itemType].push(action)
+            console.log(data.itemBooks, mode)
+
+            return {itemBooks: data.itemBooks}
+        }, queue)
+    }
+
+    getItemBook(itemType, flip) {
+        return this.getItemBooks(flip)[itemType]
+    }
+
+    hasItemBook(itemType, flip) {
+        return itemType in this.getItemBooks(flip)
     }
 
     /// stack ///

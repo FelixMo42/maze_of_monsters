@@ -17,6 +17,10 @@ export default class Item extends GameObject {
         })
 
         this.addVariable({
+            name: "type"
+        })
+
+        this.addVariable({
             name: "slots",
             init: (state) => {
                 return state || (this.config.slot ? [this.config.slot] : [])

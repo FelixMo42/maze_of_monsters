@@ -134,6 +134,19 @@ export default class GameObject {
         }
     }
 
+
+    mirror(func, queue) {
+        this.callUpdateDataCallback(func(this.data, "data"))
+
+        if (queue) {
+            queue.push(() => {
+                this.callUpdateStateCallback(func(this.state, "state"))
+            })
+        } else {
+            this.callUpdateStateCallback(func(this.state, "state"))
+        }
+    }
+
     /**
      * 
      * @param {*} array 
@@ -141,18 +154,10 @@ export default class GameObject {
      * @param {*} queue 
      */
     appendArrayItem(array, value, queue) {
-        this.data[array].push(value)
-        this.callUpdateDataCallback({[array]: this.data[array]})
-
-        if (queue) {
-            queue.push(() => {
-                this.state[array].push(value)
-                this.callUpdateStateCallback({[array]: this.state[array]})
-            })
-        } else {
-            this.state[array].push(value)
-            this.callUpdateStateCallback({[array]: this.state[array]})
-        }
+        this.mirror((data) => {
+            data[array].push(value)
+            return {[array]: data[array]}
+        })
     }
 
     /**
@@ -217,6 +222,14 @@ export default class GameObject {
         this.setState({[key]: value}, queue)
     }
 
+    has(key, flip=false) {
+        if (flip) {
+            return key in this.state
+        } else {
+            return key in this.data
+        }
+    }
+
     /// constructor functions ///
 
     /**
@@ -240,6 +253,13 @@ export default class GameObject {
             })
         }
 
+        // add hasser
+        if (opts.hasser !== false) {
+            this[opts.hasserName || "has" + name] = opts.hasser || ((value, queue) => {
+                return this.has(opts.name, value, queue)
+            })
+        }
+
         this.data[opts.name] = this.config[opts.name] || opts.default;
 
         if (opts.init) {
@@ -247,6 +267,18 @@ export default class GameObject {
         }
 
         this.state[opts.name] = this.data[opts.name]
+
+        if (this.data[opts.name] instanceof Array) {
+            this.state[opts.name] = [
+                ...this.data[opts.name]
+            ]
+        } else if (this.data[opts.name] instanceof Object) {
+            this.state[opts.name] = {
+                ...this.data[opts.name]
+            } 
+        } else {
+            this.state[opts.name] = this.data[opts.name]
+        }
     }
 
     /**
