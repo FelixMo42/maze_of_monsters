@@ -136,14 +136,14 @@ export default class GameObject {
 
 
     mirror(func, queue) {
-        this.callUpdateDataCallback(func(this.data, "data"))
+        this.callUpdateDataCallback(func(this.data, false))
 
         if (queue) {
             queue.push(() => {
-                this.callUpdateStateCallback(func(this.state, "state"))
+                this.callUpdateStateCallback(func(this.state, true))
             })
         } else {
-            this.callUpdateStateCallback(func(this.state, "state"))
+            this.callUpdateStateCallback(func(this.state, true))
         }
     }
 

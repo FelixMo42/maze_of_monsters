@@ -31,6 +31,14 @@ export default class Item extends GameObject {
             name: "size",
             default: 1
         })
+
+        this.addCallback({
+            name: "equipe"
+        })
+
+        this.addCallback({
+            name: "unquipe"
+        })
     }
 
     pickup(player, queue) {
@@ -78,6 +86,8 @@ export default class Item extends GameObject {
         this.setEquiped(this.getSlots()[slot], queue)
         this.getPlayer().equipItem(this, this.getSlots()[slot], queue)
 
+        this.CallEquipCallback()
+
         console.debug(this.getPlayer() + " equiped " + this)
     }
 
@@ -93,6 +103,8 @@ export default class Item extends GameObject {
 
         this.setEquiped(undefined, queue)
         this.getPlayer().unequipItem(this, queue)
+
+        this.CallUnequipCallback()
 
         console.debug(this.getPlayer() + " unequip " + this)
     }

@@ -49,6 +49,7 @@ export default class Action extends GameObject {
         // list of effects the action has
         this.addVariable({
             name: "effects",
+            default: [],
             setter: false
         })
 
@@ -69,6 +70,10 @@ export default class Action extends GameObject {
 
     /// ///
 
+    /**
+     * 
+     * @param {*} flip 
+     */
     getMap(flip) {
         return this.getPlayer(flip).getMap(flip)
     }

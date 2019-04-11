@@ -326,6 +326,11 @@ export default class Player extends GameObject.uses(
                     player: this
                 })
                 this.addAction(action, queue)
+                var callback = () => {
+                    this.removeAction(action)
+                    item.deregisterUnequipCallback(callback)
+                }
+                item.registerUnequipCallback(callback)
             }
         }
     }
@@ -370,13 +375,16 @@ export default class Player extends GameObject.uses(
         this.appendArrayItem("actions", action, queue)
     }
 
+    removeAction(action, queue) {
+        this.removeArrayItem("actions", action, queue)
+    }
+
     addItemBookAction(itemType, action, queue) {
         this.mirror((data, mode) => {
             if (!(itemType in data.itemBooks)) {
                 data.itemBooks[itemType] = []
             }
             data.itemBooks[itemType].push(action)
-            console.log(data.itemBooks, mode)
 
             return {itemBooks: data.itemBooks}
         }, queue)
