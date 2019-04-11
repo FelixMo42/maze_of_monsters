@@ -166,34 +166,15 @@ export default class GameObject {
      * @param {*} value 
      * @param {*} queue 
      */
-    removeArrayItem(array, value, queue) {
-        var data = this.data[array]
-        for (var i = data.indexOf(value) + 1; i < data.length; i++) {
-            data[i - 1] = data[i]
-        }
-        data = data.slice(0,-1)
-        this.callUpdateDataCallback({[array]: data})
-
-        var state = this.state[array]
-        if (queue) {
-            queue.push(() => {
-                for (i = state.indexOf(value) + 1; i < state.length; i++) {
-                    data[i - 1] = data[i]
-                }
-                state = data.slice(0,-1)
-
-                this.state[array].push(value)
-                this.callUpdateStateCallback({[array]: state})
-            })
-        } else {
-            for (i = state.indexOf(value) + 1; i < state.length; i++) {
-                data[i - 1] = data[i]
+    removeArrayItem(arrayName, value, queue) {
+        this.mirror((data) => {
+            let array = data[arrayName]
+            for (var i = array.indexOf(value) + 1; i < array.length; i++) {
+                array[i - 1] = array[i]
             }
-            state = data.slice(0,-1)
-
-            this.state[array].push(value)
-            this.callUpdateStateCallback({[array]: state})
-        }
+            data[arrayName] = array.slice(0,-1)
+            return {[arrayName]: data[arrayName]}
+        }, queue)
     }
 
     /// creator functions ///

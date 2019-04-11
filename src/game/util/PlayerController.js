@@ -111,7 +111,14 @@ export default class extends React.Component {
                                     type="button"
                                     key={item.getKey(true)}
                                     value={item.getName(true)}
-                                    onClick={() => {
+                                    style={
+                                        item.isEquiped(true) ? {
+                                            backgroundColor: "blue"
+                                        } : {}
+                                    }
+                                    onClick={item.isEquiped(true) ? () => {
+                                        item.unequip()
+                                    } : () => {
                                         item.equip()
                                     }}
                                 />

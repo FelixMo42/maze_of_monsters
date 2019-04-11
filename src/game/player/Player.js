@@ -314,19 +314,21 @@ export default class Player extends GameObject.uses(
     }
 
     equipItem(item, slots, queue) {
-        for (var slot in slots) {
+        for (let slot in slots) {
             this.getSlot(slot).addItem(item, slots[slot], queue)
         }
 
         if (item.hasType() && this.hasItemBook(item.getType())) {
-            for (var actionState of this.getItemBook(item.getType())) {
-                var action = new Action({
+            for (let actionState of this.getItemBook(item.getType())) {
+                let action = new Action({
                     ...actionState,
                     item: item,
                     player: this
                 })
+                
                 this.addAction(action, queue)
-                var callback = () => {
+
+                let callback = () => {
                     this.removeAction(action)
                     item.deregisterUnequipCallback(callback)
                 }
@@ -335,8 +337,10 @@ export default class Player extends GameObject.uses(
         }
     }
 
-    unequipItem(item, slot, queue) {
-        this.getSlot(slot).removeItem(item, queue)
+    unequipItem(item, slots, queue) {
+        for (let slot in slots) {
+            this.getSlot(slot).removeItem(item, slots[slot], queue)
+        }
     }
 
     getSlot(slot, flip) {

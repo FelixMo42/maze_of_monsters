@@ -33,11 +33,11 @@ export default class Item extends GameObject {
         })
 
         this.addCallback({
-            name: "equipe"
+            name: "equipCallback"
         })
 
         this.addCallback({
-            name: "unquipe"
+            name: "unequipCallback"
         })
     }
 
@@ -86,7 +86,7 @@ export default class Item extends GameObject {
         this.setEquiped(this.getSlots()[slot], queue)
         this.getPlayer().equipItem(this, this.getSlots()[slot], queue)
 
-        this.CallEquipCallback()
+        this.callEquipCallback()
 
         console.debug(this.getPlayer() + " equiped " + this)
     }
@@ -96,17 +96,18 @@ export default class Item extends GameObject {
             console.error("attempted to unequip an item thats dosent have player!")
             return
         }
-        if (this.isEquiped()) {
-            console.error("attempted to equip an item thats allready equiped!")
+        if (!this.isEquiped()) {
+            console.error("attempted to unequip an item thats not equiped!")
             return
         }
 
+        this.getPlayer().unequipItem(this.getEquiped(), queue)
+
         this.setEquiped(undefined, queue)
-        this.getPlayer().unequipItem(this, queue)
 
-        this.CallUnequipCallback()
+        this.callUnequipCallback()
 
-        console.debug(this.getPlayer() + " unequip " + this)
+        console.debug(this.getPlayer() + " unequiped " + this)
     }
 
     isEquipable(flip) {
