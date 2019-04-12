@@ -32,6 +32,14 @@ export default class extends React.Component {
             fill: "rgba(255,255,255,.5)",
             //outline: "black",
         })
+
+        if (this.state.action && this.state.player) {
+            Draw.circle({
+                position: this.state.player.getPosition(),
+                radius: this.state.action.getRange(),
+                outline: "black"
+            })
+        }
     }
 
     activateAction() {

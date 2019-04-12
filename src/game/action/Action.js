@@ -57,6 +57,10 @@ export default class Action extends GameObject {
             name: "requirments",
             default: {}
         })
+
+        this.addVariable({
+            name: "item"
+        })
     }
 
     /// ///

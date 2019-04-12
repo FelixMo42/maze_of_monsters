@@ -186,6 +186,7 @@ export default class Player extends GameObject.uses(
         if (this.isTurn()) {
             this.endTurn(queue)
         }
+
         this.getMap().removePlayer(this, queue)
     }
 

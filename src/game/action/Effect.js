@@ -137,6 +137,9 @@ export default class {
         return this.source.getTile()
     }
 
+    /**
+     * 
+     */
     getSource() {
         return this.source
     }

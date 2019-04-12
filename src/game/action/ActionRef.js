@@ -9,8 +9,8 @@ export default {
             this.mod = mod
         }
 
-        func(meta) {
-            return this.mod(meta.action.getItem().data[this.key])
+        func(action) {
+            return this.mod(action.getItem().data[this.key])
         }
     }
 }

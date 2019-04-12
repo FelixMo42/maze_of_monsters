@@ -32,6 +32,15 @@ export default class Item extends GameObject {
             default: 1
         })
 
+        //
+
+        this.addVariable({
+            name: "range",
+            default: 1
+        })
+
+        //
+
         this.addCallback({
             name: "equipCallback"
         })

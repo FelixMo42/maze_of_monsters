@@ -1,3 +1,5 @@
+import Value from "../util/Value";
+
 let uid = 0;
 
 export default class GameObject {
@@ -223,7 +225,7 @@ export default class GameObject {
         // add getter
         if (opts.getter !== false) {
             this[opts.getterName || "get" + name] = opts.getter || ((flip) => {
-                return this.get(opts.name, flip)
+                return Value.cheak(this.get(opts.name, flip), this)
             })
         }
 

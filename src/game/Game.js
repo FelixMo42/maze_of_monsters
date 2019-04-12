@@ -79,8 +79,17 @@ export default class Game extends React.Component {
         }
 
         var sword = {
-            name: "Sword",
+            name: "Dimensional Blade",
             type: "sword",
+            slot: {
+                hand: 1
+            }
+        }
+
+        var gun = {
+            name: "Eden's Revolver",
+            type: "gun",
+            range: 10,
             slot: {
                 hand: 1
             }
@@ -90,8 +99,35 @@ export default class Game extends React.Component {
             name: "Slice",
             itemTypes: ["sword"],
             effects: [
-
+                {
+                    playerEffect: {
+                        HP: new RandomValue(-100, -50)
+                    }
+                }
             ],
+            cost: {
+                moves: {
+                    main: -5
+                }
+            },
+            range: new ActionRef.item("range")
+        }
+
+        var shoot = {
+            name: "Shoot",
+            itemTypes: ["gun"],
+            effects: [
+                {
+                    playerEffect: {
+                        HP: new RandomValue(-50, -25)
+                    }
+                }
+            ],
+            cost: {
+                moves: {
+                    main: -3
+                }
+            },
             range: new ActionRef.item("range")
         }
 
@@ -122,11 +158,16 @@ export default class Game extends React.Component {
                     actions: [
                         punch,
                         move,
-                        slice
+                        slice,
+                        shoot
                     ],
                     items: [
-                        sword
-                    ]
+                        sword,
+                        gun
+                    ],
+                    maxMoves: {
+                        main: 7
+                    }
                 }),
                 new Vec2(0,5)
             )

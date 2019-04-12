@@ -49,13 +49,14 @@ export default class {
 
         var x = opts.position.getX()
         var y = opts.position.getY()
-        var radius = this.getScale() / 2
+
+        var radius = this.getScale() / 2 * ("radius" in opts ? (opts.radius * 2 + 1) : 1)
 
         ctx.beginPath();
 
         ctx.arc(
-            x * this.getScale() + radius, // x
-            y * this.getScale() + radius, // y
+            (x + .5) * this.getScale(),// + radius, // x
+            (y + .5) * this.getScale(),// + radius, // y
             radius, // radius
             0, // start angle
             2 * Math.PI // end angle
