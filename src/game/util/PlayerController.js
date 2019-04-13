@@ -107,7 +107,7 @@ export default class extends React.Component {
                                 />
                             )
                         }
-                        <input type="button" value="end turn" onClick={() => {
+                        <input type="button" value="End Turn" onClick={() => {
                             this.state.player.endTurn()
                         }}/>
                     </div>

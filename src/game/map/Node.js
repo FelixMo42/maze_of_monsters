@@ -33,6 +33,10 @@ export default class Node extends GameObject {
             this.getPlayer().affect(effect.getPlayerEffect())
         }
 
+        if (this.hasItem() && effect.hasItemEffect()) {
+            this.getItem().affect(effect.getItemEffect())
+        }
+
         //TODO: add item effect
 
         //TODO: add struct effect
@@ -149,8 +153,8 @@ export default class Node extends GameObject {
     /**
      * 
      */
-    getStructure() {
-        return this.data.structure
+    getStructure(flip) {
+        return this.get("structure", flip)
     }
 
     /**
@@ -186,14 +190,14 @@ export default class Node extends GameObject {
      * 
      */
     hasItem() {
-        return this.item !== undefined
+        return this.getItem() !== undefined
     }
 
     /**
      * 
      */
-    getItem() {
-        return this.item
+    getItem(flip) {
+        return this.get("item", flip)
     }
 
     /**
@@ -222,7 +226,6 @@ export default class Node extends GameObject {
             this.setState({item: undefined}, queue)
         }
     }
-
 
     /**
      * 

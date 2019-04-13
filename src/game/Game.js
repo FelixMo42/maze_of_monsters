@@ -78,6 +78,22 @@ export default class Game extends React.Component {
             }
         }
 
+        var pickup = {
+            name: "Pick Up",
+            effects: [
+                {
+                    itemEffect: {
+                        pickup: true
+                    }
+                }
+            ],
+            cost: {
+                moves: {
+                    main: -2
+                }
+            }
+        }
+
         var sword = {
             name: "Dimensional Blade",
             type: "sword",
@@ -143,6 +159,10 @@ export default class Game extends React.Component {
             ]
         }
 
+        var item = {
+            name: "note"
+        }
+
         // set up world
 
         var world = state.world = new Map({
@@ -150,13 +170,14 @@ export default class Game extends React.Component {
             height: 11
         })
         /*var players = */state.players = [
-            world.addPlayer(
+            world.setPlayer(
                 new Player({
                     controller: "player",
                     name: "Eden Black",
                     color: "black",
                     actions: [
                         punch,
+                        pickup,
                         move,
                         slice,
                         shoot
@@ -173,24 +194,29 @@ export default class Game extends React.Component {
             )
         ]
 
-        world.addPlayer(
+        world.setPlayer(
             new Player(solder),
             new Vec2(9,10)
         )
 
-        world.addPlayer(
+        world.setPlayer(
             new Player(solder),
             new Vec2(9,0)
         )
 
-        world.addPlayer(
+        world.setPlayer(
             new Player(solder),
             new Vec2(2,10)
         )
 
-        world.addPlayer(
+        world.setPlayer(
             new Player(solder),
             new Vec2(2,0)
+        )
+
+        world.addItem(
+            item,
+            new Vec2(1, 4)
         )
 
         return state

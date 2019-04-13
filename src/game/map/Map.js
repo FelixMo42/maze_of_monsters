@@ -2,6 +2,7 @@ import GameObject from "../object/GameObject"
 import Vec2 from "../util/Vec2";
 import Game from "../Game";
 import Node from "./Node";
+import Item from "../item/Item";
 
 export default class Map extends GameObject {
     players = []
@@ -81,6 +82,9 @@ export default class Map extends GameObject {
         })
 
         Vec2.forEach(start, end, (position) => {
+            if (this.hasItem(position)) {
+                this.getItem(position).draw()
+            }
             if (this.hasPlayer(position)) {
                 this.getPlayer(position).draw()
             }
@@ -153,7 +157,7 @@ export default class Map extends GameObject {
      * @param {Vec2} position 
      * @param {[() => boolean]} queue 
      */
-    addPlayer(player, position, queue) {
+    setPlayer(player, position, queue) {
         if (this.hasPlayer(position)) {
             throw new Error("allready a player at position " + position)
         }
@@ -162,6 +166,11 @@ export default class Map extends GameObject {
         return player
     }
 
+    /**
+     * 
+     * @param {*} player 
+     * @param {*} queue 
+     */
     removePlayer(player, queue) {
         if (player.hasNode()) {
             player.getNode().removePlayer(queue)
@@ -170,5 +179,29 @@ export default class Map extends GameObject {
             this.players[i - 1] = this.players[i]
         }
         this.players = this.players.slice(0,-1)
+    }
+
+    /// item getters/setters ///
+
+    hasItem(position) {
+        return this.getItem(position) !== undefined
+    }
+
+    getItem(position) {
+        return this.getNode(position).getItem()
+    }
+
+    setItem(item, position, queue) {
+        if (this.hasItem(position)) {
+            throw new Error("allready a item at position " + position)
+        }
+
+        this.getNode(position).setItem(item, queue) 
+
+        return  item
+    }
+
+    addItem(item, position, queue) {
+        this.setItem(new Item(item), position, queue)
     }
 }

@@ -13,11 +13,11 @@ export default class SubEffect {
     addParamater(config) {
         var name = config.name.charAt(0).toUpperCase() + config.name.slice(1)
 
-        this["has" + name] = () => {
+        this[config.hasserName || "has" + name] = () => {
             return config.name in this.config
         }
 
-        this["get" + name] = () => {
+        this[config.getterName || "get" + name] = () => {
             return Value.cheak(this.config[config.name], this.effect.getSource())
         }
     }
@@ -73,11 +73,15 @@ export default class SubEffect {
         return this.effect.getSourceNode()
     }
 
-     /**
-      * 
-      */
+    /**
+     * 
+     */
     getSourceTile() {
         return this.effect.getSourceTile()
+    }
+
+    getSourcePlayer() {
+        return this.effect.getSourcePlayer()
     }
 
     /// range/size getters ///

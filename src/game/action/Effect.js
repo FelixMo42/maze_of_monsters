@@ -1,5 +1,6 @@
 import PlayerEffect from "../player/PlayerEffect";
 import TileEffect from "../tile/TileEffect";
+import ItemEffect from "../item/ItemEffect";
 
 export default class {
     constructor(config) {
@@ -11,6 +12,7 @@ export default class {
 
         this.playerEffect = config.playerEffect
         this.tileEffect = config.tileEffect
+        this.itemEffect = config.itemEffect
 
         // initiate defaults
 
@@ -86,6 +88,25 @@ export default class {
         })
     }
 
+    /// item effect getters  ///
+
+    /**
+     * 
+     */
+    hasItemEffect() {
+        return this.itemEffect !== undefined
+    }
+
+    /**
+     * 
+     */
+    getItemEffect() {
+        return new ItemEffect({
+            ...this.itemEffect,
+            effect: this
+        })
+    }
+
     /// location getters ///
 
     /**
@@ -135,6 +156,10 @@ export default class {
      */
     getSourceTile() {
         return this.source.getTile()
+    }
+
+    getSourcePlayer() {
+        return this.source.getPlayer()
     }
 
     /**

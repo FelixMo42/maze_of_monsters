@@ -207,9 +207,9 @@ export default class GameObject {
 
     has(key, flip=false) {
         if (flip) {
-            return key in this.state
+            return this.state.key !== undefined
         } else {
-            return key in this.data
+            return this.data.key !== undefined
         }
     }
 

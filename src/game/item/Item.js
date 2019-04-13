@@ -1,6 +1,10 @@
 import GameObject from "../object/GameObject";
+import NodeComponent from "../object/NodeComponent";
+import Draw from "../util/Draw";
 
-export default class Item extends GameObject {
+export default class Item extends GameObject.uses(
+    NodeComponent
+) {
     constructor(config) {
         super(config)
 
@@ -53,7 +57,10 @@ export default class Item extends GameObject {
     pickup(player, queue) {
         if (this.hasPlayer()) {
             console.error("attempted to pickup an item that allready has a player!")
-            return
+        }
+ 
+        if (this.hasNode()) {
+            this.getNode().removeItem()
         }
 
         this.setPlayer(player, queue)
@@ -65,11 +72,9 @@ export default class Item extends GameObject {
     drop(queue) {
         if (!this.hasPlayer()) {
             console.error("attempted to drop an item thats dosent have player!")
-            return
         }
         if (this.isEquiped()) {
             console.error("attempted to drop an item thats still equiped!")
-            return
         }
 
         this.setPlayer(undefined, queue)
@@ -127,7 +132,21 @@ export default class Item extends GameObject {
         return this.getEquiped(flip) !== undefined
     }
 
-    hasPlayer(flip) {
-        return this.getPlayer(flip) !== undefined
+    draw() {
+        Draw.circle({
+            position: this.getPosition(),
+            fill: "blue",
+            outline: "black",
+            radius: -.25
+        })
+    }
+
+    affect(effect) {
+        console.log(this)
+        console.log(this.getPlayer() !== undefined)
+        console.log(this.hasPlayer())
+        if (effect.shouldPickup()) {
+            this.pickup(effect.getSourcePlayer())
+        }
     }
 }
