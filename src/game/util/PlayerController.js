@@ -68,11 +68,179 @@ export default class extends React.Component {
      * 
      */
     render() {
-        if (this.state.player) {
-            return this.playerUi()
-        } else {
-            return <p>not your turn :(</p>
-        }
+        return (
+            <div className="PlayerController">
+                { this.state.player ? this.renderActions() : "" }
+                <div style={{
+                    position: "fixed",
+                    bottom: "0px",
+                    backgroundColor: "#212121",
+                    width: "200px",
+                    border: "solid black"
+                }}>
+                    { this.renderPlayers() }
+                </div>
+                {this.state.viewed ? this.renderViewed() : "" }
+            </div>
+        )
+    }
+
+    renderViewed() {
+        var border = 17
+        return (
+            <div style={{
+                position: "absolute",
+                top: border + "px",
+                bottom: border + "px",
+                left: border + "px",
+                right: border + "px",
+                border: "solid black",
+                backgroundColor: "white"
+            }}>
+                <div>
+                    <input type="button" value="items" onClick={() => {
+                        this.setState({
+                            viewMove: "items"
+                        })
+                    }}/>
+                    <input type="button" value="actions" onClick={() => {
+                        this.setState({
+                            viewMove: "actions"
+                        })
+                    }}/>
+                    <input type="button" value="stats" onClick={() => {
+                        this.setState({
+                            viewMove: "stats"
+                        })
+                    }}/>
+                    <input type="button" value="X" onClick={() => {
+                        this.setState({
+                            viewed: undefined
+                        })
+                    }}/>
+                </div>
+                { this.state.viewMove === "items" ? this.renderItemsView()  : "" }
+                { this.state.viewMove === "actions" ? "N/A"  : "" }
+                { this.state.viewMove === "stats" ? "N/A"  : "" }
+            </div>
+        )
+    }
+
+    renderItemsView() {
+        return (
+            <div>
+                <ul>
+                    {
+                        this.state.viewed.getItems().map((item) => {
+                            return (
+                                <li key={item.getKey()}>
+                                    {item.getName()}{" - "}
+                                    { item.isEquipable(true) ? (
+                                        (item.isEquiped(true) ? 
+                                            <input type="button" value="U" onClick={()=>{
+                                                item.unequip()
+                                            }}/>
+                                        :
+                                            <input type="button" value="E" onClick={()=>{
+                                                item.equip()
+                                            }}/>)
+                                    ) : ""}
+                                    <input type="button" value="D" onClick={()=>{
+                                        item.drop()
+                                    }}/>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
+            </div>
+        )
+    }
+
+    renderActions() {
+        return (
+            <div>
+                { this.state.player.getActions().map(action => {
+                    return this.renderAction(action)
+                }) }
+                <input type="button" value="End Turn" onClick={() => {
+                    this.state.player.endTurn()
+                }}/>
+            </div>
+        )
+    }
+
+    renderAction(action) {
+        return (
+            <input
+                type="button"
+                style={
+                    action === this.state.action ? {
+                        backgroundColor: "blue"
+                    } : {}
+                }
+                key={action.getKey(true)}
+                value={action.getName(true)}
+                onClick={() => {this.selectAction(action)}}
+            />
+        )
+    }
+
+    renderPlayers() {
+        return this.props.players.map( (player) => this.renderPlayer(player) )
+    }
+
+    renderPlayer(player) {
+        return (
+            <div
+                style={{
+                    padding: "5px",
+                    overflow: "auto",
+                    color: "white",
+                }}
+                key={ player.getKey() }
+                onClick={() => {
+                    this.setState({
+                        viewed: player
+                    })
+                }}
+            >
+                { this.renderPlayerIcon(player) }
+                { player.getName(true) }
+                <hr style={{
+                    marginTop: "2px",
+                    marginBottom: "2px",
+                }} />
+                { player.getHP(true) } / { player.getMaxHP(true) } hp
+                <br />
+                { player.getMove("main", true) } / { player.getMaxMove("main", true) } moves
+            </div>
+        )
+    }
+
+    renderPlayerIcon(player) {
+        return (
+            <img
+                style={{
+                    width: "60px",
+                    height: "60px",
+                    backgroundColor: "white",
+                    outlineColor: "black",
+                    marginRight: "5px",
+                    float: "left"
+                }} 
+                alt=""
+            />
+        )
+    }
+
+    renderSelectedPlayer() {
+        return (
+            <div>
+                <input type="button" value="action" />
+                <input type="button" value="items" />
+            </div>
+        )
     }
 
     /**
@@ -82,10 +250,9 @@ export default class extends React.Component {
     selectAction(action) {
         this.setState({action: action})
     }
+}
 
-    /**
-     * 
-     */
+/*
     playerUi() {
         return (
             <div>
@@ -149,4 +316,4 @@ export default class extends React.Component {
             </div>
         )
     }
-}
+}*/

@@ -17,7 +17,8 @@ export default class Item extends GameObject.uses(
         })
 
         this.addVariable({
-            name: "equiped"
+            name: "equiped",
+            hasserName: "isEquiped"
         })
 
         this.addVariable({
@@ -98,6 +99,10 @@ export default class Item extends GameObject.uses(
         }
 
         this.setEquiped(this.getSlots()[slot], queue)
+        console.log(this.getSlots()[slot])
+        console.log(this.getEquiped())
+        console.log(this.isEquiped())
+
         this.getPlayer().equipItem(this, this.getSlots()[slot], queue)
 
         this.callEquipCallback()
@@ -128,10 +133,6 @@ export default class Item extends GameObject.uses(
         return this.getSlots(flip).length > 0
     }
 
-    isEquiped(flip) {
-        return this.getEquiped(flip) !== undefined
-    }
-
     draw() {
         Draw.circle({
             position: this.getPosition(),
@@ -142,9 +143,6 @@ export default class Item extends GameObject.uses(
     }
 
     affect(effect) {
-        console.log(this)
-        console.log(this.getPlayer() !== undefined)
-        console.log(this.hasPlayer())
         if (effect.shouldPickup()) {
             this.pickup(effect.getSourcePlayer())
         }

@@ -289,8 +289,6 @@ export default class Game extends React.Component {
     render() {
         return (
             <div className="Game"
-                onMouseMove={(e) => {this.onMouseMoved(e)}}
-                onClick={(e) => {this.onMouseDown(e)}}
             >
                 <canvas
                     ref="canvas"
@@ -298,6 +296,8 @@ export default class Game extends React.Component {
 
                     onContextMenu={(e) => {this.contextMenu(e)}}
                     onKeyPress={(e) => {this.onKeyDown(e)}}
+                    onMouseMove={(e) => {this.onMouseMoved(e)}}
+                    onClick={(e) => {this.onMouseDown(e)}}
                 />
 
                 <PlayerController players={this.state.players} />
