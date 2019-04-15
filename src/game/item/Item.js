@@ -13,6 +13,11 @@ export default class Item extends GameObject.uses(
         })
 
         this.addVariable({
+            name: "description",
+            default: ""
+        })
+
+        this.addVariable({
             name: "player"
         })
 
@@ -78,8 +83,9 @@ export default class Item extends GameObject.uses(
             console.error("attempted to drop an item thats still equiped!")
         }
 
-        this.setPlayer(undefined, queue)
         this.getPlayer().removeItem(this, queue)
+        this.getPlayer().getNode().setItem(this)
+        this.setPlayer(undefined, queue)
 
         console.debug(this.getPlayer() + " droped " + this)
     }
@@ -99,9 +105,6 @@ export default class Item extends GameObject.uses(
         }
 
         this.setEquiped(this.getSlots()[slot], queue)
-        console.log(this.getSlots()[slot])
-        console.log(this.getEquiped())
-        console.log(this.isEquiped())
 
         this.getPlayer().equipItem(this, this.getSlots()[slot], queue)
 

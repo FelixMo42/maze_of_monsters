@@ -96,6 +96,7 @@ export default class Game extends React.Component {
 
         var sword = {
             name: "Dimensional Blade",
+            description: "A black blade with ancient eldrich runes inscribed on the blade. It was forged by Consilius during the bearth of hell.",
             type: "sword",
             slot: {
                 hand: 1
@@ -104,6 +105,7 @@ export default class Game extends React.Component {
 
         var gun = {
             name: "Eden's Revolver",
+            description: "A good old six shooter past down the Eden famility that has been enchanted over the years by Black.",
             type: "gun",
             range: 10,
             slot: {
@@ -160,7 +162,8 @@ export default class Game extends React.Component {
         }
 
         var item = {
-            name: "note"
+            name: "note",
+            description: "A small paper note with 'blank' writen on it."
         }
 
         // set up world

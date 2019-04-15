@@ -6,7 +6,9 @@ export default class extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {}
+        this.state = {
+            viewMode: "items"
+        }
 
         for (var player of props.players) {
             player.registerStartTurnCallback(
@@ -100,17 +102,17 @@ export default class extends React.Component {
                 <div>
                     <input type="button" value="items" onClick={() => {
                         this.setState({
-                            viewMove: "items"
+                            viewMode: "items"
                         })
                     }}/>
                     <input type="button" value="actions" onClick={() => {
                         this.setState({
-                            viewMove: "actions"
+                            viewMode: "actions"
                         })
                     }}/>
                     <input type="button" value="stats" onClick={() => {
                         this.setState({
-                            viewMove: "stats"
+                            viewMode: "stats"
                         })
                     }}/>
                     <input type="button" value="X" onClick={() => {
@@ -119,9 +121,9 @@ export default class extends React.Component {
                         })
                     }}/>
                 </div>
-                { this.state.viewMove === "items" ? this.renderItemsView()  : "" }
-                { this.state.viewMove === "actions" ? "N/A"  : "" }
-                { this.state.viewMove === "stats" ? "N/A"  : "" }
+                { this.state.viewMode === "items" ? this.renderItemsView()  : "" }
+                { this.state.viewMode === "actions" ? "N/A"  : "" }
+                { this.state.viewMode === "stats" ? "N/A"  : "" }
             </div>
         )
     }
@@ -130,29 +132,54 @@ export default class extends React.Component {
         return (
             <div>
                 <ul>
-                    {
-                        this.state.viewed.getItems().map((item) => {
-                            return (
-                                <li key={item.getKey()}>
-                                    {item.getName()}{" - "}
-                                    { item.isEquipable(true) ? (
-                                        (item.isEquiped(true) ? 
-                                            <input type="button" value="U" onClick={()=>{
+                    { this.state.viewed.getItems().map((item) => {
+                        return (
+                            <li key={item.getKey()}>
+                                <span onClick={()=>{
+                                    this.setState({item: item})
+                                }}> { item.getName() } </span> { " - " }
+                                { item.isEquipable(true) ? (
+                                    item.isEquiped(true) ? 
+                                        <input
+                                            style={{backgroundColor: "blue"}}
+                                            type="button"
+                                            value="U"
+                                            onClick={()=>{
                                                 item.unequip()
-                                            }}/>
-                                        :
-                                            <input type="button" value="E" onClick={()=>{
+                                            }}
+                                        />
+                                    :
+                                        <input
+                                            type="button"
+                                            value="E"
+                                            onClick={()=>{
                                                 item.equip()
-                                            }}/>)
-                                    ) : ""}
-                                    <input type="button" value="D" onClick={()=>{
-                                        item.drop()
-                                    }}/>
-                                </li>
-                            )
-                        })
-                    }
+                                            }}
+                                        />
+                                ) : ""}
+                                <input type="button" value="D" onClick={()=>{
+                                    item.drop()
+                                }}/>
+                            </li>
+                        )
+                    }) }
                 </ul>
+                <hr/>
+                { this.state.item ?
+                    <div style={{
+                        padding: "5px"
+                    }}>
+                        <div style={{
+                            textAlign: "center"
+                        }}>
+                            {this.state.item.getName(true)}
+                        </div>
+
+                        <br />
+
+                        description: {this.state.item.getDescription()}
+                    </div>
+                : ""}
             </div>
         )
     }
@@ -251,69 +278,3 @@ export default class extends React.Component {
         this.setState({action: action})
     }
 }
-
-/*
-    playerUi() {
-        return (
-            <div>
-                <div>
-                    <div>
-                        actions: 
-                        {
-                            this.state.player.getActions().map(action =>
-                                <input
-                                    type="button"
-                                    style={
-                                        action === this.state.action ? {
-                                            backgroundColor: "blue"
-                                        } : {}
-                                    }
-                                    key={action.getKey(true)}
-                                    value={action.getName(true)}
-                                    onClick={() => {this.selectAction(action)}}
-                                />
-                            )
-                        }
-                        <input type="button" value="End Turn" onClick={() => {
-                            this.state.player.endTurn()
-                        }}/>
-                    </div>
-                    <div>
-                        items: 
-                        {
-                            this.state.player.getItems().map(item =>
-                                <input
-                                    type="button"
-                                    key={item.getKey(true)}
-                                    value={item.getName(true)}
-                                    style={
-                                        item.isEquiped(true) ? {
-                                            backgroundColor: "blue"
-                                        } : {}
-                                    }
-                                    onClick={item.isEquiped(true) ? () => {
-                                        item.unequip()
-                                    } : () => {
-                                        item.equip()
-                                    }}
-                                />
-                            )
-                        }
-                    </div>
-                    <div>
-                        moves: 
-                        {
-                            Object.keys(this.state.player.getMoves(true)).map(move =>
-                                <input
-                                    key={move}
-                                    type="button"
-                                    value={move + " : " + this.state.player.getMove(move, true)}
-                                />
-                            )
-                        }
-                    </div>
-                </div>
-            </div>
-        )
-    }
-}*/
