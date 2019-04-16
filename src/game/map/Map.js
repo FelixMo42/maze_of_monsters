@@ -3,6 +3,7 @@ import Vec2 from "../util/Vec2";
 import Game from "../Game";
 import Node from "./Node";
 import Item from "../item/Item";
+import Structure from "../structure/Structure";
 
 export default class Map extends GameObject {
     players = []
@@ -82,6 +83,9 @@ export default class Map extends GameObject {
         })
 
         Vec2.forEach(start, end, (position) => {
+            if (this.hasStructure(position)) {
+                this.getStructure(position).draw()
+            }
             if (this.hasItem(position)) {
                 this.getItem(position).draw()
             }
@@ -203,5 +207,29 @@ export default class Map extends GameObject {
 
     addItem(item, position, queue) {
         this.setItem(new Item(item), position, queue)
+    }
+
+    /// structor getters/setters ///
+
+    hasStructure(position) {
+        return this.getStructure(position) !== undefined
+    }
+
+    getStructure(position) {
+        return this.getNode(position).getStructure()
+    }
+
+    setStructure(structure, position, queue) {
+        if (this.hasStructure(position)) {
+            throw new Error("allready a structor at position " + position)
+        }
+
+        this.getNode(position).setStructure(structure, queue)
+
+        return structure
+    }
+
+    addStructure(structure, position, queue) {
+        this.setStructure(new Structure(structure), position, queue)
     }
 }

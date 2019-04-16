@@ -146,8 +146,8 @@ export default class Node extends GameObject {
     /**
      * 
      */
-    hasStructure() {
-        return this.data.structure !== undefined
+    hasStructure(flip) {
+        return this.getStructure(flip) !== undefined
     }
 
     /**
@@ -232,8 +232,14 @@ export default class Node extends GameObject {
      * @param {boolean} flip 
      */
     isWalkable(flip) {
-        if (this.getPlayer(flip)) {
+        if (this.hasPlayer(flip)) {
             return false
+        }
+
+        if (this.hasStructure(flip)) {
+            if (!this.getStructure(flip).isWalkable(flip)) {
+                return false
+            }
         }
 
         return true

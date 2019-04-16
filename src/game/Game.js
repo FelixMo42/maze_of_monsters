@@ -166,12 +166,20 @@ export default class Game extends React.Component {
             description: "A small paper note with 'blank' writen on it."
         }
 
+        var wall = {
+            name: "wall",
+            walkable: false
+        }
+
         // set up world
 
         var world = state.world = new Map({
             width: 10,
             height: 11
         })
+
+        world.addStructure(wall, new Vec2(5,5))
+
         /*var players = */state.players = [
             world.setPlayer(
                 new Player({
