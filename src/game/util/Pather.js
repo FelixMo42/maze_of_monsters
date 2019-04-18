@@ -22,11 +22,15 @@ class Pather {
 
     open(position, previous) {
         this.opened[this.getId(position)] = {
+            //data: this.map.getNode(position),
+
             position: position,
             previous: previous,
 
-            s: previous ? previous.s + 1 : 0,
-            t: position.distanceFrom(previous.position)
+            cost: previous ? previous.cost + 1 : 0,
+            dist: position.distanceFrom(previous.position),
+
+            value: cost + dist
         }
     }
 
@@ -37,20 +41,20 @@ class Pather {
     }
 
     isOpen(node) {
-        return this.opened[this.getId(node)]
+        return this.opened[this.getId(node)] !== undefined
     }
 
     isClosed(node) {
-        return this.closed[this.getId(node)]
+        return this.closed[this.getId(node)] !== undefined
     }
 
     path(start, end) {
         open(start)
 
         while (true) {
-            var current = false
+            let current = false
 
-            for (var node of this.opened) {
+            for (let node of this.opened) {
                 if (!current || current.value > node.value) {
                     current = node
                 }
@@ -66,5 +70,32 @@ class Pather {
                 break
             }
         }
+
+        let endId = this.getId(end)
+        return this.processes(this.opened[endId] || this.closed[endId])
+    }
+
+    processes(end) {
+        var nodes = []
+        var node = end
+
+        while ("previous" in node) {
+            node = node.previous
+            nodes.push(node)
+        }
+
+        return nodes
+    }
+
+    addNeighbours(node) {
+        node.data.getNeighbours().forEach(data => {
+            var position = data.getPosition()
+            if (!isOpen(position) && !isClosed(position)) {
+                open(position, node)
+                if (!data.isWalkable()) {
+                    close(position)
+                }
+            }
+        });
     }
 }

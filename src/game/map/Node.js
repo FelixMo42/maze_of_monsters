@@ -1,5 +1,6 @@
 import GameObject from "../object/GameObject";
 import Tile from "../tile/Tile";
+import Vec2 from "../util/Vec2";
 
 export default class Node extends GameObject {
     constructor(config={}) {
@@ -243,5 +244,28 @@ export default class Node extends GameObject {
         }
 
         return true
+    }
+
+    /// ///
+
+    getNeighbours(flip) {
+        let neighbours = []
+        for (let x = -1; x < 1; x++) {
+            for (let y = -1; y < 1; y++) {
+                if (x === 0 && y === 0) {
+                    continue
+                }
+
+                neighbours.push(
+                    this.getMap().getNode(
+                        new Vec2(
+                            this.getX() + x,
+                            this.getY() + y
+                        )
+                    )
+                )
+            }
+        }
+        return neighbours
     }
 }
