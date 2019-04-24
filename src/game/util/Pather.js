@@ -1,6 +1,4 @@
-import { threadId } from "worker_threads";
-
-class Pather {
+export default class Pather {
     constructor(map) {
         this.reset()
 
@@ -21,14 +19,17 @@ class Pather {
     }
 
     open(position, previous) {
+        var cost = previous ? previous.cost + 1 : 0
+        var dist = position.distanceFrom(previous.position)
+
         this.opened[this.getId(position)] = {
             //data: this.map.getNode(position),
 
             position: position,
             previous: previous,
 
-            cost: previous ? previous.cost + 1 : 0,
-            dist: position.distanceFrom(previous.position),
+            cost: cost,
+            dist: dist,
 
             value: cost + dist
         }
@@ -49,7 +50,7 @@ class Pather {
     }
 
     path(start, end) {
-        open(start)
+        this.open(start)
 
         while (true) {
             let current = false
@@ -62,11 +63,11 @@ class Pather {
 
             if (!current) { break }
 
-            close(current)
+            this.close(current)
 
             this.addNeighbours(current)
 
-            if (isOpen(end) || isClosed(current)) {
+            if (this.isOpen(end) || this.isClosed(current)) {
                 break
             }
         }
@@ -90,10 +91,10 @@ class Pather {
     addNeighbours(node) {
         node.data.getNeighbours().forEach(data => {
             var position = data.getPosition()
-            if (!isOpen(position) && !isClosed(position)) {
-                open(position, node)
+            if (!this.isOpen(position) && !this.isClosed(position)) {
+                this.open(position, node)
                 if (!data.isWalkable()) {
-                    close(position)
+                    this.close(position)
                 }
             }
         });

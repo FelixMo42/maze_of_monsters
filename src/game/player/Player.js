@@ -6,6 +6,7 @@ import Action from "../action/Action";
 import HealthComponent from "../object/HealthComponent";
 import Item from "../item/Item";
 import Slot from "./Slot";
+import Pather from "../util/Pather";
 
 export default class Player extends GameObject.uses(
     HealthComponent, NodeComponent
