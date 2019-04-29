@@ -87,4 +87,11 @@ export default class Vec2 {
             Math.sign(this.getY())
         )
     }
+
+    clone() {
+        return new Vec2(
+            this.x,
+            this.y
+        )
+    }
 }

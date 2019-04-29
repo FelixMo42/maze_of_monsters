@@ -8,6 +8,7 @@ import Player from "./player/Player";
 import "./Game.css"
 import { RandomValue } from "./util/Value";
 import ActionRef from "./action/ActionRef";
+import Pather from "./util/Pather";
 
 let instance = undefined
 
@@ -229,6 +230,9 @@ export default class Game extends React.Component {
             item,
             new Vec2(1, 4)
         )
+
+        let pather = new Pather(world)
+        console.log(pather.path(new Vec2(0,0), new Vec2(9,9)))
 
         return state
     }

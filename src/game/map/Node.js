@@ -250,22 +250,21 @@ export default class Node extends GameObject {
 
     getNeighbours(flip) {
         let neighbours = []
-        for (let x = -1; x < 1; x++) {
-            for (let y = -1; y < 1; y++) {
-                if (x === 0 && y === 0) {
+        for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+                let position = new Vec2(
+                    this.getX() + x,
+                    this.getY() + y
+                )
+
+                if ((x === 0 && y === 0) || !this.getMap().inBounds(position)) {
                     continue
                 }
 
-                neighbours.push(
-                    this.getMap().getNode(
-                        new Vec2(
-                            this.getX() + x,
-                            this.getY() + y
-                        )
-                    )
-                )
+                neighbours.push(this.getMap().getNode(position))
             }
         }
+       
         return neighbours
     }
 }
