@@ -117,7 +117,7 @@ export default class Map extends GameObject {
             return false
         }
 
-        if (position.x > this.getWidth(flip) || position.y > this.getHeight(flip)) {
+        if (position.x >= this.getWidth(flip) || position.y >= this.getHeight(flip)) {
             return false
         }
 

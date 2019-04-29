@@ -241,13 +241,10 @@ export default class Player extends GameObject.uses(
 
         var whatToDo = "fight"
 
-        //console.log(whatToDo, enemies[0])
-
         if (whatToDo === "stay") {
         }
 
         if (whatToDo === "fight") {
-            var sucses;
             var target = enemies[0]
         
             if (target === undefined) {
@@ -255,10 +252,10 @@ export default class Player extends GameObject.uses(
             }
 
             // move to target
-            while (true) {
-                sucses = this.getAction("Move").use(
-                    this.getPosition().add(target.getPosition().subtract(this.getPosition()).sign())
-                )
+            let pather = new Pather(this.getMap())
+            let path = pather.path(this.getPosition(), target.getPosition())
+            while (path.length > 0) {
+                let sucses = this.getAction("Move").use(path.shift())
                 if (!sucses) {
                     break
                 }
@@ -266,7 +263,7 @@ export default class Player extends GameObject.uses(
 
             // attack target
             while (true) {
-                sucses = this.getAction("Punch").use(
+                let sucses = this.getAction("Punch").use(
                     target.getPosition()
                 )
                 if (!sucses || target.isDead()) {

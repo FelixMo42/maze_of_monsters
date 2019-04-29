@@ -88,52 +88,15 @@ export default class Pather {
     neighbours(point) {
         var neighbours = []
         for (let neighbour of this.map.getNode(point.position).getNeighbours()) {
-            if (!neighbour.isWalkable()) {
-                continue
-            }
-            neighbours.push(this.grid.get(neighbour.getPosition()))
+            let neighbourPoint = this.grid.get(neighbour.getPosition())
+            neighbourPoint.walkable = neighbour.isWalkable()
+            neighbours.push(neighbourPoint)
         }
         return neighbours
     }
 
-    path(start , end) {
-        var grid = this.grid = new Grid(start, end)
-        var heap = this.heap = new Heap()
-
-        //var i = 100
-
-        heap.put(grid.start)
-
-        while (heap.size) {
-            var current = heap.get()
-        
-            if (current === grid.target) {
-                break
-            }
-
-            for (var neighbour of this.neighbours(current)) {
-                //if (!neighbor.walkable) {
-                //    continue
-                //}
-
-                if (neighbour.open || neighbour.closed) {
-                    continue
-                }
-
-                grid.set(neighbour, current)
-                heap.put(neighbour)
-            }        
-
-            /*i -= 1
-            console.log(i, current.position, current)
-            if (i === 0) {
-                return
-            }*/
-        }
-
+    follow(point) {
         var path = []
-
-        var point = this.grid.target
 
         while ("previous" in point) {
             path.unshift(point.position)
@@ -141,5 +104,36 @@ export default class Pather {
         }
 
         return path
+    }
+
+    path(start , end) {
+        var grid = this.grid = new Grid(start, end)
+        var heap = this.heap = new Heap()
+
+        heap.put(grid.start)
+
+        while (heap.size) {
+            var current = heap.get()
+        
+            if (current === grid.target) {
+                return this.follow(this.grid.target)
+            }
+
+            for (var neighbour of this.neighbours(current)) {
+                if (!neighbour.walkable) {
+                    if (neighbour === grid.target) {
+                        return this.follow(current)
+                    }
+                    continue
+                }
+
+                if (neighbour.open || neighbour.closed) {
+                    continue
+                }
+
+                grid.set(neighbour, current)
+                heap.put(neighbour)
+            }
+        }
     }
 }
