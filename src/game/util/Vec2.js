@@ -58,6 +58,10 @@ export default class Vec2 {
 
     /// ///
 
+    equals(a) {
+        return this.getX() === a.getX() && this.getY() === a.getY()
+    }
+
     distanceFrom(postion) {
         return Math.sqrt(
             (this.getX() - postion.getX()) ** 2 +

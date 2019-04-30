@@ -15,6 +15,7 @@ export default class {
      */
     static rectangle(opts) {
         var ctx = this.getContext(opts.layer)
+        ctx.save()
     
         var x = opts.position.getX()
         var y = opts.position.getY()
@@ -38,6 +39,8 @@ export default class {
                 (opts.height || 1) * this.getScale()
             )
         }
+
+        ctx.restore()
     }
 
     /**
@@ -46,6 +49,7 @@ export default class {
      */
     static circle(opts) {
         var ctx = this.getContext(opts.layer)
+        ctx.save()
 
         var x = opts.position.getX()
         var y = opts.position.getY()
@@ -72,7 +76,38 @@ export default class {
             ctx.stroke()
         }
 
-        ctx.closePath();
+        ctx.closePath()
+        ctx.restore()
+    }
+
+    static toGlobal(num) {
+        return (num + .5) * this.getScale()
+    }
+
+    static line(opts) {
+        var ctx = this.getContext(opts.layer)
+        ctx.save()
+
+        ctx.beginPath()
+
+        ctx.moveTo(
+            this.toGlobal(opts.points[0].getX()),
+            this.toGlobal(opts.points[0].getY())
+        )
+
+        for (let i = 1; i < opts.points.length; i++) {
+            ctx.lineTo(
+                this.toGlobal(opts.points[i].getX()),
+                this.toGlobal(opts.points[i].getY())
+            )
+        }
+
+        ctx.lineWidth = opts.lineWidth || 5;
+
+        ctx.stroke()
+
+        ctx.closePath()
+        ctx.restore()
     }
 
     /**

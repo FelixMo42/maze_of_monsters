@@ -107,6 +107,10 @@ export default class Pather {
     }
 
     path(start , end) {
+        if (start.equals(end)) {
+            return []
+        }
+        
         var grid = this.grid = new Grid(start, end)
         var heap = this.heap = new Heap()
 

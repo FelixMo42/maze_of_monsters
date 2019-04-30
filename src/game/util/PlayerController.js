@@ -1,6 +1,7 @@
 import React from "react"
 import Game from "../Game";
 import Draw from "./Draw";
+import Pather from "./Pather";
 
 export default class extends React.Component {
     constructor(props) {
@@ -36,6 +37,9 @@ export default class extends React.Component {
         })
 
         if (this.state.action && this.state.player) {
+            if (this.state.action.getName(true) === "Move") {
+                return this.drawMoveActionOverlay()
+            }
             Draw.circle({
                 position: this.state.player.getPosition(),
                 radius: this.state.action.getRange(),
@@ -44,9 +48,34 @@ export default class extends React.Component {
         }
     }
 
+    drawMoveActionOverlay() {
+        if (this.mousePos !== Draw.getMousePos()) {
+            this.mousePos = Draw.getMousePos()
+            var pather = new Pather(this.state.player.getMap())
+            this.path = pather.path(this.state.player.getPosition(), this.mousePos)
+        }
+
+        Draw.line({
+            outline: "black",
+            points: [
+                this.state.player.getPosition(),
+                ...this.path
+            ],
+        })
+    }
+
     activateAction() {
         if (this.state.action) {
-            this.state.action.use(Draw.getMousePos())
+            if (this.state.action.getName() === "Move") {
+                while (this.path.length > 0) {
+                    let sucses = this.state.action.use(this.path.shift())
+                    if (!sucses) {
+                        break
+                    }
+                }
+            } else {
+                this.state.action.use(Draw.getMousePos())
+            }
         }
     }
 
