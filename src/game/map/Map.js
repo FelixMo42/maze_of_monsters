@@ -112,7 +112,7 @@ export default class Map extends GameObject {
         return this.getNodes(flip)[position.x][position.y]
     }
 
-    inBounds(position, flip) {
+    isInBounds(position, flip) {
         if (position.x < 0 || position.y < 0) {
             return false
         }

@@ -110,7 +110,7 @@ export default class Pather {
         if (start.equals(end)) {
             return []
         }
-        
+
         var grid = this.grid = new Grid(start, end)
         var heap = this.heap = new Heap()
 

@@ -49,7 +49,10 @@ export default class extends React.Component {
     }
 
     drawMoveActionOverlay() {
-        if (this.mousePos !== Draw.getMousePos()) {
+        if (
+            this.mousePos !== Draw.getMousePos() &&
+            this.state.player.getMap().isInBounds(Draw.getMousePos())
+        ) {
             this.mousePos = Draw.getMousePos()
             var pather = new Pather(this.state.player.getMap())
             this.path = pather.path(this.state.player.getPosition(), this.mousePos)

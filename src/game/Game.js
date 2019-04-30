@@ -299,8 +299,7 @@ export default class Game extends React.Component {
 
     render() {
         return (
-            <div className="Game"
-            >
+            <div className="Game">
                 <canvas
                     ref="canvas"
                     className="layer"

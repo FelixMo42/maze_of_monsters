@@ -257,7 +257,7 @@ export default class Node extends GameObject {
                     this.getY() + y
                 )
 
-                if ((x === 0 && y === 0) || !this.getMap().inBounds(position)) {
+                if ((x === 0 && y === 0) || !this.getMap().isInBounds(position)) {
                     continue
                 }
 
