@@ -313,6 +313,8 @@ export default class Player extends GameObject.uses(
     }
 
     equipItem(item, slots, queue) {
+        this.removeItem(item, queue)
+
         for (let slot in slots) {
             this.getSlot(slot).addItem(item, slots[slot], queue)
         }
@@ -330,6 +332,7 @@ export default class Player extends GameObject.uses(
                 let callback = () => {
                     this.removeAction(action)
                     item.deregisterUnequipCallback(callback)
+                    this.storeItem(item, queue)
                 }
                 item.registerUnequipCallback(callback)
             }

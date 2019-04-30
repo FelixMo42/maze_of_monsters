@@ -123,7 +123,7 @@ export default class Item extends GameObject.uses(
             return
         }
 
-        this.getPlayer().unequipItem(this.getEquiped(), queue)
+        this.getPlayer().unequipItem(this, this.getEquiped(), queue)
 
         this.setEquiped(undefined, queue)
 

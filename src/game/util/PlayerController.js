@@ -165,38 +165,22 @@ export default class extends React.Component {
             <div>
                 <ul>
                     { this.state.viewed.getItems().map((item) => {
-                        return (
-                            <li key={item.getKey()}>
-                                <span onClick={()=>{
-                                    this.setState({item: item})
-                                }}> { item.getName() } </span> { " - " }
-                                { item.isEquipable(true) ? (
-                                    item.isEquiped(true) ? 
-                                        <input
-                                            style={{backgroundColor: "blue"}}
-                                            type="button"
-                                            value="U"
-                                            onClick={()=>{
-                                                item.unequip()
-                                            }}
-                                        />
-                                    :
-                                        <input
-                                            type="button"
-                                            value="E"
-                                            onClick={()=>{
-                                                item.equip()
-                                            }}
-                                        />
-                                ) : ""}
-                                <input type="button" value="D" onClick={()=>{
-                                    item.drop()
-                                }}/>
-                            </li>
-                        )
+                        return this.renderItem(item)
                     }) }
                 </ul>
+
+                {
+                    Object.values(this.state.viewed.getSlots()).map((slot) => 
+                        <ul key={slot.getKey()}>
+                            { slot.getItems().map((item) => {
+                                return this.renderItem(item)
+                            }) }
+                        </ul>
+                    )
+                }
+
                 <hr/>
+                
                 { this.state.item ?
                     <div style={{
                         padding: "5px"
@@ -213,6 +197,38 @@ export default class extends React.Component {
                     </div>
                 : ""}
             </div>
+        )
+    }
+
+    renderItem(item) {
+        return (
+            <li key={item.getKey()}>
+                <span onClick={()=>{
+                    this.setState({item: item})
+                }}> { item.getName() } </span> { " - " }
+                { item.isEquipable(true) ? (
+                    item.isEquiped(true) ? 
+                        <input
+                            style={{backgroundColor: "blue"}}
+                            type="button"
+                            value="U"
+                            onClick={()=>{
+                                item.unequip()
+                            }}
+                        />
+                    :
+                        <input
+                            type="button"
+                            value="E"
+                            onClick={()=>{
+                                item.equip()
+                            }}
+                        />
+                ) : ""}
+                <input type="button" value="D" onClick={()=>{
+                    item.drop()
+                }}/>
+            </li>
         )
     }
 

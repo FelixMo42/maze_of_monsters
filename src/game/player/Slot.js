@@ -56,7 +56,9 @@ export default class Slot extends GameObject {
      * @param {Item} item 
      * @param {*} queue 
      */
-    removeItem(item, queue) {
-        //TODO: remove multiple times
+    removeItem(item, size, queue) {
+        for (var i = 0; i < size; i++) {
+            this.removeArrayItem("items", item, queue)
+        }
     }
 }

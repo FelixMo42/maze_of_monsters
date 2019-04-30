@@ -178,7 +178,9 @@ export default class Game extends React.Component {
             height: 11
         })
 
-        world.addStructure(wall, new Vec2(5,5))
+        world.addStructure(wall, new Vec2(3,4))
+        world.addStructure(wall, new Vec2(3,5))
+        world.addStructure(wall, new Vec2(3,6))
 
         /*var players = */state.players = [
             world.setPlayer(

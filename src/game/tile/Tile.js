@@ -1,6 +1,6 @@
 import GameObject from "../object/GameObject"
-import NodeComponent from "../object/NodeComponent";
-import Draw from "../util/Draw";
+import NodeComponent from "../object/NodeComponent"
+import Draw from "../util/Draw"
 
 export default class Tile extends GameObject.uses(NodeComponent) {
     constructor(config={}) {
