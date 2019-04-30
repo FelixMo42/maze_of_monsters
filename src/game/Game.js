@@ -195,9 +195,12 @@ export default class Game extends React.Component {
                         slice,
                         shoot
                     ],
-                    items: [
+                    equiped: [
                         sword,
                         gun
+                    ],
+                    items: [
+                        
                     ],
                     maxMoves: {
                         main: 7

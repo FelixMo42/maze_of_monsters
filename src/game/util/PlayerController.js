@@ -163,6 +163,7 @@ export default class extends React.Component {
     renderItemsView() {
         return (
             <div>
+                <h3 style={{marginLeft: "100px"}}>Inventory</h3>
                 <ul>
                     { this.state.viewed.getItems().map((item) => {
                         return this.renderItem(item)
@@ -171,11 +172,14 @@ export default class extends React.Component {
 
                 {
                     Object.values(this.state.viewed.getSlots()).map((slot) => 
-                        <ul key={slot.getKey()}>
-                            { slot.getItems().map((item) => {
-                                return this.renderItem(item)
-                            }) }
-                        </ul>
+                        <div key={slot.getKey()}>
+                            <h3 style={{marginLeft: "100px"}}>{slot.getName()}</h3>
+                            <ul>
+                                { slot.getItems().map((item) => {
+                                    return this.renderItem(item)
+                                }) }
+                            </ul>
+                        </div>
                     )
                 }
 

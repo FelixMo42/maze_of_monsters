@@ -137,7 +137,7 @@ export default class Player extends GameObject.uses(
                 return slots
             }
         })
-
+    
         this.addCallback({
             name: "startTurnCallback"
         });
@@ -145,6 +145,12 @@ export default class Player extends GameObject.uses(
         this.addCallback({
             name: "endTurnCallback"
         });
+
+        for (var itemState of config.equiped || []) {
+            var item = new Item(itemState)
+            item.pickup(this)
+            item.equip()
+        }
 
         // register callbacks
 
