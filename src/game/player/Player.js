@@ -52,7 +52,7 @@ export default class Player extends GameObject.uses(
             setter: false,
             init: (state) => {
                 return {
-                    "main": 10,
+                    "main": 5,
                     ...state
                 }
             }

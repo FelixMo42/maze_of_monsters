@@ -1,6 +1,8 @@
 import Game from "../Game";
 
 export default class {
+    /// getters ///
+
     static getContext(layer) {
         return Game.getInstance().context
     }
@@ -8,6 +10,19 @@ export default class {
     static getScale(layer) {
         return Game.getInstance().scale
     }
+
+    /**
+     * 
+     */
+    static getMousePos() {
+        return Game.getInstance().mousePos
+    }
+
+    static toGlobal(num) {
+        return (num + .5) * this.getScale()
+    }
+
+    /// drawing functions ///
 
     /**
      * 
@@ -80,10 +95,6 @@ export default class {
         ctx.restore()
     }
 
-    static toGlobal(num) {
-        return (num + .5) * this.getScale()
-    }
-
     static line(opts) {
         var ctx = this.getContext(opts.layer)
         ctx.save()
@@ -110,10 +121,21 @@ export default class {
         ctx.restore()
     }
 
-    /**
-     * 
-     */
-    static getMousePos() {
-        return Game.getInstance().mousePos
+    static text(opts) {
+        var ctx = this.getContext(opts.layer)
+        ctx.save()
+
+        ctx.fillStyle = opts.fill || "black"
+        ctx.textAlign = opts.align || "center"
+
+        ctx.font = "20px Comic Sans MS"
+
+        ctx.fillText(
+            opts.text,
+            this.toGlobal(opts.position.getX()),
+            this.toGlobal(opts.position.getY())
+        )
+
+        ctx.restore()
     }
 }

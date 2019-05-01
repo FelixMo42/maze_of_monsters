@@ -1,3 +1,5 @@
+import Draw from "../util/Draw"
+
 export default class HealthComponent {
     initializer() {
         this.addVariable({
@@ -32,8 +34,26 @@ export default class HealthComponent {
     }
 
     updateHP(hp, queue) {
+        let pos = this.getPosition().clone()
+        let timer = 2
+        this.getMap().addOveraly((dt) => {
+            timer -= dt
+        
+            pos.y -= dt / 2
+
+            Draw.text({
+                fill: "red",
+                position: pos,
+                text: hp
+            })
+
+            return timer < 0
+        })
+
         this.setHP(this.getHP() + hp, queue)
+        
         console.debug(this.getName() + " is at " + this.getHP() + "/" + this.getMaxHP() + " hp")
+
         if (this.getHP() <= 0) {
             if ("die" in this) {
                 this.setAlive(false, queue)

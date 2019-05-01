@@ -7,6 +7,7 @@ import Structure from "../structure/Structure";
 
 export default class Map extends GameObject {
     players = []
+    overlays = []
 
     constructor(config={}) {
         super(config)
@@ -68,13 +69,23 @@ export default class Map extends GameObject {
             this.data.turn++
         }
 
-        this.draw()
+        this.draw(dt)
     }
 
     /**
      * 
      */
-    draw() {
+    nextTurn() {
+        console.log(this)
+        this.player = undefined
+    }
+
+    /// Graphics ///
+
+    /**
+     * 
+     */
+    draw(dt) {
         var start = new Vec2(0,0)
         var end = new Vec2(this.getWidth() - 1, this.getHeight() - 1)
 
@@ -93,13 +104,22 @@ export default class Map extends GameObject {
                 this.getPlayer(position, true).draw()
             }
         })
+
+        for (var overlay of this.overlays) {
+            var over = overlay(dt)
+            if (over === true) {
+                this.removeOverlay(overlay)
+            }
+        }
     }
 
-    /**
-     * 
-     */
-    nextTurn() {
-        this.player = undefined
+    addOveraly(overlay) {
+        this.overlays.push(overlay)
+    }
+
+    removeOverlay(overlay) {
+        var index = this.overlays.indexOf(overlay)
+        this.overlays.splice(index, 1)
     }
 
     /// Node Getters ///
