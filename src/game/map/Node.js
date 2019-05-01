@@ -136,7 +136,7 @@ export default class Node extends GameObject {
      */
     removePlayer(queue) {
         if (this.hasPlayer()) {
-            this.getPlayer().removeNode()
+            this.getPlayer().removeNode(queue)
             this.setData({player: undefined})
             this.setState({player: undefined}, queue)
         }

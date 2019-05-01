@@ -79,18 +79,18 @@ export default class Map extends GameObject {
         var end = new Vec2(this.getWidth() - 1, this.getHeight() - 1)
 
         Vec2.forEach(start, end, (position) => {
-            this.getTile(position).draw()
+            this.getTile(position, true).draw()
         })
 
         Vec2.forEach(start, end, (position) => {
-            if (this.hasStructure(position)) {
-                this.getStructure(position).draw()
+            if (this.hasStructure(position, true)) {
+                this.getStructure(position, true).draw()
             }
-            if (this.hasItem(position)) {
-                this.getItem(position).draw()
+            if (this.hasItem(position, true)) {
+                this.getItem(position, true).draw()
             }
-            if (this.hasPlayer(position)) {
-                this.getPlayer(position).draw()
+            if (this.hasPlayer(position, true)) {
+                this.getPlayer(position, true).draw()
             }
         })
     }
@@ -148,8 +148,8 @@ export default class Map extends GameObject {
      * 
      * @param {Vec2} position 
      */
-    hasPlayer(position) {
-        return this.getPlayer(position) !== undefined
+    hasPlayer(position, flip) {
+        return this.getPlayer(position, flip) !== undefined
     }
 
     /**
@@ -199,12 +199,12 @@ export default class Map extends GameObject {
 
     /// item getters/setters ///
 
-    hasItem(position) {
-        return this.getItem(position) !== undefined
+    hasItem(position, flip) {
+        return this.getItem(position, flip) !== undefined
     }
 
-    getItem(position) {
-        return this.getNode(position).getItem()
+    getItem(position, flip) {
+        return this.getNode(position, flip).getItem(flip)
     }
 
     setItem(item, position, queue) {
@@ -223,12 +223,12 @@ export default class Map extends GameObject {
 
     /// structor getters/setters ///
 
-    hasStructure(position) {
-        return this.getStructure(position) !== undefined
+    hasStructure(position, flip) {
+        return this.getStructure(position, flip) !== undefined
     }
 
-    getStructure(position) {
-        return this.getNode(position).getStructure()
+    getStructure(position, flip) {
+        return this.getNode(position, flip).getStructure(flip)
     }
 
     setStructure(structure, position, queue) {

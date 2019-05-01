@@ -85,10 +85,12 @@ export default class GameObject {
     setState(update, queue) {
         if (queue) {
             queue.push(() => {
+                //console.log("queue call", this, update)
                 this.setState(update)
                 return true
             })
         } else {
+            //console.log(this, update)
             for (var key in update) {
                 this.state[key] = update[key]
             }

@@ -185,6 +185,15 @@ export default class Player extends GameObject.uses(
         var map = this.getMap()
         this.getNode().removePlayer(queue)
         map.getNode(position).setPlayer(this, queue)
+
+        if (queue) {
+            let timer = 1
+            queue.push((dt) => {
+                //console.log(timer)
+                timer -= dt
+                return timer < 0
+            })
+        }
     }
 
     die(queue) {
@@ -437,7 +446,7 @@ export default class Player extends GameObject.uses(
                 return
             }
 
-            if (this.stack[0]() === false) {
+            if (this.stack[0](dt) === false) {
                 return
             } else {
                 this.stack.shift()
@@ -452,8 +461,8 @@ export default class Player extends GameObject.uses(
      */
     draw() {
         Draw.circle({
-            position: this.getPosition(),
-            fill: this.getColor(),
+            position: this.getPosition(true),
+            fill: this.getColor(true),
             outline: "black"
         })
     }
