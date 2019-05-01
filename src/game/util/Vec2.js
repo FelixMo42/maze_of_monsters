@@ -69,6 +69,10 @@ export default class Vec2 {
         )
     }
 
+    magnitude() {
+        return Math.sqrt(this.getX() ** 2 + this.getY() ** 2)
+    }
+
     subtract(a) {
         return new Vec2(
             this.getX() - a.getX(),
@@ -83,6 +87,34 @@ export default class Vec2 {
             this.getY() + a.getY()
 
         )
+    }
+
+    divide(a) {
+        if (a instanceof Vec2) {
+            return new Vec2(
+                this.getX() / a.getX(),
+                this.getY() / a.getY()
+            )
+        } else {
+            return new Vec2(
+                this.getX() / a,
+                this.getY() / a
+            )
+        }
+    }
+
+    multiply(a) {
+        if (a instanceof Vec2) {
+            return new Vec2(
+                this.getX() * a.getX(),
+                this.getY() * a.getY()
+            )
+        } else {
+            return new Vec2(
+                this.getX() * a,
+                this.getY() * a
+            )
+        }
     }
 
     sign() {

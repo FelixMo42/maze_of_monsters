@@ -7,6 +7,7 @@ import HealthComponent from "../object/HealthComponent";
 import Item from "../item/Item";
 import Slot from "./Slot";
 import Pather from "../util/Pather";
+import Vec2 from "../util/Vec2";
 
 export default class Player extends GameObject.uses(
     HealthComponent, NodeComponent
@@ -51,7 +52,7 @@ export default class Player extends GameObject.uses(
             setter: false,
             init: (state) => {
                 return {
-                    "main": 5,
+                    "main": 10,
                     ...state
                 }
             }
@@ -152,6 +153,8 @@ export default class Player extends GameObject.uses(
             item.equip()
         }
 
+        this.offset = new Vec2(0,0)
+
         // register callbacks
 
         Game.getInstance().registerUpdateCallback((dt) => this.processStack(dt))
@@ -182,18 +185,24 @@ export default class Player extends GameObject.uses(
     move(position, queue) {
         console.debug(this.getName() + " moves to " + position)
 
+        if (queue) {
+            let pos = position.subtract(this.getPosition())
+            let timer = 0
+            let dist = pos.magnitude()
+            queue.push((player, dt) => {
+                this.offset = pos.multiply(timer/dist)
+                timer += dt * 3
+                if (timer >= dist) {
+                    this.offset = new Vec2(0,0)
+                    return true
+                }
+                return false
+            })
+        }
+
         var map = this.getMap()
         this.getNode().removePlayer(queue)
         map.getNode(position).setPlayer(this, queue)
-
-        if (queue) {
-            let timer = 1
-            queue.push((dt) => {
-                //console.log(timer)
-                timer -= dt
-                return timer < 0
-            })
-        }
     }
 
     die(queue) {
@@ -446,7 +455,7 @@ export default class Player extends GameObject.uses(
                 return
             }
 
-            if (this.stack[0](dt) === false) {
+            if (this.stack[0](this, dt) === false) {
                 return
             } else {
                 this.stack.shift()
@@ -461,7 +470,7 @@ export default class Player extends GameObject.uses(
      */
     draw() {
         Draw.circle({
-            position: this.getPosition(true),
+            position: this.getPosition(true).add(this.offset),
             fill: this.getColor(true),
             outline: "black"
         })

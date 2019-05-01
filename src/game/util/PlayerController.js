@@ -2,6 +2,7 @@ import React from "react"
 import Game from "../Game";
 import Draw from "./Draw";
 import Pather from "./Pather";
+import Vec2 from "./Vec2";
 
 export default class extends React.Component {
     constructor(props) {
@@ -27,6 +28,8 @@ export default class extends React.Component {
 
         Game.getInstance().registerDrawCallback(() => {this.drawActionOverlay()})
         Game.getInstance().registerMouseDownCallback(() => {this.activateAction()})
+
+        this.mousePos = new Vec2(-1, -1)
     }
 
     drawActionOverlay() {
@@ -50,7 +53,7 @@ export default class extends React.Component {
 
     drawMoveActionOverlay() {
         if (
-            this.mousePos !== Draw.getMousePos() &&
+            !this.mousePos.equals(Draw.getMousePos()) &&
             this.state.player.getMap().isInBounds(Draw.getMousePos())
         ) {
             this.mousePos = Draw.getMousePos()
@@ -62,7 +65,7 @@ export default class extends React.Component {
             outline: "black",
             points: [
                 this.state.player.getPosition(),
-                ...this.path
+                ...this.path.slice(0, this.state.player.getMove("main"))
             ],
         })
     }

@@ -1,3 +1,5 @@
+var additive = 1
+
 class Grid {
     constructor(start, end) {
         this.start = {
@@ -19,7 +21,7 @@ class Grid {
 
     set(point, previous) {
         point.previous = previous
-        point.cost = previous.cost + 1
+        point.cost = previous.cost + additive
         point.value = point.cost + point.dist
     }
 
@@ -38,8 +40,8 @@ class Grid {
 
     dist(position) {
         return (
-            (this.target.position.x - position.x) ** 2 +
-            (this.target.position.y - position.y) ** 2
+            Math.abs(this.target.position.x - position.x) +
+            Math.abs(this.target.position.y - position.y)
         )
     }
 }
@@ -132,7 +134,9 @@ export default class Pather {
                 }
 
                 if (neighbour.open || neighbour.closed) {
-                    continue
+                    if (neighbour.cost < current.cost + additive) {
+                        continue
+                    }
                 }
 
                 grid.set(neighbour, current)
