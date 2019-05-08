@@ -40,7 +40,7 @@ export default class Game extends React.Component {
     createWorld() {
         var state = {}
 
-        // create actions
+        /// create actions ///
 
         var move = {
             name: "Move",
@@ -66,8 +66,9 @@ export default class Game extends React.Component {
             name: "Punch",
             effects: [
                 {
+                    aim: new ActionRef.playerSkill("hand-to-hand"),
                     playerEffect: {
-                        HP: new RandomValue(-20, -10)
+                        damage: new RandomValue(-20, -10)
                     }
                 }
             ],
@@ -94,24 +95,7 @@ export default class Game extends React.Component {
             }
         }
 
-        var sword = {
-            name: "Dimensional Blade",
-            description: "A black blade with ancient eldrich runes inscribed on the blade. It was forged by Consilius during the bearth of hell.",
-            type: "sword",
-            slot: {
-                hand: 1
-            }
-        }
-
-        var gun = {
-            name: "Eden's Revolver",
-            description: "A good old six shooter past down the Eden famility that has been enchanted over the years by Black.",
-            type: "gun",
-            range: 10,
-            slot: {
-                hand: 1
-            }
-        }
+        /// item actions ///
 
         var slice = {
             name: "Slice",
@@ -149,6 +133,57 @@ export default class Game extends React.Component {
             range: new ActionRef.item("range")
         }
 
+        /// skills ///
+
+        var dodge = {
+            name: "Dodge",
+            stat: "dex"
+        }
+
+        var defence = {
+            name: "Defence",
+            stat: "con"
+        }
+
+        var swordsmanship = {
+            name: "Swordsmanship",
+            stat: "str"
+        }
+
+        var handtohand = {
+            name: "Hand-to-hand",
+            stat: "str"
+        }
+
+
+        /// items ///
+
+        var sword = {
+            name: "Dimensional Blade",
+            description: "A black blade with ancient eldrich runes inscribed on the blade. It was forged by Consilius during the bearth of hell.",
+            type: "sword",
+            slot: {
+                hand: 1
+            }
+        }
+
+        var gun = {
+            name: "Eden's Revolver",
+            description: "A good old six shooter past down the Eden famility that has been enchanted over the years by Black.",
+            type: "gun",
+            range: 10,
+            slot: {
+                hand: 1
+            }
+        }
+
+        var item = {
+            name: "note",
+            description: "A small paper note with 'blank' writen on it."
+        }
+
+        /// characters ///
+
         var baseAiContoller = {}
 
         var solder = {
@@ -161,10 +196,7 @@ export default class Game extends React.Component {
             ]
         }
 
-        var item = {
-            name: "note",
-            description: "A small paper note with 'blank' writen on it."
-        }
+        /// structors ///
 
         var wall = {
             name: "wall",
@@ -182,7 +214,7 @@ export default class Game extends React.Component {
         world.addStructure(wall, new Vec2(3,5))
         world.addStructure(wall, new Vec2(3,6))
 
-        /*var players = */state.players = [
+        var players = state.players = [
             world.setPlayer(
                 new Player({
                     controller: "player",
@@ -204,11 +236,16 @@ export default class Game extends React.Component {
                     ],
                     maxMoves: {
                         main: 7
-                    }
+                    },
+                    skills: [
+                        dodge
+                    ]
                 }),
                 new Vec2(0,5)
             )
         ]
+
+        console.log(players[0].getSkill("Dodge").getScore())
 
         world.setPlayer(
             new Player(solder),

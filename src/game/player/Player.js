@@ -8,6 +8,7 @@ import Item from "../item/Item";
 import Slot from "./Slot";
 import Pather from "../util/Pather";
 import Vec2 from "../util/Vec2";
+import Skill from "../skill/Skill";
 
 export default class Player extends GameObject.uses(
     HealthComponent, NodeComponent
@@ -128,15 +129,44 @@ export default class Player extends GameObject.uses(
                     spots: 2
                 },
             },
-            init: (states) => {
+            init: (stats) => {
                 var slots = {}
 
-                for (var state in states) {
-                    slots[state] = new Slot(states[state])
+                for (var state in stats) {
+                    slots[state] = new Slot(stats[state])
                 }
 
                 return slots
             }
+        })
+
+        this.addVariable({
+            name: "skills",
+            setter: false,
+            default: [],
+            init: (stats) => {
+                var skills = {}
+
+                for (var state of stats) {
+                    var skill = new Skill({...state, player: this})
+                    skills[skill.getName()] = skill
+                }
+
+                return skills
+            }
+        })
+
+        this.addVariable({
+            name: "stats",
+            setter: false,
+            default: {
+                dex: 0,
+                str: 0,
+                con: 0,
+                int: 0,
+                chr: 0,
+                wil: 0
+            },
         })
     
         this.addCallback({
@@ -165,8 +195,15 @@ export default class Player extends GameObject.uses(
      * @param {PlayerEffect} effect 
      */
     affect(effect) {
-        if (effect.hasHP()) {
-            this.damage(effect.getHP())
+        if (effect.hasDamage()) {
+            this.damage({
+                hp: effect.getDamage()
+            })
+        }
+        if (effect.hasHeal()) {
+            this.damage({
+                hp: effect.getHeal()
+            })
         }
 
         if (effect.hasPull()) {
@@ -373,7 +410,7 @@ export default class Player extends GameObject.uses(
         return this.getSlots(flip)[slot]
     }
 
-    /// moves and actions ///
+    /// moves ///
 
     getMove(move, flip) {
         return this.getMoves(flip)[move]
@@ -393,6 +430,26 @@ export default class Player extends GameObject.uses(
         return this.getMaxMoves(flip)[move]
     }
 
+    /// skills and stats ///
+
+    getSkill(skill, flip) {
+        if (!this.hasSkill(skill)) {
+            console.log(skill)
+            //TODO: learn skill
+        }
+        return this.getSkills(flip)[skill]
+    }
+
+    getStat(stat, flip) {
+        return this.getStats(flip)[stat]
+    }
+
+    hasSkill(skill, flip) {
+        return skill in this.getSkills(flip)
+    }
+
+    /// actions ///
+
     getAction(name) {
         for (var action of this.getActions()) {
             if (action.getName() === name) {
@@ -408,6 +465,8 @@ export default class Player extends GameObject.uses(
     removeAction(action, queue) {
         this.removeArrayItem("actions", action, queue)
     }
+
+    /// item book ///
 
     addItemBookAction(itemType, action, queue) {
         this.mirror((data, mode) => {

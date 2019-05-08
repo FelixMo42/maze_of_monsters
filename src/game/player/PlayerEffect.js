@@ -5,7 +5,11 @@ export default class extends SubEffect {
         super(config)
 
         this.addParamater({
-            name: "HP"
+            name: "damage"
+        })
+
+        this.addParamater({
+            name: "heal"
         })
 
         this.addParamater({

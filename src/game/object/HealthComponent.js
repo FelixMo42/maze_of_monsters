@@ -25,12 +25,16 @@ export default class HealthComponent {
         })
     }
 
-    damage(hp, opts={}) {
+    damage(opts={}) {
+        var hp = opts.hp
+        if (opts.aim) {
+
+        }
         this.updateHP(hp, opts.queue)
     }
 
-    heal(hp, opts={}) {
-        this.updateHP(hp, opts.queue)
+    heal(opts={}) {
+        this.updateHP(opts.hp, opts.queue)
     }
 
     updateHP(hp, queue) {
