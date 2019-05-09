@@ -4,6 +4,10 @@ export default class SubEffect {
     constructor(config) {
         this.effect = config.effect
         this.config = config
+
+        this.addParamater({
+            name: "aim"
+        })
     }
 
     /**

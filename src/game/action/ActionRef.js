@@ -23,7 +23,20 @@ export default {
         }
 
         func(action) {
-            return this.mod(action.getPlayer().getSkill(this.skill))
+            return this.mod(action.getPlayer().getSkill(this.skill).getScore())
+        }
+    },
+
+    playerSkillRoll: class extends Value {
+        constructor(skill, mod=(a)=>a) {
+            super()
+
+            this.skill = skill
+            this.mod = mod
+        }
+
+        func(action) {
+            return this.mod(action.getPlayer().getSkill(this.skill).getRoll())
         }
     }
 }

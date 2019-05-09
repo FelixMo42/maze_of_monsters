@@ -1,4 +1,5 @@
 import GameObject from "../object/GameObject";
+import D from "../util/D";
 
 export default class extends GameObject {
     constructor(config={}) {
@@ -14,21 +15,21 @@ export default class extends GameObject {
         })
 
         this.addVariable({
-            name: "stat"
-        })
-
-        this.addVariable({
             name: "player"
         })
     }
 
-    getScore() {
+    getScore(opts = {}) {
         let score = this.getLevel()
 
-        if (this.hasStat()) {
-            score += this.getPlayer().getStat(this.getStat())
+        if (opts.stat) {
+            score += this.getPlayer().getStat(opts.stat)
         }
 
         return score
+    }
+
+    getRoll(opts = {}) {
+        return this.getScore(opts) + D(opts.die || 20)
     }
 }

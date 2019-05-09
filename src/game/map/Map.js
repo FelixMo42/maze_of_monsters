@@ -4,6 +4,7 @@ import Game from "../Game";
 import Node from "./Node";
 import Item from "../item/Item";
 import Structure from "../structure/Structure";
+import Player from "../player/Player";
 
 export default class Map extends GameObject {
     players = []
@@ -197,9 +198,15 @@ export default class Map extends GameObject {
         if (this.hasPlayer(position)) {
             throw new Error("allready a player at position " + position)
         }
+
         this.players.push(player)
         this.getNode(position).setPlayer(player, queue)
+        
         return player
+    }
+
+    addPlayer(player, position, queue) {
+        return this.setPlayer(new Player(player), position, queue)
     }
 
     /**
@@ -234,11 +241,11 @@ export default class Map extends GameObject {
 
         this.getNode(position).setItem(item, queue) 
 
-        return  item
+        return item
     }
 
     addItem(item, position, queue) {
-        this.setItem(new Item(item), position, queue)
+        return this.setItem(new Item(item), position, queue)
     }
 
     /// structor getters/setters ///

@@ -3,11 +3,13 @@ import Map from "./map/Map"
 import Callback from "./util/Callback"
 import Vec2 from "./util/Vec2"
 import PlayerController from "./util/PlayerController"
-import Player from "./player/Player";
+
+import players from "../data/players"
+import structures from "../data/structures"
+import items from "../data/items"
 
 import "./Game.css"
-import { RandomValue } from "./util/Value";
-import ActionRef from "./action/ActionRef";
+
 
 let instance = undefined
 
@@ -40,237 +42,33 @@ export default class Game extends React.Component {
     createWorld() {
         var state = {}
 
-        /// create actions ///
-
-        var move = {
-            name: "Move",
-            requirments: {
-                walkable: true
-            },
-            effects: [
-                {
-                    style: "self",
-                    playerEffect: {
-                        pull: 1
-                    }
-                }
-            ],
-            cost: {
-                moves: {
-                    main: -1
-                }
-            }
-        }
-
-        var punch = {
-            name: "Punch",
-            effects: [
-                {
-                    aim: new ActionRef.playerSkill("hand-to-hand"),
-                    playerEffect: {
-                        damage: new RandomValue(-20, -10)
-                    }
-                }
-            ],
-            cost: {
-                moves: {
-                    main: -5
-                }
-            }
-        }
-
-        var pickup = {
-            name: "Pick Up",
-            effects: [
-                {
-                    itemEffect: {
-                        pickup: true
-                    }
-                }
-            ],
-            cost: {
-                moves: {
-                    main: -2
-                }
-            }
-        }
-
-        /// item actions ///
-
-        var slice = {
-            name: "Slice",
-            itemTypes: ["sword"],
-            effects: [
-                {
-                    playerEffect: {
-                        HP: new RandomValue(-100, -50)
-                    }
-                }
-            ],
-            cost: {
-                moves: {
-                    main: -5
-                }
-            },
-            range: new ActionRef.item("range")
-        }
-
-        var shoot = {
-            name: "Shoot",
-            itemTypes: ["gun"],
-            effects: [
-                {
-                    playerEffect: {
-                        HP: new RandomValue(-50, -25)
-                    }
-                }
-            ],
-            cost: {
-                moves: {
-                    main: -3
-                }
-            },
-            range: new ActionRef.item("range")
-        }
-
-        /// skills ///
-
-        var dodge = {
-            name: "Dodge",
-            stat: "dex"
-        }
-
-        var defence = {
-            name: "Defence",
-            stat: "con"
-        }
-
-        var swordsmanship = {
-            name: "Swordsmanship",
-            stat: "str"
-        }
-
-        var handtohand = {
-            name: "Hand-to-hand",
-            stat: "str"
-        }
-
-
-        /// items ///
-
-        var sword = {
-            name: "Dimensional Blade",
-            description: "A black blade with ancient eldrich runes inscribed on the blade. It was forged by Consilius during the bearth of hell.",
-            type: "sword",
-            slot: {
-                hand: 1
-            }
-        }
-
-        var gun = {
-            name: "Eden's Revolver",
-            description: "A good old six shooter past down the Eden famility that has been enchanted over the years by Black.",
-            type: "gun",
-            range: 10,
-            slot: {
-                hand: 1
-            }
-        }
-
-        var item = {
-            name: "note",
-            description: "A small paper note with 'blank' writen on it."
-        }
-
-        /// characters ///
-
-        var baseAiContoller = {}
-
-        var solder = {
-            name: "foor solder",
-            color: "gray",
-            controller: baseAiContoller,
-            actions: [
-                punch,
-                move
-            ]
-        }
-
-        /// structors ///
-
-        var wall = {
-            name: "wall",
-            walkable: false
-        }
-
-        // set up world
+        // create world
 
         var world = state.world = new Map({
             width: 10,
             height: 11
         })
 
-        world.addStructure(wall, new Vec2(3,4))
-        world.addStructure(wall, new Vec2(3,5))
-        world.addStructure(wall, new Vec2(3,6))
+        world.addStructure(structures.wall, new Vec2(3,4))
+        world.addStructure(structures.wall, new Vec2(3,5))
+        world.addStructure(structures.wall, new Vec2(3,6))
 
-        var players = state.players = [
-            world.setPlayer(
-                new Player({
-                    controller: "player",
-                    name: "Eden Black",
-                    color: "black",
-                    actions: [
-                        punch,
-                        pickup,
-                        move,
-                        slice,
-                        shoot
-                    ],
-                    equiped: [
-                        sword,
-                        gun
-                    ],
-                    items: [
-                        
-                    ],
-                    maxMoves: {
-                        main: 7
-                    },
-                    skills: [
-                        dodge
-                    ]
-                }),
-                new Vec2(0,5)
-            )
+        // add player character
+
+        state.players = [
+            world.addPlayer(players.edenBlack, new Vec2(0,5))
         ]
 
-        console.log(players[0].getSkill("Dodge").getScore())
+        // add enemies
 
-        world.setPlayer(
-            new Player(solder),
-            new Vec2(9,10)
-        )
+        world.addPlayer(players.solder, new Vec2(9,10))
+        world.addPlayer(players.solder, new Vec2(9,0))
+        world.addPlayer(players.solder, new Vec2(2,10))
+        world.addPlayer(players.solder, new Vec2(2,0))
+        
+        world.addItem(items.note, new Vec2(1, 4))
 
-        world.setPlayer(
-            new Player(solder),
-            new Vec2(9,0)
-        )
-
-        world.setPlayer(
-            new Player(solder),
-            new Vec2(2,10)
-        )
-
-        world.setPlayer(
-            new Player(solder),
-            new Vec2(2,0)
-        )
-
-        world.addItem(
-            item,
-            new Vec2(1, 4)
-        )
+        // return state
 
         return state
     }

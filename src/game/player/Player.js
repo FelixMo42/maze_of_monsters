@@ -197,9 +197,11 @@ export default class Player extends GameObject.uses(
     affect(effect) {
         if (effect.hasDamage()) {
             this.damage({
-                hp: effect.getDamage()
+                hp: effect.getDamage(),
+                aim: effect.getAim()
             })
         }
+
         if (effect.hasHeal()) {
             this.damage({
                 hp: effect.getHeal()
@@ -432,6 +434,10 @@ export default class Player extends GameObject.uses(
 
     /// skills and stats ///
 
+    hasSkill(skill, flip) {
+        return skill in this.getSkills(flip)
+    }
+
     getSkill(skill, flip) {
         if (!this.hasSkill(skill)) {
             console.log(skill)
@@ -442,10 +448,6 @@ export default class Player extends GameObject.uses(
 
     getStat(stat, flip) {
         return this.getStats(flip)[stat]
-    }
-
-    hasSkill(skill, flip) {
-        return skill in this.getSkills(flip)
     }
 
     /// actions ///
