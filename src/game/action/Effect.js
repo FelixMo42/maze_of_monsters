@@ -14,6 +14,10 @@ export default class {
         this.tileEffect = config.tileEffect
         this.itemEffect = config.itemEffect
 
+        // dc stuff
+
+        this.aim = config.aim
+
         // initiate defaults
 
         this.style = config.style || this.source.getDefaultStyle()
@@ -187,5 +191,11 @@ export default class {
 
     getStyle() {
         return this.style
+    }
+
+    /// CD stuff ///
+
+    getAim() {
+        return this.aim
     }
 }

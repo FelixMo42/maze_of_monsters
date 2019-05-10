@@ -4,10 +4,6 @@ export default class SubEffect {
     constructor(config) {
         this.effect = config.effect
         this.config = config
-
-        this.addParamater({
-            name: "aim"
-        })
     }
 
     /**
@@ -102,5 +98,14 @@ export default class SubEffect {
      */
     getSize() {
         return this.effect.getSize()
+    }
+
+    /// DC stuff ///
+
+    /**
+     * 
+     */
+    getAim() {
+        return Value.cheak(this.effect.getAim(), this.effect.getSource())
     }
 }

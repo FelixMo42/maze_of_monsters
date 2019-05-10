@@ -29,7 +29,7 @@ export default class HealthComponent {
     damage(opts={}) {
         var hp = opts.hp
 
-        /*if (opts.aim) {
+        if (opts.aim) {
             let aim = opts.aim
             let dodge = this.getSkill(skills.dodge).getRoll({stat: "dex"})
 
@@ -48,11 +48,11 @@ export default class HealthComponent {
             }
         }
 
-        hp += this.getSkill(skills.defence).getScore({stat: "def"})*/
+        hp += this.getSkill(skills.defence).getScore({stat: "con"})
 
-        //if (hp > 0) {
-        //    return // return if no damage delt
-        //}
+        if (hp > 0) {
+            return // return if no damage delt
+        }
 
         this.updateHP(hp, opts.queue)
     }

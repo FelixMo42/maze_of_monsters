@@ -77,7 +77,6 @@ export default class Map extends GameObject {
      * 
      */
     nextTurn() {
-        console.log(this)
         this.player = undefined
     }
 

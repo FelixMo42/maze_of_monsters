@@ -435,19 +435,37 @@ export default class Player extends GameObject.uses(
     /// skills and stats ///
 
     hasSkill(skill, flip) {
-        return skill in this.getSkills(flip)
+        return skill.name in this.getSkills(flip)
+    }
+
+    addSkill(skill, queue) {
+        this.data[skill.name] = new Skill({
+            ...skill,
+            player: this
+        })
+
+        if (queue) {
+            queue.append(() => {
+                this.state[skill.name] = this.data[skill.name]
+            })
+        }
+
+        return this.data[skill.name]
     }
 
     getSkill(skill, flip) {
         if (!this.hasSkill(skill)) {
-            console.log(skill)
-            //TODO: learn skill
+            return this.addSkill(skill)
         }
-        return this.getSkills(flip)[skill]
+        return this.getSkills(flip)[skill.name]
     }
 
     getStat(stat, flip) {
-        return this.getStats(flip)[stat]
+        var stats = this.getStats(flip)
+        if (!(stat in stats)) {
+            throw new Error(stat + " is not a stat")
+        }
+        return stats[stat]
     }
 
     /// actions ///
