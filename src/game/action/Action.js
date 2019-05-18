@@ -112,7 +112,7 @@ export default class Action extends GameObject {
      * 
      * @param {Vec2} position 
      */
-    cheak(target) {
+    check(target) {
         if (this.getPosition().distanceFrom(target) > this.getRange() + .5) {
             return false
         }
@@ -137,7 +137,7 @@ export default class Action extends GameObject {
      * @param {Vec2} flip 
      */
     use(position) {
-        if (!this.cheak(position)) {
+        if (!this.check(position)) {
             console.debug(this.getPlayer() + " failed to use " + this + " on " + position)
             return false
         }

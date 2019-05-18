@@ -18,7 +18,7 @@ export default class SubEffect {
         }
 
         this[config.getterName || "get" + name] = () => {
-            return Value.cheak(this.config[config.name], this.effect.getSource())
+            return Value.check(this.config[config.name], this.effect.getSource())
         }
     }
 
@@ -106,6 +106,6 @@ export default class SubEffect {
      * 
      */
     getAim() {
-        return Value.cheak(this.effect.getAim(), this.effect.getSource())
+        return Value.check(this.effect.getAim(), this.effect.getSource())
     }
 }

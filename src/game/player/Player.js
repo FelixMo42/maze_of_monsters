@@ -45,8 +45,6 @@ export default class Player extends GameObject.uses(
             default: "blue"
         })
 
-        //TODO: more unified move type list
-
         this.addVariable({
             name: "maxMoves",
             default: {},
@@ -487,7 +485,7 @@ export default class Player extends GameObject.uses(
     }
 
     /// item book ///
-
+    
     addItemBookAction(itemType, action, queue) {
         this.mirror((data, mode) => {
             if (!(itemType in data.itemBooks)) {
@@ -501,6 +499,10 @@ export default class Player extends GameObject.uses(
 
     getItemBook(itemType, flip) {
         return this.getItemBooks(flip)[itemType]
+    }
+
+    getItemBookTypes(flip) {
+        return Object.keys(this.getItemBooks(flip))
     }
 
     hasItemBook(itemType, flip) {

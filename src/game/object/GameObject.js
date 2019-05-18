@@ -227,7 +227,7 @@ export default class GameObject {
         // add getter
         if (opts.getter !== false) {
             this[opts.getterName || "get" + name] = opts.getter || ((flip) => {
-                return Value.cheak(this.get(opts.name, flip), this)
+                return Value.check(this.get(opts.name, flip), this)
             })
         }
 

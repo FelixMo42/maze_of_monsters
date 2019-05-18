@@ -1,7 +1,7 @@
 import GameObject from "../object/GameObject";
 import D from "../util/D";
 
-export default class extends GameObject {
+export default class Skill extends GameObject {
     constructor(config={}) {
         super(config)
 

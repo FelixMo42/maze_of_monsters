@@ -30,6 +30,12 @@ export default class extends React.Component {
         Game.getInstance().registerMouseDownCallback(() => {this.activateAction()})
 
         this.mousePos = new Vec2(-1, -1)
+
+        this.styles = {
+            header: {
+                marginLeft: "100px"
+            }
+        }
     }
 
     drawActionOverlay() {
@@ -157,8 +163,8 @@ export default class extends React.Component {
                     }}/>
                 </div>
                 { this.state.viewMode === "items" ? this.renderItemsView()  : "" }
-                { this.state.viewMode === "actions" ? "N/A"  : "" }
-                { this.state.viewMode === "stats" ? "N/A"  : "" }
+                { this.state.viewMode === "actions" ? this.renderActionView()  : "" }
+                { this.state.viewMode === "stats" ? this.renderStatsView()  : "" }
             </div>
         )
     }
@@ -166,7 +172,7 @@ export default class extends React.Component {
     renderItemsView() {
         return (
             <div>
-                <h3 style={{marginLeft: "100px"}}>Inventory</h3>
+                <h3 style={this.styles.header}>Inventory</h3>
                 <ul>
                     { this.state.viewed.getItems().map((item) => {
                         return this.renderItem(item)
@@ -176,7 +182,7 @@ export default class extends React.Component {
                 {
                     Object.values(this.state.viewed.getSlots()).map((slot) => 
                         <div key={slot.getKey()}>
-                            <h3 style={{marginLeft: "100px"}}>{slot.getName()}</h3>
+                            <h3 style={this.styles.header}>{slot.getName()}</h3>
                             <ul>
                                 { slot.getItems().map((item) => {
                                     return this.renderItem(item)
@@ -239,12 +245,59 @@ export default class extends React.Component {
         )
     }
 
+    renderStatsView() {
+        return (
+            <div>
+                <h3 style={this.styles.header}>Stats</h3>
+                <ul>
+                    { Object.entries(this.state.viewed.getStats(true)).map((stat) => 
+                    <li key={ stat[0] }>{ stat[0] } : { stat[1] }</li>
+                    ) }
+                </ul>
+
+                <h3 style={this.styles.header}>Skills</h3>
+                <ul>
+                    { Object.values(this.state.viewed.getSkills(true)).map((skill) => 
+                        <li key={ skill.getKey() }>{ skill.getName(true) }</li>
+                    ) }
+                </ul>
+
+                <hr />
+            </div>
+        )
+    }
+
+    renderActionView() {
+        return (
+            <div>
+                <h3 style={this.styles.header}>Active Actions</h3>
+                <ul>
+                    { this.state.player.getActions(true).map(action => 
+                        <li key={ action.getKey() }> { action.getName() } </li>
+                    ) }
+                </ul>
+                { this.state.player.getItemBookTypes(true).map(itemBook => 
+                    <div key={ itemBook }>
+                        <h3 style={this.styles.header}> Item Actions : { itemBook } </h3>
+                        <ul>
+                            { this.state.player.getItemBook(itemBook).map(action =>
+                                <li key={ action.name }> { action.name } </li>
+                            ) }
+                        </ul>
+                    </div>
+                ) }
+            </div>
+        )
+    }
+
+    /// GAME UI ///
+
     renderActions() {
         return (
             <div>
-                { this.state.player.getActions().map(action => {
-                    return this.renderAction(action)
-                }) }
+                { this.state.player.getActions().map(action => 
+                    this.renderAction(action)
+                ) }
                 <input type="button" value="End Turn" onClick={() => {
                     this.state.player.endTurn()
                 }}/>
@@ -262,7 +315,7 @@ export default class extends React.Component {
                     } : {}
                 }
                 key={action.getKey(true)}
-                value={action.getName(true)}
+                value={action.getName(true) + (action.hasItem() ? " ( " + action.getItem().getName() + ")" : "")}
                 onClick={() => {this.selectAction(action)}}
             />
         )
@@ -325,10 +378,6 @@ export default class extends React.Component {
         )
     }
 
-    /**
-     * 
-     * @param {Action} action 
-     */
     selectAction(action) {
         this.setState({action: action})
     }

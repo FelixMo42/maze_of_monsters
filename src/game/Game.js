@@ -1,15 +1,14 @@
 import React from "react"
-import Map from "./map/Map"
 import Callback from "./util/Callback"
 import Vec2 from "./util/Vec2"
 import PlayerController from "./util/PlayerController"
+import Map from "./map/Map"
 
 import players from "../data/players"
 import structures from "../data/structures"
 import items from "../data/items"
 
 import "./Game.css"
-
 
 let instance = undefined
 
@@ -129,7 +128,7 @@ export default class Game extends React.Component {
     contextMenu(e) {
         e.preventDefault()
     }
-
+    
     resize() {
         this.canvas.width = window.innerWidth * devicePixelRatio
         this.canvas.height = window.innerHeight * devicePixelRatio

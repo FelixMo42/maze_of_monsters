@@ -43,7 +43,7 @@ export default class Callback {
 
     /**
      * Returns whether the stack has the callback.
-     * @param {function} callback Callback to cheak against.
+     * @param {function} callback Callback to check against.
      * @return {boolean} Whether it has callback.
      */
     hasCallback(callback) {

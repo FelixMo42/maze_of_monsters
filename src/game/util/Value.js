@@ -1,5 +1,5 @@
 export default class Value {
-    static cheak(value, meta) {
+    static check(value, meta) {
         if (value instanceof Value) {
             return value.func(meta)
         } else {
