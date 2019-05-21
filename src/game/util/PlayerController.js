@@ -359,12 +359,12 @@ export default class extends React.Component {
                 style={{
                     width: "60px",
                     height: "60px",
-                    backgroundColor: "white",
                     outlineColor: "black",
                     marginRight: "5px",
                     float: "left"
                 }} 
-                alt=""
+                alt="icon not found"
+                src={player.getImageUrl()}
             />
         )
     }

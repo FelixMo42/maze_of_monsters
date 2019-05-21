@@ -22,6 +22,7 @@ const baseActions = [
 const solder = {
     name: "foor solder",
     color: "gray",
+    image: "white.png",
     controller: baseAiContoller,
     actions: [
         ...baseActions
@@ -36,6 +37,7 @@ const solder = {
 const edenBlack = {
     name: "Eden Black",
     color: "black",
+    image: "white.png",
     controller: "player",
     actions: [
         ...baseActions,

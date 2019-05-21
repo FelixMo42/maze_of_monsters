@@ -1,17 +1,18 @@
 import GameObject from "../object/GameObject"
-import NodeComponent from "../object/NodeComponent";
-import Game from "../Game";
-import Draw from "../util/Draw";
-import Action from "../action/Action";
-import HealthComponent from "../object/HealthComponent";
-import Item from "../item/Item";
-import Slot from "./Slot";
-import Pather from "../util/Pather";
-import Vec2 from "../util/Vec2";
-import Skill from "../skill/Skill";
+import NodeComponent from "../object/NodeComponent"
+import Game from "../Game"
+import Draw from "../util/Draw"
+import Action from "../action/Action"
+import HealthComponent from "../object/HealthComponent"
+import Item from "../item/Item"
+import Slot from "./Slot"
+import Pather from "../util/Pather"
+import Vec2 from "../util/Vec2"
+import Skill from "../skill/Skill"
+import ImageComponent from "../object/ImageComponent"
 
 export default class Player extends GameObject.uses(
-    HealthComponent, NodeComponent
+    HealthComponent, NodeComponent, ImageComponent
 ) {
     constructor(config={}) {
         super(config)
@@ -485,7 +486,7 @@ export default class Player extends GameObject.uses(
     }
 
     /// item book ///
-    
+
     addItemBookAction(itemType, action, queue) {
         this.mirror((data, mode) => {
             if (!(itemType in data.itemBooks)) {
@@ -550,9 +551,15 @@ export default class Player extends GameObject.uses(
      * 
      */
     draw() {
-        Draw.circle({
+        /*Draw.circle({
             position: this.getPosition(true).add(this.offset),
             fill: this.getColor(true),
+            outline: "black"
+        })*/
+
+        Draw.image({
+            image: this.getImageObj(),
+            position: this.getPosition(true).add(this.offset),
             outline: "black"
         })
     }

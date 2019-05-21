@@ -1,4 +1,5 @@
 import Game from "../Game";
+import Vec2 from "./Vec2";
 
 export default class {
     /// getters ///
@@ -19,7 +20,7 @@ export default class {
     }
 
     static toGlobal(num) {
-        return (num + .5) * this.getScale()
+        return num * this.getScale()
     }
 
     /// drawing functions ///
@@ -102,14 +103,14 @@ export default class {
         ctx.beginPath()
 
         ctx.moveTo(
-            this.toGlobal(opts.points[0].getX()),
-            this.toGlobal(opts.points[0].getY())
+            this.toGlobal(opts.points[0].getX() + .5),
+            this.toGlobal(opts.points[0].getY() + .5)
         )
 
         for (let i = 1; i < opts.points.length; i++) {
             ctx.lineTo(
-                this.toGlobal(opts.points[i].getX()),
-                this.toGlobal(opts.points[i].getY())
+                this.toGlobal(opts.points[i].getX() + .5),
+                this.toGlobal(opts.points[i].getY() + .5)
             )
         }
 
@@ -134,6 +135,23 @@ export default class {
             opts.text,
             this.toGlobal(opts.position.getX()),
             this.toGlobal(opts.position.getY())
+        )
+
+        ctx.restore()
+    }
+
+    static image(opts) {
+        var ctx = this.getContext(opts.layer)
+        ctx.save()
+
+        let size = opts.size || new Vec2(1,1)
+
+        ctx.drawImage(
+            opts.image,
+            this.toGlobal(opts.position.getX()),
+            this.toGlobal(opts.position.getY()),
+            this.toGlobal(size.getX()),
+            this.toGlobal(size.getY())
         )
 
         ctx.restore()
