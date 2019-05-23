@@ -67,17 +67,12 @@ export default class {
         var ctx = this.getContext(opts.layer)
         ctx.save()
 
-        var x = opts.position.getX()
-        var y = opts.position.getY()
-
-        var radius = this.getScale() / 2 * ("radius" in opts ? (opts.radius * 2 + 1) : 1)
-
         ctx.beginPath();
 
         ctx.arc(
-            (x + .5) * this.getScale(),// + radius, // x
-            (y + .5) * this.getScale(),// + radius, // y
-            radius, // radius
+            this.toGlobal(opts.position.getX() + .5),
+            this.toGlobal(opts.position.getY() + .5),
+            this.toGlobal(opts.radius || 1) / 2,
             0, // start angle
             2 * Math.PI // end angle
         );
@@ -143,17 +138,36 @@ export default class {
     static image(opts) {
         var ctx = this.getContext(opts.layer)
         ctx.save()
+        ctx.beginPath()
+        
+        ctx.translate(
+            this.toGlobal(opts.position.getX()),
+            this.toGlobal(opts.position.getY())
+        )
+
+
 
         let size = opts.size || new Vec2(1,1)
 
+        if (opts.icon) {
+            ctx.arc(
+                this.toGlobal(.5),
+                this.toGlobal(.5),
+                this.toGlobal(1) / 2,
+                0, 2*Math.PI
+            )
+            ctx.fill()
+            ctx.clip()
+        }
+
         ctx.drawImage(
             opts.image,
-            this.toGlobal(opts.position.getX()),
-            this.toGlobal(opts.position.getY()),
+            0, 0,
             this.toGlobal(size.getX()),
             this.toGlobal(size.getY())
         )
 
+        ctx.closePath()
         ctx.restore()
     }
 }

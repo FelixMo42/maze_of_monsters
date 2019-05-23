@@ -138,11 +138,11 @@ export default class Action extends GameObject {
      */
     use(position) {
         if (!this.check(position)) {
-            console.debug(this.getPlayer() + " failed to use " + this + " on " + position)
+            console.debug(`${this.getPlayer()} failed to use ${this} on ${position}`)
             return false
         }
 
-        console.debug(this.getPlayer() + " uses " + this + " on " + position)
+        console.debug(`${this.getPlayer()} uses ${this} on ${position}`)
 
         // apply cost
         new Effect({

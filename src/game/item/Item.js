@@ -72,7 +72,7 @@ export default class Item extends GameObject.uses(
         this.setPlayer(player, queue)
         player.storeItem(this, queue)
 
-        console.debug(this.getPlayer() + " picked up " + this)
+        console.debug(`${this.getPlayer()} picked up ${this}`)
     }
 
     drop(queue) {
@@ -87,7 +87,7 @@ export default class Item extends GameObject.uses(
         this.getPlayer().getNode().setItem(this)
         this.setPlayer(undefined, queue)
 
-        console.debug(this.getPlayer() + " droped " + this)
+        console.debug(`${this.getPlayer()} droped ${this}`)
     }
 
     equip(slot=0, queue) {
@@ -110,7 +110,7 @@ export default class Item extends GameObject.uses(
 
         this.callEquipCallback()
 
-        console.debug(this.getPlayer() + " equiped " + this)
+        console.debug(`${this.getPlayer()} equiped ${this}`)
     }
 
     unequip(queue) {
@@ -129,7 +129,7 @@ export default class Item extends GameObject.uses(
 
         this.callUnequipCallback()
 
-        console.debug(this.getPlayer() + " unequiped " + this)
+        console.debug(`${this.getPlayer()} unequiped ${this}`)
     }
 
     isEquipable(flip) {
@@ -141,7 +141,7 @@ export default class Item extends GameObject.uses(
             position: this.getPosition(),
             fill: "blue",
             outline: "black",
-            radius: -.25
+            radius: .5
         })
     }
 

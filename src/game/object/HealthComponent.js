@@ -80,7 +80,7 @@ export default class HealthComponent {
 
         this.setHP(this.getHP() + hp, queue)
         
-        console.debug(this.getName() + " is at " + this.getHP() + "/" + this.getMaxHP() + " hp")
+        console.debug(`${this} is at ${this.getHP()}/${this.getMaxHP()} hp`)
 
         if (this.getHP() <= 0) {
             if ("die" in this) {

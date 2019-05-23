@@ -221,7 +221,7 @@ export default class Player extends GameObject.uses(
     }
 
     move(position, queue) {
-        console.debug(this.getName() + " moves to " + position)
+        console.debug(`${this} moves to ${position}`)
 
         if (queue) {
             let pos = position.subtract(this.getPosition())
@@ -244,7 +244,7 @@ export default class Player extends GameObject.uses(
     }
 
     die(queue) {
-        console.debug(this.getName() + " died!")
+        console.debug(`${this} died!`)
 
         if (this.isTurn()) {
             this.endTurn(queue)
@@ -259,7 +259,7 @@ export default class Player extends GameObject.uses(
      * 
      */
     startTurn() {
-        console.debug(this.getName() + " starts their turn")
+        console.debug(`${this} starts their turn`)
 
         this.set("turn", true)
         this.setMoves({...this.getMaxMoves()})
@@ -346,7 +346,7 @@ export default class Player extends GameObject.uses(
             return
         }
 
-        console.debug(this.getName() + " ends their turn")
+        console.debug(`${this} ends their turn`)
 
         this.set("turn", false, this.stack)
 
@@ -551,14 +551,14 @@ export default class Player extends GameObject.uses(
      * 
      */
     draw() {
-        /*Draw.circle({
-            position: this.getPosition(true).add(this.offset),
-            fill: this.getColor(true),
-            outline: "black"
-        })*/
-
         Draw.image({
+            icon: true,
             image: this.getImageObj(),
+            position: this.getPosition(true).add(this.offset),
+            outline: "black"
+        })
+
+        Draw.circle({
             position: this.getPosition(true).add(this.offset),
             outline: "black"
         })

@@ -50,8 +50,8 @@ export default class extends React.Component {
                 return this.drawMoveActionOverlay()
             }
             Draw.circle({
+                radius: this.state.action.getRange() * 2,
                 position: this.state.player.getPosition(),
-                radius: this.state.action.getRange(),
                 outline: "black"
             })
         }
@@ -267,13 +267,23 @@ export default class extends React.Component {
         )
     }
 
+    actionName(action) {
+        if (action.hasItem()) {
+            return `${action.getName(true)} (${action.getItem().getName(true)})`
+        } else {
+            return action.getName(true)
+        }
+    }
+
     renderActionView() {
         return (
             <div>
                 <h3 style={this.styles.header}>Active Actions</h3>
                 <ul>
                     { this.state.player.getActions(true).map(action => 
-                        <li key={ action.getKey() }> { action.getName() } </li>
+                        <li key={ action.getKey() }>
+                            { this.actionName(action) }
+                        </li>
                     ) }
                 </ul>
                 { this.state.player.getItemBookTypes(true).map(itemBook => 
@@ -314,9 +324,9 @@ export default class extends React.Component {
                         backgroundColor: "blue"
                     } : {}
                 }
-                key={action.getKey(true)}
-                value={action.getName(true) + (action.hasItem() ? " ( " + action.getItem().getName() + ")" : "")}
-                onClick={() => {this.selectAction(action)}}
+                key={ action.getKey(true)}
+                value={ this.actionName(action) }
+                onClick={ () => { this.selectAction(action) }}
             />
         )
     }
