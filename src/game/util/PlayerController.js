@@ -201,12 +201,12 @@ export default class extends React.Component {
                         <div style={{
                             textAlign: "center"
                         }}>
-                            {this.state.item.getName(true)}
+                            { this.state.item.getName(true) }
                         </div>
 
                         <br />
 
-                        description: {this.state.item.getDescription()}
+                        description: { this.state.item.getDescription() }
                     </div>
                 : ""}
             </div>
@@ -357,6 +357,8 @@ export default class extends React.Component {
                     marginBottom: "2px",
                 }} />
                 { player.getHP(true) } / { player.getMaxHP(true) } hp
+                <br />
+                { player.getMP(true) } / { player.getMaxMP(true) } mp
                 <br />
                 { player.getMove("main", true) } / { player.getMaxMove("main", true) } moves
             </div>

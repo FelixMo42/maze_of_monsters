@@ -57,6 +57,16 @@ const pickup = {
     }
 }
 
+/// ////
+
+const firebolt = {
+    name: "Fire Bolt",
+    range: 200,
+    cost: {
+        MP: 10
+    }
+}
+
 /// item actions ///
 
 const slice = {
@@ -104,5 +114,6 @@ export default {
     punch,
     pickup,
     slice,
-    shoot
+    shoot,
+    firebolt
 }

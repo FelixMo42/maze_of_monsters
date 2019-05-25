@@ -18,7 +18,7 @@ export default class SubEffect {
         }
 
         this[config.getterName || "get" + name] = () => {
-            return Value.check(this.config[config.name], this.effect.getSource())
+            return Value.check(this.config[config.param || config.name], this.effect.getSource())
         }
     }
 

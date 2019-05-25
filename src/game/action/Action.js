@@ -1,5 +1,6 @@
 import GameObject from "../object/GameObject";
 import Effect from "./Effect";
+import PlayerEffect from "../player/PlayerEffect";
 
 export default class Action extends GameObject {
     constructor(config) {
@@ -112,19 +113,29 @@ export default class Action extends GameObject {
      * 
      * @param {Vec2} position 
      */
-    check(target) {
+    check(target, cost) {
+        // check requirments
+        
         if (this.getPosition().distanceFrom(target) > this.getRange() + .5) {
             return false
         }
 
-        for (var move in this.getCost().moves) {
-            if (this.getPlayer().getMove(move) + this.getCost().moves[move] < 0) {
+        if ("walkable" in this.getRequirments()) {
+            if (this.getRequirments().walkable !== this.getMap().getNode(target).isWalkable()) {
                 return false
             }
         }
 
-        if ("walkable" in this.getRequirments()) {
-            if (this.getRequirments().walkable !== this.getMap().getNode(target).isWalkable()) {
+        // cheack cost
+
+        for (var move in cost.moves) {
+            if (this.getPlayer().getMove(move) + cost.getMove(move) < 0) {
+                return false
+            }
+        }
+
+        if (cost.hasMP()) {
+            if (this.getPlayer().getMP() + cost.getMP() <= 0) {
                 return false
             }
         }
@@ -137,7 +148,15 @@ export default class Action extends GameObject {
      * @param {Vec2} flip 
      */
     use(position) {
-        if (!this.check(position)) {
+        // creat cost
+        let cost = new Effect({
+            style: "cost",
+            playerEffect: this.getCost(),
+            target: this.getPosition(),
+            source: this
+        })
+
+        if (!this.check(position, cost.getPlayerEffect())) {
             console.debug(`${this.getPlayer()} failed to use ${this} on ${position}`)
             return false
         }
@@ -145,12 +164,7 @@ export default class Action extends GameObject {
         console.debug(`${this.getPlayer()} uses ${this} on ${position}`)
 
         // apply cost
-        new Effect({
-            style: "cost",
-            playerEffect: this.getCost(),
-            target: this.getPosition(),
-            source: this
-        })
+        cost.activate()
 
         // apply effects
         for (var effect of this.getEffects()) {
@@ -158,7 +172,7 @@ export default class Action extends GameObject {
                 ...effect,
                 target: position,
                 source: this
-            })
+            }).activate()
         }
 
         return true

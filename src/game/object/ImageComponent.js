@@ -9,7 +9,7 @@ export default class ImageComponent {
     }
 
     getImageUrl() {
-        return "/images/" + this.getImage()
+        return "/assets/" + this.getImage()
     }
 
     getImageObj() {

@@ -4,6 +4,7 @@ import Game from "../Game"
 import Draw from "../util/Draw"
 import Action from "../action/Action"
 import HealthComponent from "../object/HealthComponent"
+import ManaComponent from "../object/ManaComponent"
 import Item from "../item/Item"
 import Slot from "./Slot"
 import Pather from "../util/Pather"
@@ -12,7 +13,7 @@ import Skill from "../skill/Skill"
 import ImageComponent from "../object/ImageComponent"
 
 export default class Player extends GameObject.uses(
-    HealthComponent, NodeComponent, ImageComponent
+    HealthComponent, ManaComponent, NodeComponent, ImageComponent
 ) {
     constructor(config={}) {
         super(config)
@@ -29,11 +30,6 @@ export default class Player extends GameObject.uses(
 
         this.addVariable({
             name: "name"
-        })
-
-        this.addVariable({
-            name: "MP",
-            default: 100
         })
 
         this.addVariable({
@@ -218,6 +214,11 @@ export default class Player extends GameObject.uses(
         if (effect.hasMoves()) {
             this.useMoves(effect.getMoves(), effect.getQueue())
         }
+
+        if (effect.hasMP()) {
+            console.log(effect.getMP())
+            this.useMP(effect.getMP())
+        }
     }
 
     move(position, queue) {
@@ -348,11 +349,11 @@ export default class Player extends GameObject.uses(
 
         console.debug(`${this} ends their turn`)
 
-        this.set("turn", false, this.stack)
+        this.set("turn", false, queue || this.stack)
 
-        this.getMap().nextTurn()
+        this.getMap().nextTurn(queue)
 
-        this.callEndTurnCallback(this)
+        this.callEndTurnCallback(this, queue)
     }
 
     /**

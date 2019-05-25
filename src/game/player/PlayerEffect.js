@@ -28,4 +28,8 @@ export default class extends SubEffect {
             name: "moves"
         })
     }
+
+    getMove(move) {
+        return this.getMoves()[move]
+    }
 }

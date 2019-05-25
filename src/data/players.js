@@ -21,7 +21,6 @@ const baseActions = [
 
 const solder = {
     name: "Foor Solder",
-    color: "gray",
     image: "white.png",
     controller: baseAiContoller,
     actions: [
@@ -35,14 +34,14 @@ const solder = {
 /// player characters ///
 
 const edenBlack = {
-    name: "Eden Black",
-    color: "black",
+    name: "Felix Moses",
     image: "felix.jpg",
     controller: "player",
     actions: [
         ...baseActions,
         actions.slice,
-        actions.shoot
+        actions.shoot,
+        actions.firebolt
     ],
     equiped: [
         items.sword,

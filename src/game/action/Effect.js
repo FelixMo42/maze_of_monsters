@@ -22,11 +22,9 @@ export default class {
 
         this.style = config.style || this.source.getDefaultStyle()
         this.size = config.style || this.source.getDefaultSize()
-
-        // activate effect
-
-        this.activate()
     }
+
+
 
     /**
      * 
