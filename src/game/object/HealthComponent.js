@@ -1,5 +1,5 @@
 import Draw from "../util/Draw"
-import skills from "../../data/skills"
+import skills from "../data/skills"
 
 export default class HealthComponent {
     initializer() {

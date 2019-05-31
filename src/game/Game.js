@@ -4,9 +4,9 @@ import Vec2 from "./util/Vec2"
 import PlayerController from "./util/PlayerController"
 import Map from "./map/Map"
 
-import players from "../data/players"
-import structures from "../data/structures"
-import items from "../data/items"
+import players from "./data/players"
+import structures from "./data/structures"
+import items from "./data/items"
 
 import "./Game.css"
 

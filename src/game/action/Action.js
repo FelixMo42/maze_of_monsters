@@ -1,6 +1,5 @@
-import GameObject from "../object/GameObject";
-import Effect from "./Effect";
-import PlayerEffect from "../player/PlayerEffect";
+import GameObject from "../object/GameObject"
+import Effect from "./Effect"
 
 export default class Action extends GameObject {
     constructor(config) {

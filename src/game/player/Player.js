@@ -38,11 +38,6 @@ export default class Player extends GameObject.uses(
         })
 
         this.addVariable({
-            name: "color",
-            default: "blue"
-        })
-
-        this.addVariable({
             name: "maxMoves",
             default: {},
             setter: false,

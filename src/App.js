@@ -1,5 +1,5 @@
 import Game from './game/Game'
-//import React from "react"
+import Editor from './editor/Editor'
 
 let App = () => {
     return "mode invalid"
@@ -11,16 +11,8 @@ if (mode === "game") {
     App = Game
 }
 
-if (mode === "pathfinder") {
-    App = class AppClass extends Game {
-        createWorld() {
-            var state = {}
-
-            state.world = new Map({})
-
-            return state
-        }
-    }
+if (mode === "editor") {
+    App = Editor
 }
 
 export default App 
