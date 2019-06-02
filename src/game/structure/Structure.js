@@ -2,7 +2,7 @@ import GameObject from "../object/GameObject";
 import NodeComponent from "../object/NodeComponent";
 import Draw from "../util/Draw";
 
-export default class extends GameObject.uses(
+export default class Structure extends GameObject.uses(
     NodeComponent
 ) {
     constructor(config={}) {

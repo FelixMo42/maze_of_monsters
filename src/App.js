@@ -1,18 +1,28 @@
 import Game from './game/Game'
-import Editor from './editor/Editor'
+
+import actions from './game/data/actions'
+import items from './game/data/items'
+
 
 let App = () => {
     return "mode invalid"
 }
 
-let mode = "game"
+let mode = "test"
 
 if (mode === "game") {
-    App = Game
+  //  App = Game
 }
 
-if (mode === "editor") {
-    App = Editor
+if (mode === "test") {
+    async function test() {
+        await actions.load(0)
+    
+        console.log(actions[0])
+    }
+    test()
+
+    App = () => "test mode"
 }
 
 export default App 
