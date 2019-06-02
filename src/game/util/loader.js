@@ -1,18 +1,16 @@
 export const data = "http://localhost:3001/api"
 
-export default function loader(Type) {
-    var type = Type.name.toLowerCase()
-
+export default function loader(type) {
     var list = {}
 
     list.load = async (id) => {
-        console.debug(`loading ${data}/${type.toLowerCase()}/${id}`)
-        let response = await fetch(`${data}/${type.toLowerCase()}/${id}`)
+        let response = await fetch(`${data}/${type}/${id}`)
         let config = await response.json()
-        let action = new Type(config)
 
-        list[config.name] = action
-        list[id] = action
+        list[config.name] = config
+        list[id] = config
+
+        return config
     }
 
     return new Proxy(list, {

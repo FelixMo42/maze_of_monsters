@@ -1,28 +1,16 @@
-import Game from './game/Game'
+/*import Game from './game/Game'
 
-import actions from './game/data/actions'
-import items from './game/data/items'
+export default Game*/
 
+import React from "react"
+import { initialize } from "./game/settings"
 
-let App = () => {
-    return "mode invalid"
+export default class App extends React.Component { 
+  componentDidMount() {
+    initialize()
+  }
+
+  render() {
+    return <div>Hi!</div>
+  }
 }
-
-let mode = "test"
-
-if (mode === "game") {
-  //  App = Game
-}
-
-if (mode === "test") {
-    async function test() {
-        await actions.load(0)
-    
-        console.log(actions[0])
-    }
-    test()
-
-    App = () => "test mode"
-}
-
-export default App 

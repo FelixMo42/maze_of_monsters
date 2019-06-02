@@ -1,22 +1,22 @@
-import Game from "../Game";
+import { game } from "../Game";
 import Vec2 from "./Vec2";
 
 export default class {
     /// getters ///
 
     static getContext(layer) {
-        return Game.getInstance().context
+        return game.context
     }
 
     static getScale(layer) {
-        return Game.getInstance().scale
+        return game.scale
     }
 
     /**
      * 
      */
     static getMousePos() {
-        return Game.getInstance().mousePos
+        return game.mousePos
     }
 
     static toGlobal(num) {

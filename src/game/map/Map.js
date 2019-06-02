@@ -1,6 +1,6 @@
 import GameObject from "../object/GameObject"
 import Vec2 from "../util/Vec2";
-import Game from "../Game";
+import { game } from "../Game";
 import Node from "./Node";
 import Item from "../item/Item";
 import Structure from "../structure/Structure";
@@ -55,7 +55,7 @@ export default class Map extends GameObject {
 
         // register callbacks
 
-        Game.getInstance().registerUpdateCallback((dt) => {this.manageTurn(dt)})
+        game.registerUpdateCallback((dt) => {this.manageTurn(dt)})
     }
 
     /// Turn Managment Functions ///

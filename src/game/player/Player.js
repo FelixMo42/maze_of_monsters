@@ -1,6 +1,6 @@
 import GameObject from "../object/GameObject"
 import NodeComponent from "../object/NodeComponent"
-import Game from "../Game"
+import { game } from "../Game"
 import Draw from "../util/Draw"
 import Action from "../action/Action"
 import HealthComponent from "../object/HealthComponent"
@@ -177,7 +177,7 @@ export default class Player extends GameObject.uses(
 
         // register callbacks
 
-        Game.getInstance().registerUpdateCallback((dt) => this.processStack(dt))
+        game.registerUpdateCallback((dt) => this.processStack(dt))
     }
 
     /**

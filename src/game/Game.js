@@ -3,17 +3,14 @@ import Callback from "./util/Callback"
 import Vec2 from "./util/Vec2"
 import PlayerController from "./util/PlayerController"
 import Map from "./map/Map"
-import players from "./data/players"
-import structures from "./data/structures"
-import items from "./data/items"
+import players from "./player/players"
+import structures from "./structure/structures"
+import items from "./item/items"
 import "./Game.css"
 
-let instance = undefined
+export let game = undefined
 
 export default class Game extends React.Component {
-    static getInstance() {
-        return instance
-    }
 
     FPS = 10
 
@@ -25,7 +22,7 @@ export default class Game extends React.Component {
 
     constructor(props) {
         super(props)
-        instance = this
+        game = this
 
         this.onUpdateCallback.setup(this, "UpdateCallback")
         this.onDrawCallback.setup(this, "DrawCallback")
@@ -36,8 +33,10 @@ export default class Game extends React.Component {
         this.state = this.createWorld()
     }
 
-    createWorld() {
+    loadWorld() {
         var state = {}
+
+        //state.map = 
 
         // create world
 

@@ -1,8 +1,8 @@
 import React from "react"
-import Game from "../Game";
-import Draw from "./Draw";
-import Pather from "./Pather";
-import Vec2 from "./Vec2";
+import { game } from "../Game"
+import Draw from "./Draw"
+import Pather from "./Pather"
+import Vec2 from "./Vec2"
 
 export default class extends React.Component {
     constructor(props) {
@@ -26,8 +26,8 @@ export default class extends React.Component {
             )
         }
 
-        Game.getInstance().registerDrawCallback(() => {this.drawActionOverlay()})
-        Game.getInstance().registerMouseDownCallback(() => {this.activateAction()})
+        game.registerDrawCallback(() => {this.drawActionOverlay()})
+        game.registerMouseDownCallback(() => {this.activateAction()})
 
         this.mousePos = new Vec2(-1, -1)
 
