@@ -6,12 +6,12 @@ import Map from "./map/Map"
 import players from "./player/players"
 import structures from "./structure/structures"
 import items from "./item/items"
+import { initialize, settings } from "./settings"
 import "./Game.css"
 
 export let game = undefined
 
 export default class Game extends React.Component {
-
     FPS = 10
 
     onUpdateCallback = new Callback()
@@ -30,43 +30,9 @@ export default class Game extends React.Component {
         this.onMouseMovedCallback.setup(this, "MouseMovedCallback")
         this.onMouseDownCallback.setup(this, "MouseDownCallback")
 
-        this.state = this.createWorld()
-    }
-
-    loadWorld() {
-        var state = {}
-
-        //state.map = 
-
-        // create world
-
-        var world = state.world = new Map({
-            width: 10,
-            height: 11
-        })
-
-        world.addStructure(structures.wall, new Vec2(3,4))
-        world.addStructure(structures.wall, new Vec2(3,5))
-        world.addStructure(structures.wall, new Vec2(3,6))
-
-        // add player character
-
-        state.players = [
-            world.addPlayer(players.edenBlack, new Vec2(0,5))
-        ]
-
-        // add enemies
-
-        world.addPlayer(players.solder, new Vec2(9,10))
-        world.addPlayer(players.solder, new Vec2(9,0))
-        world.addPlayer(players.solder, new Vec2(2,10))
-        world.addPlayer(players.solder, new Vec2(2,0))
-        
-        world.addItem(items.note, new Vec2(1, 4))
-
-        // return state
-
-        return state
+        this.state = {
+            load: initialize()
+        }
     }
 
     /// mount callbacks ///
@@ -145,8 +111,7 @@ export default class Game extends React.Component {
                     onMouseMove={(e) => {this.onMouseMoved(e)}}
                     onClick={(e) => {this.onMouseDown(e)}}
                 />
-
-                <PlayerController players={this.state.players} />
+                <PlayerController loader={this.state.load} />
             </div>
         )
     }

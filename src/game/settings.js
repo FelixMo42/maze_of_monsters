@@ -1,14 +1,28 @@
 import loader from "./util/loader"
+import Map from "./map/Map";
+import Player from "./player/Player";
+import Vec2 from "./util/Vec2";
 
 export const settings = loader("settings")
 
 export async function initialize() {
-    console.debug("------ loading ------")
+    console.debug("--- loading data ---")
 
-    let game = await settings.load("game")
-    console.debug("loaded game settings")
+    await Promise.all([
+        settings.load("game")
+    ])
 
-    console.log(game)
+    let players = [
+        new Player({
+            ...settings.game.playerCharacter
+        })
+    ]
 
-    console.debug("--- done  loading ---")
+    let map = new Map(settings.game.startingMap)
+
+    map.addPlayer(players[0], new Vec2(1,1))
+
+    console.debug("--- done loading ---")
+
+    return {map, players}
 }

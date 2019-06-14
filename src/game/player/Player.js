@@ -68,6 +68,7 @@ export default class Player extends GameObject.uses(
         this.addVariable({
             name: "actions",
             setter: false,
+            default: [],
             init: (states) => {
                 var actions = []
                 

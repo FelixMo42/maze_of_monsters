@@ -9,22 +9,27 @@ export default class extends React.Component {
         super(props)
 
         this.state = {
-            viewMode: "items"
+            viewMode: "items",
+            players: []
         }
 
-        for (var player of props.players) {
-            player.registerStartTurnCallback(
-                (player) => {this.onStartTurnCallback(player)}
-            )
+        this.props.loader.then(({map, players}) => {
+            this.setState({players: players})
 
-            player.registerUpdateStateCallback(
-                () => {this.forceUpdate()}
-            )
-
-            player.registerEndTurnCallback(
-                (player) => {this.onEndTurnCallback(player)}
-            )
-        }
+            for (var player of players) {
+                player.registerStartTurnCallback(
+                    (player) => {this.onStartTurnCallback(player)}
+                )
+    
+                player.registerUpdateStateCallback(
+                    () => {this.forceUpdate()}
+                )
+    
+                player.registerEndTurnCallback(
+                    (player) => {this.onEndTurnCallback(player)}
+                )
+            }
+        })
 
         game.registerDrawCallback(() => {this.drawActionOverlay()})
         game.registerMouseDownCallback(() => {this.activateAction()})
@@ -276,21 +281,22 @@ export default class extends React.Component {
     }
 
     renderActionView() {
+        console.log(this.state)
         return (
             <div>
                 <h3 style={this.styles.header}>Active Actions</h3>
                 <ul>
-                    { this.state.player.getActions(true).map(action => 
+                    { this.state.viewed.getActions(true).map(action => 
                         <li key={ action.getKey() }>
                             { this.actionName(action) }
                         </li>
                     ) }
                 </ul>
-                { this.state.player.getItemBookTypes(true).map(itemBook => 
+                { this.state.viewed.getItemBookTypes(true).map(itemBook => 
                     <div key={ itemBook }>
                         <h3 style={this.styles.header}> Item Actions : { itemBook } </h3>
                         <ul>
-                            { this.state.player.getItemBook(itemBook).map(action =>
+                            { this.state.viewed.getItemBook(itemBook).map(action =>
                                 <li key={ action.name }> { action.name } </li>
                             ) }
                         </ul>
@@ -332,7 +338,7 @@ export default class extends React.Component {
     }
 
     renderPlayers() {
-        return this.props.players.map( (player) => this.renderPlayer(player) )
+        return this.state.players.map( (player) => this.renderPlayer(player) )
     }
 
     renderPlayer(player) {

@@ -31,13 +31,13 @@ export const loaderFuncs = {
 }
 
 export const loaders = {
-    Player : players,
-    Skill : skills,
-    Action : actions,
-    Item : items,
-    Map : maps,
-    Structure : structures,
-    Tile : tiles
+    player : players,
+    skill : skills,
+    action : actions,
+    item : items,
+    map : maps,
+    structure : structures,
+    tile : tiles
 }
 
 export default function loader(type) {
@@ -46,17 +46,16 @@ export default function loader(type) {
     list.load = async (id) => {
         let response = await fetch(`${source}/${type}/${id}`)
         let text = await response.text()
-
-        console.log(text)
+        let loads = []
 
         let config = JSON.parse(text, (key, value) => {
             if (!(value instanceof Object)) { return value }
 
-            if ("@type" in value) {
-                if ("id" in value) {
-                    loaders[value["@type"]].load(value["id"])
-                }
+            if ("@class" in value) {
+                loads.push( loaders[value["@class"]].load(value["id"]) )
+            }
 
+            if ("@type" in value) {
                 return new loaderTypes[value["@type"]](value)
             }
 
@@ -69,6 +68,10 @@ export default function loader(type) {
 
         list[config.name] = config
         list[id] = config
+
+        await Promise.all(loads)
+
+        console.debug(`done loading ${type}, ${id}`)
 
         return config
     }
