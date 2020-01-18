@@ -8,12 +8,6 @@ export default class {
         this.target = config.target
         this.queue = config.queue || this.source.getQueue()
 
-        // get effects
-
-        this.playerEffect = config.playerEffect
-        this.tileEffect = config.tileEffect
-        this.itemEffect = config.itemEffect
-
         // dc stuff
 
         this.aim = config.aim
@@ -23,8 +17,6 @@ export default class {
         this.style = config.style || this.source.getDefaultStyle()
         this.size = config.style || this.source.getDefaultSize()
     }
-
-
 
     /**
      * 

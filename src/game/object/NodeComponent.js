@@ -1,7 +1,6 @@
 export default class NodeComponent {
     initializer(config) {
-        this.data.node = config.node
-        this.state.node = config.node
+        this.data.node = this.state.node = config.node
     }
 
     /// Node Getter/Setter ///
@@ -28,6 +27,7 @@ export default class NodeComponent {
         this.setData({
             node: node
         })
+
         this.setState({
             node: node
         }, queue)

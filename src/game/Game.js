@@ -2,36 +2,47 @@ import React from "react"
 import Callback from "./util/Callback"
 import Vec2 from "./util/Vec2"
 import PlayerController from "./util/PlayerController"
-import Map from "./map/Map"
-import players from "./player/players"
-import structures from "./structure/structures"
-import items from "./item/items"
-import { initialize, settings } from "./settings"
+import { initialize } from "./settings"
 import "./Game.css"
 
-export let game = undefined
-
-export default class Game extends React.Component {
-    FPS = 10
-
+export let game = new class {
     onUpdateCallback = new Callback()
     onDrawCallback = new Callback()
     onKeyDownCallback = new Callback()
     onMouseMovedCallback = new Callback()
     onMouseDownCallback = new Callback()
 
-    constructor(props) {
-        super(props)
-        game = this
-
+    constructor() {
         this.onUpdateCallback.setup(this, "UpdateCallback")
         this.onDrawCallback.setup(this, "DrawCallback")
         this.onKeyDownCallback.setup(this, "KeyDownCallback")
         this.onMouseMovedCallback.setup(this, "MouseMovedCallback")
         this.onMouseDownCallback.setup(this, "MouseDownCallback")
+    }
+
+    getContext() {
+        return this.game.context
+    }
+
+    getScale() {
+        return this.game.scale
+    }
+
+    getMousePos() {
+        return this.game.mousePos
+    }
+} ()
+
+export default class Game extends React.Component {
+    FPS = 10
+
+    constructor(props) {
+        super(props)
+
+        game.game = this
 
         this.state = {
-            load: initialize()
+            load: (props.world || initialize)()
         }
     }
 
@@ -63,15 +74,15 @@ export default class Game extends React.Component {
 
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
         
-        this.onUpdateCallback.call(dt)
-        this.onDrawCallback.call(dt)
+        game.onUpdateCallback.call(dt)
+        game.onDrawCallback.call(dt)
     }
 
     /// using input callbacks ///
 
     onMouseDown(e) {
         e.preventDefault()
-        this.onMouseDownCallback.call()
+        game.onMouseDownCallback.call()
     }
 
     onMouseMoved(e) {
@@ -80,12 +91,12 @@ export default class Game extends React.Component {
             Math.floor(e.clientX/this.scale),
             Math.floor(e.clientY/this.scale)
         )
-        this.onMouseMovedCallback.call()
+        game.onMouseMovedCallback.call()
     }
 
     onKeyDown(e) {
         e.preventDefault()
-        this.onKeyDownCallback.call()
+        game.onKeyDownCallback.call()
     }
 
     contextMenu(e) {

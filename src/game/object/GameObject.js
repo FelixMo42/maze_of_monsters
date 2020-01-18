@@ -1,4 +1,5 @@
-import Value from "../util/Value";
+import Value from "../util/Value"
+import { loaders } from "../util/loader"
 
 let uid = 0;
 
@@ -42,8 +43,17 @@ export default class GameObject {
         this.addCallback({
             name: "updateStateCallback"
         })
-
-        this.config = config
+        
+        if ("@class" in config) {
+            this.config = {
+                ...loaders[config["@class"]][config["id"]],
+                ...config
+            }
+        } else {
+            this.config = {
+                ...config
+            }
+        }
 
         this.data = {
             name: config.name,

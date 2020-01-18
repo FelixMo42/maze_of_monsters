@@ -14,13 +14,14 @@ export async function initialize() {
 
     let players = [
         new Player({
-            ...settings.game.playerCharacter
+            ...settings.game.playerCharacter,
+            controller: "player"
         })
     ]
 
     let map = new Map(settings.game.startingMap)
 
-    map.addPlayer(players[0], new Vec2(1,1))
+    map.setPlayer(players[0], new Vec2(1,1))
 
     console.debug("--- done loading ---")
 

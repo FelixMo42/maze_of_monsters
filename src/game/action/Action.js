@@ -147,7 +147,7 @@ export default class Action extends GameObject {
      * @param {Vec2} flip 
      */
     use(position) {
-        // creat cost
+        // create cost
         let cost = new Effect({
             style: "cost",
             playerEffect: this.getCost(),

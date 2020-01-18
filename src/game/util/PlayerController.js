@@ -8,12 +8,14 @@ export default class extends React.Component {
     constructor(props) {
         super(props)
 
+        let loader = props.loader
+
         this.state = {
             viewMode: "items",
             players: []
         }
 
-        this.props.loader.then(({map, players}) => {
+        loader.then(({map, players}) => {
             this.setState({players: players})
 
             for (var player of players) {
@@ -45,7 +47,7 @@ export default class extends React.Component {
 
     drawActionOverlay() {
         Draw.rectangle({
-            position: Draw.getMousePos(),
+            position: game.getMousePos(),
             fill: "rgba(255,255,255,.5)",
             //outline: "black",
         })
@@ -64,10 +66,10 @@ export default class extends React.Component {
 
     drawMoveActionOverlay() {
         if (
-            !this.mousePos.equals(Draw.getMousePos()) &&
-            this.state.player.getMap().isInBounds(Draw.getMousePos())
+            !this.mousePos.equals(game.getMousePos()) &&
+            this.state.player.getMap().isInBounds(game.getMousePos())
         ) {
-            this.mousePos = Draw.getMousePos()
+            this.mousePos = game.getMousePos()
             var pather = new Pather(this.state.player.getMap())
             this.path = pather.path(this.state.player.getPosition(), this.mousePos)
         }
@@ -281,7 +283,6 @@ export default class extends React.Component {
     }
 
     renderActionView() {
-        console.log(this.state)
         return (
             <div>
                 <h3 style={this.styles.header}>Active Actions</h3>

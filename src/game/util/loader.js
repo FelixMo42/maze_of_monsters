@@ -1,11 +1,3 @@
-import Player from "../player/Player"
-import Skill from "../skill/Skill"
-import Action from "../action/Action"
-import Item from "../item/Item"
-import Map from "../map/Map"
-import Tile from "../tile/Tile"
-import Structure from "../structure/Structure"
-
 import skills from "../skill/skills"
 import players from "../player/players"
 import items from "../item/items"
@@ -17,17 +9,9 @@ import tiles from "../tile/tiles"
 export const source = "http://localhost:3001/api"
 
 export const loaderTypes = {
-    Player,
-    Skill,
-    Action,
-    Item,
-    Map,
-    Structure,
-    Tile
 }
 
 export const loaderFuncs = {
-
 }
 
 export const loaders = {
@@ -42,6 +26,7 @@ export const loaders = {
 
 export default function loader(type) {
     var list = {}
+    var id = -1
 
     list.load = async (id) => {
         let response = await fetch(`${source}/${type}/${id}`)
@@ -66,14 +51,20 @@ export default function loader(type) {
             return value
         })
 
-        list[config.name] = config
-        list[id] = config
+        list.register(config)
 
         await Promise.all(loads)
 
         console.debug(`done loading ${type}, ${id}`)
 
         return config
+    }
+
+    list.register = (config) => {
+        list[config.name] = config
+        list[id] = config
+
+        return {"@class": type, "id": id}
     }
 
     return new Proxy(list, {

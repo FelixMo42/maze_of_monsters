@@ -1,7 +1,8 @@
 export default class ImageComponent {
     initializer(config) {
         this.addVariable({
-            name: "image"
+            name: "image",
+            default: "white.png"
         })
 
         this.imageObj = new Image()

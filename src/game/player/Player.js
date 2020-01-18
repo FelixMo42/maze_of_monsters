@@ -162,11 +162,11 @@ export default class Player extends GameObject.uses(
     
         this.addCallback({
             name: "startTurnCallback"
-        });
+        })
 
         this.addCallback({
             name: "endTurnCallback"
-        });
+        })
 
         for (var itemState of config.equiped || []) {
             var item = new Item(itemState)
@@ -482,7 +482,7 @@ export default class Player extends GameObject.uses(
         this.removeArrayItem("actions", action, queue)
     }
 
-    /// item book ///
+    /// item actions TODO: rename func to ItemAction///
 
     addItemBookAction(itemType, action, queue) {
         this.mirror((data, mode) => {

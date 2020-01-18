@@ -4,23 +4,8 @@ import Vec2 from "./Vec2";
 export default class {
     /// getters ///
 
-    static getContext(layer) {
-        return game.context
-    }
-
-    static getScale(layer) {
-        return game.scale
-    }
-
-    /**
-     * 
-     */
-    static getMousePos() {
-        return game.mousePos
-    }
-
     static toGlobal(num) {
-        return num * this.getScale()
+        return num * game.getScale()
     }
 
     /// drawing functions ///
@@ -30,7 +15,7 @@ export default class {
      * @param {*} opts 
      */
     static rectangle(opts) {
-        var ctx = this.getContext(opts.layer)
+        var ctx = game.getContext(opts.layer)
         ctx.save()
     
         var x = opts.position.getX()
@@ -39,20 +24,20 @@ export default class {
         if ("fill" in opts) {
             ctx.fillStyle = opts.fill
             ctx.fillRect(
-                x * this.getScale(),
-                y * this.getScale(),
-                (opts.width || 1) * this.getScale(),
-                (opts.height || 1) * this.getScale()
+                x * game.getScale(),
+                y * game.getScale(),
+                (opts.width || 1) * game.getScale(),
+                (opts.height || 1) * game.getScale()
             )
         }
 
         if ("outline" in opts) {
             ctx.strokeStyle = opts.outline
             ctx.strokeRect(
-                x * this.getScale(),
-                y * this.getScale(),
-                (opts.width || 1) * this.getScale(),
-                (opts.height || 1) * this.getScale()
+                x * game.getScale(),
+                y * game.getScale(),
+                (opts.width || 1) * game.getScale(),
+                (opts.height || 1) * game.getScale()
             )
         }
 
@@ -64,7 +49,7 @@ export default class {
      * @param {*} opts 
      */
     static circle(opts) {
-        var ctx = this.getContext(opts.layer)
+        var ctx = game.getContext(opts.layer)
         ctx.save()
 
         ctx.beginPath();
@@ -92,7 +77,7 @@ export default class {
     }
 
     static line(opts) {
-        var ctx = this.getContext(opts.layer)
+        var ctx = game.getContext(opts.layer)
         ctx.save()
 
         ctx.beginPath()
@@ -118,7 +103,7 @@ export default class {
     }
 
     static text(opts) {
-        var ctx = this.getContext(opts.layer)
+        var ctx = game.getContext(opts.layer)
         ctx.save()
 
         ctx.fillStyle = opts.fill || "black"
@@ -136,7 +121,7 @@ export default class {
     }
 
     static image(opts) {
-        var ctx = this.getContext(opts.layer)
+        var ctx = game.getContext(opts.layer)
         ctx.save()
         ctx.beginPath()
         
