@@ -3,6 +3,10 @@
     <head>
         <title>4x</title>
         <style>
+            * {
+                box-sizing: border-box;
+            }
+
             body {
                 margin: 0px;
                 overflow: hidden;
@@ -19,19 +23,36 @@
             article {
                 margin: 10px;
                 border: 1px solid white;
-                border-radius: 20px;
+                border-radius: 5px;
                 min-width: 250px;
                 background-color: black;
+                display: flex;
+                flex-direction: column;
             }
 
             article h1 {
                 background-color: gray;
-                margin-top: 0px;
+                margin: 0px;
                 padding: 5px 15px;
-                border-top-left-radius: 20px;
-                border-top-right-radius: 20px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
                 font-size: 1em;
                 text-align: center;
+            }
+
+            article p {
+                margin: 10px;
+            }
+
+            article button {
+                margin: 10px;
+                border-radius: 5px;
+                background-color: darkcyan;
+                border: none;
+                outline: none;
+                padding: 5px;
+                color: white;
+                font: inherit;
             }
 
             canvas {
@@ -42,8 +63,11 @@
     </head>
     <body>
         <main id="ui">
-            
-            <article><h1>Selected: Pawn</h1></article>
+            <article id="selected"><h1>Selected: Pawn</h1></article>
+            <article>
+                <h1>Actions</h1>
+                <button id="endturn">End Turn</button>
+            </article>
         </main>
         <script src="./res/index.js"></script>
     </body>

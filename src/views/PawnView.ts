@@ -1,7 +1,8 @@
 import { Graphics, Text } from "pixi.js"
-import { Pawn, onclick } from "../logic/world"
 import { hex2pixel } from "../utils/hex"
 import { use } from "../utils/use"
+import { Pawn } from "../logic/pawn"
+import { onclick } from "../logic/inputs"
 
 export function PawnView(pawn: Pawn) {
     const g = new Graphics()

@@ -1,5 +1,3 @@
-import { World, WORLD, update } from "../logic/world"
-
 const GAME_EVENTS = new Map<Function, Function[]>()
 
 export function GameEvent<A, B>(cb: (_: A) => B) {

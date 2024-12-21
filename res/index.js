@@ -14661,13 +14661,13 @@ ${parts.join("\n")}
   });
 
   // node_modules/pixi.js/lib/rendering/renderers/shared/geometry/utils/transformVertices.mjs
-  function transformVertices(vertices, m3, offset, stride, size) {
-    const a2 = m3.a;
-    const b2 = m3.b;
-    const c2 = m3.c;
-    const d3 = m3.d;
-    const tx = m3.tx;
-    const ty = m3.ty;
+  function transformVertices(vertices, m4, offset, stride, size) {
+    const a2 = m4.a;
+    const b2 = m4.b;
+    const c2 = m4.c;
+    const d3 = m4.d;
+    const tx = m4.tx;
+    const ty = m4.ty;
     offset || (offset = 0);
     stride || (stride = 2);
     size || (size = vertices.length / stride - offset);
@@ -14794,8 +14794,8 @@ ${parts.join("\n")}
             return points;
           }
           const n2 = Math.ceil(2.3 * Math.sqrt(rx + ry));
-          const m3 = n2 * 8 + (dx ? 4 : 0) + (dy ? 4 : 0);
-          if (m3 === 0) {
+          const m4 = n2 * 8 + (dx ? 4 : 0) + (dy ? 4 : 0);
+          if (m4 === 0) {
             return points;
           }
           if (n2 === 0) {
@@ -14808,7 +14808,7 @@ ${parts.join("\n")}
           let j1 = 0;
           let j22 = n2 * 4 + (dx ? 2 : 0) + 2;
           let j3 = j22;
-          let j4 = m3;
+          let j4 = m4;
           let x0 = dx + rx;
           let y0 = dy;
           let x1 = x3 + x0;
@@ -14908,12 +14908,12 @@ ${parts.join("\n")}
 
   // node_modules/pixi.js/lib/scene/graphics/shared/utils/getOrientationOfPoints.mjs
   function getOrientationOfPoints(points) {
-    const m3 = points.length;
-    if (m3 < 6) {
+    const m4 = points.length;
+    if (m4 < 6) {
       return 1;
     }
     let area = 0;
-    for (let i2 = 0, x1 = points[m3 - 2], y1 = points[m3 - 1]; i2 < m3; i2 += 2) {
+    for (let i2 = 0, x1 = points[m4 - 2], y1 = points[m4 - 1]; i2 < m4; i2 += 2) {
       const x22 = points[i2];
       const y2 = points[i2 + 1];
       area += (x22 - x1) * (y2 + y1);
@@ -15512,35 +15512,35 @@ ${parts.join("\n")}
         return filterPoints(bridge, bridge.next);
       }
       function findHoleBridge(hole, outerNode) {
-        var p2 = outerNode, hx = hole.x, hy = hole.y, qx = -Infinity, m3;
+        var p2 = outerNode, hx = hole.x, hy = hole.y, qx = -Infinity, m4;
         do {
           if (hy <= p2.y && hy >= p2.next.y && p2.next.y !== p2.y) {
             var x3 = p2.x + (hy - p2.y) * (p2.next.x - p2.x) / (p2.next.y - p2.y);
             if (x3 <= hx && x3 > qx) {
               qx = x3;
-              m3 = p2.x < p2.next.x ? p2 : p2.next;
-              if (x3 === hx) return m3;
+              m4 = p2.x < p2.next.x ? p2 : p2.next;
+              if (x3 === hx) return m4;
             }
           }
           p2 = p2.next;
         } while (p2 !== outerNode);
-        if (!m3) return null;
-        var stop = m3, mx = m3.x, my = m3.y, tanMin = Infinity, tan;
-        p2 = m3;
+        if (!m4) return null;
+        var stop = m4, mx = m4.x, my = m4.y, tanMin = Infinity, tan;
+        p2 = m4;
         do {
           if (hx >= p2.x && p2.x >= mx && hx !== p2.x && pointInTriangle(hy < my ? hx : qx, hy, mx, my, hy < my ? qx : hx, hy, p2.x, p2.y)) {
             tan = Math.abs(hy - p2.y) / (hx - p2.x);
-            if (locallyInside(p2, hole) && (tan < tanMin || tan === tanMin && (p2.x > m3.x || p2.x === m3.x && sectorContainsSector(m3, p2)))) {
-              m3 = p2;
+            if (locallyInside(p2, hole) && (tan < tanMin || tan === tanMin && (p2.x > m4.x || p2.x === m4.x && sectorContainsSector(m4, p2)))) {
+              m4 = p2;
               tanMin = tan;
             }
           }
           p2 = p2.next;
         } while (p2 !== stop);
-        return m3;
+        return m4;
       }
-      function sectorContainsSector(m3, p2) {
-        return area(m3.prev, m3, p2.prev) < 0 && area(p2.next, m3, m3.next) < 0;
+      function sectorContainsSector(m4, p2) {
+        return area(m4.prev, m4, p2.prev) < 0 && area(p2.next, m4, m4.next) < 0;
       }
       function indexCurve(start, minX, minY, invSize) {
         var p2 = start;
@@ -17585,16 +17585,16 @@ ${parts.join("\n")}
             })
           });
           const { x0, y0, x1, y1 } = this;
-          const m3 = new Matrix();
+          const m4 = new Matrix();
           const dx = x1 - x0;
           const dy = y1 - y0;
           const dist = Math.sqrt(dx * dx + dy * dy);
           const angle = Math.atan2(dy, dx);
-          m3.translate(-x0, -y0);
-          m3.scale(1 / defaultSize, 1 / defaultSize);
-          m3.rotate(-angle);
-          m3.scale(256 / dist, 1);
-          this.transform = m3;
+          m4.translate(-x0, -y0);
+          m4.scale(1 / defaultSize, 1 / defaultSize);
+          m4.rotate(-angle);
+          m4.scale(256 / dist, 1);
+          this.transform = m4;
           this._styleKey = null;
         }
         get styleKey() {
@@ -20248,10 +20248,10 @@ ${parts.join("\n")}
     const style = { ...defaultStyle, ...value };
     if (style.texture) {
       if (style.texture !== Texture.WHITE) {
-        const m3 = style.matrix?.clone().invert() || new Matrix();
-        m3.translate(style.texture.frame.x, style.texture.frame.y);
-        m3.scale(1 / style.texture.source.width, 1 / style.texture.source.height);
-        style.matrix = m3;
+        const m4 = style.matrix?.clone().invert() || new Matrix();
+        m4.translate(style.texture.frame.x, style.texture.frame.y);
+        m4.scale(1 / style.texture.source.width, 1 / style.texture.source.height);
+        style.matrix = m4;
       }
       const sourceStyle = style.texture.source.style;
       if (sourceStyle.addressMode === "clamp-to-edge") {
@@ -38879,23 +38879,6 @@ ${parts.join("\n")}
     }
   };
 
-  // src/utils/gameevents.ts
-  var GAME_EVENTS = /* @__PURE__ */ new Map();
-  function GameEvent(cb) {
-    const self2 = (a2) => {
-      const param = cb(a2);
-      for (const cb2 of GAME_EVENTS.get(self2)) {
-        cb2(param);
-      }
-      return param;
-    };
-    GAME_EVENTS.set(self2, []);
-    return self2;
-  }
-  function on(hook, cb) {
-    GAME_EVENTS.get(hook)?.push(cb);
-  }
-
   // src/utils/hex.ts
   var HEX_SIZE = 60;
   function Hex(q2, r2) {
@@ -38938,33 +38921,72 @@ ${parts.join("\n")}
     return hexs;
   }
 
-  // src/logic/world.ts
+  // src/logic/pawn.ts
   function Pawn(coord) {
     return {
-      coord
+      coord,
+      actionsLeft: 3,
+      actionsFull: 3
     };
   }
-  function createWorld({ mapSize }) {
-    const pawns = [
-      Pawn(Hex(0, 0))
-    ];
-    const tiles = hexsInRange(mapSize).map((hex) => ({
-      coord: hex,
-      color: randomGreen()
-    }));
+  function pawnOnTile(world, hex) {
+    return world.pawns.find((pawn) => hexEqual(pawn.coord, hex));
+  }
+
+  // src/utils/gameevents.ts
+  var GAME_EVENTS = /* @__PURE__ */ new Map();
+  function GameEvent(cb) {
+    const self2 = (a2) => {
+      const param = cb(a2);
+      for (const cb2 of GAME_EVENTS.get(self2)) {
+        cb2(param);
+      }
+      return param;
+    };
+    GAME_EVENTS.set(self2, []);
+    return self2;
+  }
+  function on(hook, cb) {
+    GAME_EVENTS.get(hook)?.push(cb);
+  }
+
+  // src/logic/tile.ts
+  function Tile(coord) {
     return {
-      selectedPawn: 0,
-      tiles,
-      pawns
+      coord,
+      color: randomGreen()
     };
   }
   function randomGreen() {
     const greenComponent = Math.floor(Math.random() * 70) + 40;
     return greenComponent << 8;
   }
+
+  // src/logic/world.ts
+  function createWorld({ mapSize }) {
+    const pawns = [
+      Pawn(Hex(0, 0))
+    ];
+    const tiles = hexsInRange(mapSize).map(Tile);
+    return {
+      selectedPawn: 0,
+      tiles,
+      pawns
+    };
+  }
   var WORLD = createWorld({ mapSize: 5 });
-  function pawnOnTile(world, hex) {
-    return world.pawns.find((pawn) => hexEqual(pawn.coord, hex));
+  var update = GameEvent((change) => {
+    change(WORLD);
+    return WORLD;
+  });
+
+  // src/logic/inputs.ts
+  function endturn() {
+    update((w2) => {
+      w2.pawns.forEach((p2) => {
+        p2.actionsLeft = p2.actionsFull;
+      });
+    });
   }
   function onclick(hex) {
     update((w2) => {
@@ -38972,17 +38994,18 @@ ${parts.join("\n")}
         w2.selectedPawn = w2.pawns.findIndex((p2) => hexEqual(p2.coord, hex));
       } else {
         const pawn = w2.pawns[w2.selectedPawn];
-        if (hexDistance(pawn.coord, hex) <= 1) {
-          pawn.coord = hex;
+        if (pawn.actionsLeft > 0) {
+          if (hexDistance(pawn.coord, hex) <= 1) {
+            pawn.coord = hex;
+          }
+          pawn.actionsLeft -= 1;
         }
-        w2.selectedPawn = (w2.selectedPawn + 1) % w2.pawns.length;
+        if (pawn.actionsLeft === 0) {
+          w2.selectedPawn = (w2.selectedPawn + 1) % w2.pawns.length;
+        }
       }
     });
   }
-  var update = GameEvent((change) => {
-    change(WORLD);
-    return WORLD;
-  });
 
   // src/utils/use.ts
   function use(data, cb) {
@@ -39061,6 +39084,22 @@ ${parts.join("\n")}
     const app = await App.createAndInit("black");
     app.viewport.addChild(GameView());
     app.viewport.fit();
+    const el = document.getElementById("selected");
+    use((w2) => w2.pawns[w2.selectedPawn].actionsLeft, () => {
+      const pawn = WORLD.pawns[WORLD.selectedPawn];
+      el?.replaceChildren(
+        m3("h1", "Selected: Pawn"),
+        m3("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`)
+      );
+    });
+    document.getElementById("endturn").onclick = () => {
+      endturn();
+    };
+  }
+  function m3(tag, ...children) {
+    const el = document.createElement(tag);
+    el.append(...children);
+    return el;
   }
   main();
 })();

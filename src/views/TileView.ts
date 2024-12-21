@@ -1,6 +1,7 @@
 import { Graphics } from "pixi.js"
-import { Tile, onclick } from "../logic/world"
 import { hex2pixel, HEX_SIZE } from "../utils/hex"
+import { Tile } from "../logic/tile"
+import { onclick } from "../logic/inputs"
 
 export function TileView(tile: Tile) {
     // Draw a hex with the right color
