@@ -55,3 +55,20 @@ export function hex2pixel(hex: Hex) {
     return { x, y }
 }
 
+// Range
+
+export function hexsInRange(size: number) {
+    const hexs: Hex[] = []
+    
+    for (let q = -size; q <= size; q++) {
+        for (let r = -size; r <= size; r++) {
+            for (let s = -size; s <= size; s++) {
+                if (q + r + s === 0) {
+                    hexs.push(Hex(q, r))
+                }
+            }
+        }
+    }
+
+    return hexs
+}

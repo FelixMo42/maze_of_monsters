@@ -1,4 +1,4 @@
-import { State, STATE, update } from "./state"
+import { World, WORLD, update } from "../logic/world"
 
 const GAME_EVENTS = new Map<Function, Function[]>()
 
@@ -20,10 +20,10 @@ export function on<A, B>(hook: (_: A) => B, cb: (_: B) => void) {
     GAME_EVENTS.get(hook)?.push(cb)
 }
 
-export function use<T>(data: (s: State) => T, cb: (t: T) => void) {
+export function use<T>(data: (s: World) => T, cb: (t: T) => void) {
     let memory: T | undefined = undefined
 
-    function check(s: State) {
+    function check(s: World) {
         const current = data(s)
         if (current !== memory) {
             cb(current)
@@ -33,5 +33,5 @@ export function use<T>(data: (s: State) => T, cb: (t: T) => void) {
 
     on(update, check)
 
-    check(STATE)
+    check(WORLD)
 }
