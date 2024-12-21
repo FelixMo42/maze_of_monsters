@@ -7,16 +7,44 @@
                 margin: 0px;
                 overflow: hidden;
                 background: black;
+                color: white;
+                font-size: 1.2rem;
+                font-family: sans-serif;
+            }
+
+            body {
+                display: flex;
+            }
+
+            article {
+                margin: 10px;
+                border: 1px solid white;
+                border-radius: 20px;
+                min-width: 250px;
+                background-color: black;
+            }
+
+            article h1 {
+                background-color: gray;
+                margin-top: 0px;
+                padding: 5px 15px;
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+                font-size: 1em;
+                text-align: center;
             }
 
             canvas {
-                width: 100vw;
-                height: 100vh;
+                position: absolute;
+                z-index: -1;
             }
         </style>
     </head>
-    <head>
-        <div></div>
+    <body>
+        <main id="ui">
+            
+            <article><h1>Selected: Pawn</h1></article>
+        </main>
         <script src="./res/index.js"></script>
-    </head>
+    </body>
 </html>

@@ -38865,7 +38865,7 @@ ${parts.join("\n")}
       });
       this.stage.addChild(this.viewport);
       this.viewport.moveCenter(0, 0);
-      this.viewport.drag().pinch().wheel();
+      this.viewport;
     }
     onkeydown(e2) {
       this.keyboard.set(e2.key, true);
@@ -38894,18 +38894,6 @@ ${parts.join("\n")}
   }
   function on(hook, cb) {
     GAME_EVENTS.get(hook)?.push(cb);
-  }
-  function use(data, cb) {
-    let memory = void 0;
-    function check(s2) {
-      const current = data(s2);
-      if (current !== memory) {
-        cb(current);
-        memory = current;
-      }
-    }
-    on(update, check);
-    check(WORLD);
   }
 
   // src/utils/hex.ts
@@ -38952,13 +38940,13 @@ ${parts.join("\n")}
 
   // src/logic/world.ts
   function Pawn(coord) {
-    return { coord };
+    return {
+      coord
+    };
   }
   function createWorld({ mapSize }) {
     const pawns = [
-      Pawn(Hex(0, 0)),
-      Pawn(Hex(2, 2)),
-      Pawn(Hex(-2, -2))
+      Pawn(Hex(0, 0))
     ];
     const tiles = hexsInRange(mapSize).map((hex) => ({
       coord: hex,
@@ -38996,13 +38984,21 @@ ${parts.join("\n")}
     return WORLD;
   });
 
-  // src/views/GameView.ts
-  function GameView() {
-    const c2 = new Container();
-    c2.addChild(WorldArrayView((s2) => s2.tiles, TileView));
-    c2.addChild(WorldArrayView((s2) => s2.pawns, PawnView));
-    return c2;
+  // src/utils/use.ts
+  function use(data, cb) {
+    let memory = void 0;
+    function check(s2) {
+      const current = data(s2);
+      if (current !== memory) {
+        cb(current);
+        memory = current;
+      }
+    }
+    on(update, check);
+    check(WORLD);
   }
+
+  // src/views/TileView.ts
   function TileView(tile) {
     const g2 = new Graphics().regularPoly(0, 0, HEX_SIZE, 6, 0).fill(tile.color);
     const { x: x3, y: y2 } = hex2pixel(tile.coord);
@@ -39012,6 +39008,8 @@ ${parts.join("\n")}
     g2.onclick = () => onclick(tile.coord);
     return g2;
   }
+
+  // src/views/PawnView.ts
   function PawnView(pawn) {
     const g2 = new Graphics().circle(0, 0, 30).fill("blue").stroke({ color: "black", width: 4 });
     use(() => pawn.coord, () => {
@@ -39029,6 +39027,14 @@ ${parts.join("\n")}
     g2.interactive = true;
     g2.onclick = () => onclick(pawn.coord);
     return g2;
+  }
+
+  // src/views/GameView.ts
+  function GameView() {
+    const c2 = new Container();
+    c2.addChild(WorldArrayView((s2) => s2.tiles, TileView));
+    c2.addChild(WorldArrayView((s2) => s2.pawns, PawnView));
+    return c2;
   }
   function WorldArrayView(data, draw) {
     const sprites = /* @__PURE__ */ new Map();

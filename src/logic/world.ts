@@ -17,15 +17,15 @@ export interface World {
 }
 
 function Pawn(coord: Hex): Pawn {
-    return { coord }
+    return {
+        coord,
+    }
 }
 
 function createWorld({ mapSize }: { mapSize: number }): World {
     // Generate pawns
     const pawns = [
         Pawn(Hex(0, 0)),
-        Pawn(Hex(2, 2)),
-        Pawn(Hex(-2, -2)),
     ]
 
     // Generate tiles
