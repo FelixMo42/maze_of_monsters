@@ -2,7 +2,7 @@ export const HEX_SIZE = 60
 
 // Base
 
-interface Hex {
+export interface Hex {
     q: number
     r: number
 }

@@ -36640,7 +36640,6 @@ ${parts.join("\n")}
   init_textureFrom();
   init_Container();
   init_Graphics();
-  init_GraphicsContext();
   init_Ticker();
   init_eventemitter3();
   var import_earcut2 = __toESM(require_earcut(), 1);
@@ -38782,7 +38781,7 @@ ${parts.join("\n")}
     }
   };
 
-  // src/hexagon.ts
+  // src/hex.ts
   var HEX_SIZE = 60;
   function Hex(q2, r2) {
     return { q: q2, r: r2 };
@@ -38801,26 +38800,46 @@ ${parts.join("\n")}
     return { x: x3, y: y2 };
   }
 
-  // src/main.ts
-  var MAP_SIZE = 5;
-  async function main() {
-    const app = await App.createAndInit("black");
-    let circleContext = new GraphicsContext().regularPoly(0, 0, HEX_SIZE - 5, 6, 0).fill(21760);
-    for (let q2 = -MAP_SIZE; q2 <= MAP_SIZE; q2++) {
-      for (let r2 = -MAP_SIZE; r2 <= MAP_SIZE; r2++) {
-        for (let s2 = -MAP_SIZE; s2 <= MAP_SIZE; s2++) {
-          if (q2 + r2 + s2 === 0) {
-            let g2 = new Graphics(circleContext);
-            const { x: x3, y: y2 } = hex2pixel({ q: q2, r: r2 });
-            g2.x = x3;
-            g2.y = y2;
-            g2.interactive = true;
-            g2.onclick = () => console.log({ q: q2, r: r2 });
-            app.add(g2);
+  // src/hexmap.ts
+  var HexMap = class {
+    size;
+    hexs;
+    constructor({ size }) {
+      this.size = size;
+      this.hexs = /* @__PURE__ */ new Map();
+      for (let q2 = -size; q2 <= size; q2++) {
+        for (let r2 = -size; r2 <= size; r2++) {
+          for (let s2 = -size; s2 <= size; s2++) {
+            if (q2 + r2 + s2 === 0) {
+              this.hexs.set(`${q2}:${r2}`, {
+                coord: { q: q2, r: r2 },
+                color: Math.random() * 5592405
+              });
+            }
           }
         }
       }
     }
+    render() {
+      const container = new Container();
+      for (const hex of this.hexs.values()) {
+        const g2 = new Graphics().regularPoly(0, 0, HEX_SIZE - 5, 6, 0).fill(hex.color);
+        container.addChild(g2);
+        const { x: x3, y: y2 } = hex2pixel(hex.coord);
+        g2.x = x3;
+        g2.y = y2;
+        g2.interactive = true;
+        g2.onclick = () => console.log(hex);
+      }
+      return container;
+    }
+  };
+
+  // src/main.ts
+  async function main() {
+    const app = await App.createAndInit("black");
+    const map = new HexMap({ size: 5 });
+    app.add(map.render());
   }
   main();
 })();
