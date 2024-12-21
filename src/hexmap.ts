@@ -1,5 +1,6 @@
-import { Container, Graphics, GraphicsContext } from "pixi.js"
+import { BlurFilter, Container, Graphics, GraphicsContext } from "pixi.js"
 import { Hex, hex2pixel, HEX_SIZE } from "./hex"
+import { onclick } from "./state";
 
 interface HexData {
     coord: Hex,
@@ -31,11 +32,15 @@ export class HexMap {
 
     render() {
         const container = new Container()
+
+        const filter = new BlurFilter()
+        filter.blur = 2
+        container.filters = [filter]
     
         for (const hex of this.hexs.values()) {
             // Draw a hex with the right color
             const g = new Graphics()
-                .regularPoly(0, 0, HEX_SIZE - 5, 6, 0)
+                .regularPoly(0, 0, HEX_SIZE, 6, 0)
                 .fill(hex.color)
             container.addChild(g)
         
@@ -46,8 +51,7 @@ export class HexMap {
         
             // What happens when we click on the next?
             g.interactive = true
-            g.onclick = () => console.log(hex)
-        
+            g.onclick = () => onclick(hex.coord)
         }
 
         return container
