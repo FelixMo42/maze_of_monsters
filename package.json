@@ -9,8 +9,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "esbuild": "0.24.0",
-    "pixi-viewport": "^6.0.3",
-    "pixi.js": "8.6.4"
+    "esbuild": "0.24.2",
+    "pixi-viewport": "6.0.3",
+    "pixi.js": "8.6.6"
   }
 }

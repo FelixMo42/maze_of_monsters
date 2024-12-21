@@ -327,7 +327,7 @@
         }
         return true;
       };
-      EventEmitter2.prototype.on = function on2(event, fn, context2) {
+      EventEmitter2.prototype.on = function on3(event, fn, context2) {
         return addListener(this, event, fn, context2, false);
       };
       EventEmitter2.prototype.once = function once(event, fn, context2) {
@@ -2478,22 +2478,25 @@ Deprecated since v${version}`);
          * @param x - The X coordinate of the point to test
          * @param y - The Y coordinate of the point to test
          * @param strokeWidth - The width of the line to check
+         * @param alignment - The alignment of the stroke, 0.5 by default
          * @returns Whether the x/y coordinates are within this rectangle
          */
-        strokeContains(x3, y2, strokeWidth) {
+        strokeContains(x3, y2, strokeWidth, alignment = 0.5) {
           const { width, height } = this;
           if (width <= 0 || height <= 0)
             return false;
           const _x = this.x;
           const _y = this.y;
-          const outerLeft = _x - strokeWidth / 2;
-          const outerRight = _x + width + strokeWidth / 2;
-          const outerTop = _y - strokeWidth / 2;
-          const outerBottom = _y + height + strokeWidth / 2;
-          const innerLeft = _x + strokeWidth / 2;
-          const innerRight = _x + width - strokeWidth / 2;
-          const innerTop = _y + strokeWidth / 2;
-          const innerBottom = _y + height - strokeWidth / 2;
+          const strokeWidthOuter = strokeWidth * (1 - alignment);
+          const strokeWidthInner = strokeWidth - strokeWidthOuter;
+          const outerLeft = _x - strokeWidthOuter;
+          const outerRight = _x + width + strokeWidthOuter;
+          const outerTop = _y - strokeWidthOuter;
+          const outerBottom = _y + height + strokeWidthOuter;
+          const innerLeft = _x + strokeWidthInner;
+          const innerRight = _x + width - strokeWidthInner;
+          const innerTop = _y + strokeWidthInner;
+          const innerBottom = _y + height - strokeWidthInner;
           return x3 >= outerLeft && x3 <= outerRight && y2 >= outerTop && y2 <= outerBottom && !(x3 > innerLeft && x3 < innerRight && y2 > innerTop && y2 < innerBottom);
         }
         /**
@@ -3606,23 +3609,21 @@ Deprecated since v${version}`);
   });
 
   // node_modules/pixi.js/lib/rendering/renderers/shared/instructions/InstructionSet.mjs
-  var _tick, InstructionSet;
+  var InstructionSet;
   var init_InstructionSet = __esm({
     "node_modules/pixi.js/lib/rendering/renderers/shared/instructions/InstructionSet.mjs"() {
       init_uid();
-      _tick = 0;
       InstructionSet = class {
         constructor() {
           this.uid = uid("instructionSet");
           this.instructions = [];
           this.instructionSize = 0;
           this.renderables = [];
-          this.tick = 0;
+          this.gcTick = 0;
         }
         /** reset the instruction set so it can be reused set size back to 0 */
         reset() {
           this.instructionSize = 0;
-          this.tick = _tick++;
         }
         /**
          * Add an instruction to the set
@@ -4773,6 +4774,7 @@ Deprecated since v${version}`);
           this.worldAlpha = 1;
           this.childrenToUpdate = /* @__PURE__ */ Object.create(null);
           this.updateTick = 0;
+          this.gcTick = 0;
           this.childrenRenderablesToUpdate = { list: [], index: 0 };
           this.structureDidChange = true;
           this.instructionSet = new InstructionSet();
@@ -4788,7 +4790,9 @@ Deprecated since v${version}`);
           root.didChange = true;
           const children = root.children;
           for (let i2 = 0; i2 < children.length; i2++) {
-            this.addChild(children[i2]);
+            const child = children[i2];
+            child._updateFlags = 15;
+            this.addChild(child);
           }
         }
         enableCacheAsTexture(options = {}) {
@@ -10696,8 +10700,7 @@ Deprecated since v${version}`);
           this.canBundle = true;
           this.allowChildren = false;
           this._roundPixels = 0;
-          this._lastUsed = 0;
-          this._lastInstructionTick = -1;
+          this._lastUsed = -1;
           this._bounds = new Bounds(0, 1, 0, 0);
           this._boundsDirty = true;
         }
@@ -17937,17 +17940,18 @@ ${parts.join("\n")}
          * @param x - The X coordinate of the point to test
          * @param y - The Y coordinate of the point to test
          * @param width - The width of the line to check
+         * @param alignment - The alignment of the stroke, 0.5 by default
          * @returns Whether the x/y coordinates are within this Circle
          */
-        strokeContains(x3, y2, width) {
+        strokeContains(x3, y2, width, alignment = 0.5) {
           if (this.radius === 0)
             return false;
           const dx = this.x - x3;
           const dy = this.y - y2;
-          const r2 = this.radius;
-          const w2 = width / 2;
+          const radius = this.radius;
+          const outerWidth = (1 - alignment) * width;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          return distance < r2 + w2 && distance > r2 - w2;
+          return distance <= radius + outerWidth && distance > radius - (width - outerWidth);
         }
         /**
          * Returns the framing rectangle of the circle as a Rectangle object
@@ -18035,23 +18039,25 @@ ${parts.join("\n")}
          * Checks whether the x and y coordinates given are contained within this ellipse including stroke
          * @param x - The X coordinate of the point to test
          * @param y - The Y coordinate of the point to test
-         * @param width
+         * @param strokeWidth - The width of the line to check
+         * @param alignment - The alignment of the stroke
          * @returns Whether the x/y coords are within this ellipse
          */
-        strokeContains(x3, y2, width) {
+        strokeContains(x3, y2, strokeWidth, alignment = 0.5) {
           const { halfWidth, halfHeight } = this;
           if (halfWidth <= 0 || halfHeight <= 0) {
             return false;
           }
-          const halfStrokeWidth = width / 2;
-          const innerA = halfWidth - halfStrokeWidth;
-          const innerB = halfHeight - halfStrokeWidth;
-          const outerA = halfWidth + halfStrokeWidth;
-          const outerB = halfHeight + halfStrokeWidth;
+          const strokeOuterWidth = strokeWidth * (1 - alignment);
+          const strokeInnerWidth = strokeWidth - strokeOuterWidth;
+          const innerHorizontal = halfWidth - strokeInnerWidth;
+          const innerVertical = halfHeight - strokeInnerWidth;
+          const outerHorizontal = halfWidth + strokeOuterWidth;
+          const outerVertical = halfHeight + strokeOuterWidth;
           const normalizedX = x3 - this.x;
           const normalizedY = y2 - this.y;
-          const innerEllipse = normalizedX * normalizedX / (innerA * innerA) + normalizedY * normalizedY / (innerB * innerB);
-          const outerEllipse = normalizedX * normalizedX / (outerA * outerA) + normalizedY * normalizedY / (outerB * outerB);
+          const innerEllipse = normalizedX * normalizedX / (innerHorizontal * innerHorizontal) + normalizedY * normalizedY / (innerVertical * innerVertical);
+          const outerEllipse = normalizedX * normalizedX / (outerHorizontal * outerHorizontal) + normalizedY * normalizedY / (outerVertical * outerVertical);
           return innerEllipse > 1 && outerEllipse <= 1;
         }
         /**
@@ -18192,11 +18198,13 @@ ${parts.join("\n")}
          * @param x - The X coordinate of the point to test
          * @param y - The Y coordinate of the point to test
          * @param strokeWidth - The width of the line to check
+         * @param alignment - The alignment of the stroke, 0.5 by default
          * @returns Whether the x/y coordinates are within this polygon
          */
-        strokeContains(x3, y2, strokeWidth) {
-          const halfStrokeWidth = strokeWidth / 2;
-          const halfStrokeWidthSqrd = halfStrokeWidth * halfStrokeWidth;
+        strokeContains(x3, y2, strokeWidth, alignment = 0.5) {
+          const strokeWidthSquared = strokeWidth * strokeWidth;
+          const rightWidthSquared = strokeWidthSquared * (1 - alignment);
+          const leftWidthSquared = strokeWidthSquared - rightWidthSquared;
           const { points } = this;
           const iterationLength = points.length - (this.closePath ? 0 : 2);
           for (let i2 = 0; i2 < iterationLength; i2 += 2) {
@@ -18204,8 +18212,9 @@ ${parts.join("\n")}
             const y1 = points[i2 + 1];
             const x22 = points[(i2 + 2) % points.length];
             const y22 = points[(i2 + 3) % points.length];
-            const distanceSqrd = squaredDistanceToLineSegment(x3, y2, x1, y1, x22, y22);
-            if (distanceSqrd <= halfStrokeWidthSqrd) {
+            const distanceSquared = squaredDistanceToLineSegment(x3, y2, x1, y1, x22, y22);
+            const sign = Math.sign((x22 - x1) * (y2 - y1) - (y22 - y1) * (x3 - x1));
+            if (distanceSquared <= (sign < 0 ? leftWidthSquared : rightWidthSquared)) {
               return true;
             }
           }
@@ -18296,11 +18305,11 @@ ${parts.join("\n")}
   var init_RoundedRectangle = __esm({
     "node_modules/pixi.js/lib/maths/shapes/RoundedRectangle.mjs"() {
       init_Rectangle();
-      isCornerWithinStroke = (pX, pY, cornerX, cornerY, radius, halfStrokeWidth) => {
+      isCornerWithinStroke = (pX, pY, cornerX, cornerY, radius, strokeWidthInner, strokeWidthOuter) => {
         const dx = pX - cornerX;
         const dy = pY - cornerY;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        return distance >= radius - halfStrokeWidth && distance <= radius + halfStrokeWidth;
+        return distance >= radius - strokeWidthInner && distance <= radius + strokeWidthOuter;
       };
       RoundedRectangle = class _RoundedRectangle {
         /**
@@ -18402,26 +18411,60 @@ ${parts.join("\n")}
          * @param pX - The X coordinate of the point to test
          * @param pY - The Y coordinate of the point to test
          * @param strokeWidth - The width of the line to check
+         * @param alignment - The alignment of the stroke, 0.5 by default
          * @returns Whether the x/y coordinates are within this rectangle
          */
-        strokeContains(pX, pY, strokeWidth) {
+        strokeContains(pX, pY, strokeWidth, alignment = 0.5) {
           const { x: x3, y: y2, width, height, radius } = this;
-          const halfStrokeWidth = strokeWidth / 2;
+          const strokeWidthOuter = strokeWidth * (1 - alignment);
+          const strokeWidthInner = strokeWidth - strokeWidthOuter;
           const innerX = x3 + radius;
           const innerY = y2 + radius;
           const innerWidth = width - radius * 2;
           const innerHeight = height - radius * 2;
           const rightBound = x3 + width;
           const bottomBound = y2 + height;
-          if ((pX >= x3 - halfStrokeWidth && pX <= x3 + halfStrokeWidth || pX >= rightBound - halfStrokeWidth && pX <= rightBound + halfStrokeWidth) && pY >= innerY && pY <= innerY + innerHeight) {
+          if ((pX >= x3 - strokeWidthOuter && pX <= x3 + strokeWidthInner || pX >= rightBound - strokeWidthInner && pX <= rightBound + strokeWidthOuter) && pY >= innerY && pY <= innerY + innerHeight) {
             return true;
           }
-          if ((pY >= y2 - halfStrokeWidth && pY <= y2 + halfStrokeWidth || pY >= bottomBound - halfStrokeWidth && pY <= bottomBound + halfStrokeWidth) && pX >= innerX && pX <= innerX + innerWidth) {
+          if ((pY >= y2 - strokeWidthOuter && pY <= y2 + strokeWidthInner || pY >= bottomBound - strokeWidthInner && pY <= bottomBound + strokeWidthOuter) && pX >= innerX && pX <= innerX + innerWidth) {
             return true;
           }
           return (
             // Top-left
-            pX < innerX && pY < innerY && isCornerWithinStroke(pX, pY, innerX, innerY, radius, halfStrokeWidth) || pX > rightBound - radius && pY < innerY && isCornerWithinStroke(pX, pY, rightBound - radius, innerY, radius, halfStrokeWidth) || pX > rightBound - radius && pY > bottomBound - radius && isCornerWithinStroke(pX, pY, rightBound - radius, bottomBound - radius, radius, halfStrokeWidth) || pX < innerX && pY > bottomBound - radius && isCornerWithinStroke(pX, pY, innerX, bottomBound - radius, radius, halfStrokeWidth)
+            pX < innerX && pY < innerY && isCornerWithinStroke(
+              pX,
+              pY,
+              innerX,
+              innerY,
+              radius,
+              strokeWidthInner,
+              strokeWidthOuter
+            ) || pX > rightBound - radius && pY < innerY && isCornerWithinStroke(
+              pX,
+              pY,
+              rightBound - radius,
+              innerY,
+              radius,
+              strokeWidthInner,
+              strokeWidthOuter
+            ) || pX > rightBound - radius && pY > bottomBound - radius && isCornerWithinStroke(
+              pX,
+              pY,
+              rightBound - radius,
+              bottomBound - radius,
+              radius,
+              strokeWidthInner,
+              strokeWidthOuter
+            ) || pX < innerX && pY > bottomBound - radius && isCornerWithinStroke(
+              pX,
+              pY,
+              innerX,
+              bottomBound - radius,
+              radius,
+              strokeWidthInner,
+              strokeWidthOuter
+            )
           );
         }
         toString() {
@@ -19250,7 +19293,7 @@ ${parts.join("\n")}
           const delta = Math.PI * 2 / sides;
           const polygon = [];
           for (let i2 = 0; i2 < sides; i2++) {
-            const angle = i2 * delta + startAngle;
+            const angle = startAngle - i2 * delta;
             polygon.push(
               x3 + radius * Math.cos(angle),
               y2 + radius * Math.sin(angle)
@@ -20946,13 +20989,13 @@ ${parts.join("\n")}
             if (action === "stroke") {
               const data = instruction.data;
               const alignment = data.style.alignment;
-              const padding = data.style.width * (1 - alignment);
+              const outerPadding = data.style.width * (1 - alignment);
               const _bounds = data.path.bounds;
               bounds.addFrame(
-                _bounds.minX - padding,
-                _bounds.minY - padding,
-                _bounds.maxX + padding,
-                _bounds.maxY + padding
+                _bounds.minX - outerPadding,
+                _bounds.minY - outerPadding,
+                _bounds.maxX + outerPadding,
+                _bounds.maxY + outerPadding
               );
             }
           }
@@ -20985,7 +21028,8 @@ ${parts.join("\n")}
               if (instruction.action === "fill") {
                 hasHit = shape.contains(transformedPoint.x, transformedPoint.y);
               } else {
-                hasHit = shape.strokeContains(transformedPoint.x, transformedPoint.y, style.width);
+                const strokeStyle = style;
+                hasHit = shape.strokeContains(transformedPoint.x, transformedPoint.y, strokeStyle.width, strokeStyle.alignment);
               }
               const holes = data.hole;
               if (holes) {
@@ -27166,7 +27210,7 @@ ${parts.join("\n")}
       renderPipes3.blendMode.setBlendMode(renderable, container.groupBlendMode, instructionSet);
       const rp = renderPipes3;
       rp[renderable.renderPipeId].addRenderable(renderable, instructionSet);
-      renderableGC.addRenderable(renderable, instructionSet);
+      renderableGC.addRenderable(renderable);
       renderable.didViewUpdate = false;
     }
     if (!container.renderGroup) {
@@ -27193,7 +27237,7 @@ ${parts.join("\n")}
         renderPipes3.blendMode.setBlendMode(renderable, renderable.groupBlendMode, instructionSet);
         const pipe = renderPipes3[renderPipeId];
         pipe.addRenderable(renderable, instructionSet);
-        renderableGC.addRenderable(renderable, instructionSet);
+        renderableGC.addRenderable(renderable);
         renderable.didViewUpdate = false;
       }
       const children = container.children;
@@ -27587,7 +27631,7 @@ ${parts.join("\n")}
   var init_const8 = __esm({
     "node_modules/pixi.js/lib/utils/const.mjs"() {
       init_eventemitter3();
-      VERSION = "8.6.4";
+      VERSION = "8.6.6";
     }
   });
 
@@ -29002,28 +29046,45 @@ ${parts.join("\n")}
   });
 
   // node_modules/pixi.js/lib/rendering/renderers/shared/texture/RenderableGCSystem.mjs
-  var _RenderableGCSystem, RenderableGCSystem;
+  var renderableGCTick, _RenderableGCSystem, RenderableGCSystem;
   var init_RenderableGCSystem = __esm({
     "node_modules/pixi.js/lib/rendering/renderers/shared/texture/RenderableGCSystem.mjs"() {
       init_Extensions();
       init_clean();
+      renderableGCTick = 0;
       _RenderableGCSystem = class _RenderableGCSystem2 {
-        /** @param renderer - The renderer this System works for. */
+        /**
+         * Creates a new RenderableGCSystem instance.
+         * @param renderer - The renderer this garbage collection system works for
+         */
         constructor(renderer) {
           this._managedRenderables = [];
           this._managedHashes = [];
           this._managedArrays = [];
           this._renderer = renderer;
         }
+        /**
+         * Initializes the garbage collection system with the provided options.
+         * @param options - Configuration options for the renderer
+         */
         init(options) {
           options = { ..._RenderableGCSystem2.defaultOptions, ...options };
           this.maxUnusedTime = options.renderableGCMaxUnusedTime;
           this._frequency = options.renderableGCFrequency;
           this.enabled = options.renderableGCActive;
         }
+        /**
+         * Gets whether the garbage collection system is currently enabled.
+         * @returns True if GC is enabled, false otherwise
+         */
         get enabled() {
           return !!this._handler;
         }
+        /**
+         * Enables or disables the garbage collection system.
+         * When enabled, schedules periodic cleanup of resources.
+         * When disabled, cancels all scheduled cleanups.
+         */
         set enabled(value) {
           if (this.enabled === value)
             return;
@@ -29055,28 +29116,53 @@ ${parts.join("\n")}
             this._renderer.scheduler.cancel(this._arrayHandler);
           }
         }
+        /**
+         * Adds a hash table to be managed by the garbage collector.
+         * @param context - The object containing the hash table
+         * @param hash - The property name of the hash table
+         */
         addManagedHash(context2, hash) {
           this._managedHashes.push({ context: context2, hash });
         }
+        /**
+         * Adds an array to be managed by the garbage collector.
+         * @param context - The object containing the array
+         * @param hash - The property name of the array
+         */
         addManagedArray(context2, hash) {
           this._managedArrays.push({ context: context2, hash });
         }
-        prerender() {
+        /**
+         * Updates the GC timestamp and tracking before rendering.
+         * @param options - The render options
+         * @param options.container - The container to render
+         */
+        prerender({
+          container
+        }) {
           this._now = performance.now();
+          container.renderGroup.gcTick = renderableGCTick++;
+          this._updateInstructionGCTick(container.renderGroup, container.renderGroup.gcTick);
         }
-        addRenderable(renderable, instructionSet) {
+        /**
+         * Starts tracking a renderable for garbage collection.
+         * @param renderable - The renderable to track
+         */
+        addRenderable(renderable) {
           if (!this.enabled)
             return;
-          renderable._lastUsed = this._now;
-          if (renderable._lastInstructionTick === -1) {
+          if (renderable._lastUsed === -1) {
             this._managedRenderables.push(renderable);
             renderable.once("destroyed", this._removeRenderable, this);
           }
-          renderable._lastInstructionTick = instructionSet.tick;
+          renderable._lastUsed = this._now;
         }
-        /** Runs the scheduled garbage collection */
+        /**
+         * Performs garbage collection by cleaning up unused renderables.
+         * Removes renderables that haven't been used for longer than maxUnusedTime.
+         */
         run() {
-          const now = performance.now();
+          const now = this._now;
           const managedRenderables = this._managedRenderables;
           const renderPipes3 = this._renderer.renderPipes;
           let offset = 0;
@@ -29087,13 +29173,18 @@ ${parts.join("\n")}
               continue;
             }
             const renderGroup = renderable.renderGroup ?? renderable.parentRenderGroup;
-            const currentIndex = renderGroup?.instructionSet?.tick ?? -1;
-            if (renderable._lastInstructionTick !== currentIndex && now - renderable._lastUsed > this.maxUnusedTime) {
+            const currentTick = renderGroup?.instructionSet?.gcTick ?? -1;
+            if ((renderGroup?.gcTick ?? 0) === currentTick) {
+              renderable._lastUsed = now;
+            }
+            if (now - renderable._lastUsed > this.maxUnusedTime) {
               if (!renderable.destroyed) {
                 const rp = renderPipes3;
+                if (renderGroup)
+                  renderGroup.structureDidChange = true;
                 rp[renderable.renderPipeId].destroyRenderable(renderable);
               }
-              renderable._lastInstructionTick = -1;
+              renderable._lastUsed = -1;
               offset++;
               renderable.off("destroyed", this._removeRenderable, this);
             } else {
@@ -29102,6 +29193,7 @@ ${parts.join("\n")}
           }
           managedRenderables.length -= offset;
         }
+        /** Cleans up the garbage collection system. Disables GC and removes all tracked resources. */
         destroy() {
           this.enabled = false;
           this._renderer = null;
@@ -29109,11 +29201,26 @@ ${parts.join("\n")}
           this._managedHashes.length = 0;
           this._managedArrays.length = 0;
         }
+        /**
+         * Removes a renderable from being tracked when it's destroyed.
+         * @param renderable - The renderable to stop tracking
+         */
         _removeRenderable(renderable) {
           const index = this._managedRenderables.indexOf(renderable);
           if (index >= 0) {
             renderable.off("destroyed", this._removeRenderable, this);
             this._managedRenderables[index] = null;
+          }
+        }
+        /**
+         * Updates the GC tick counter for a render group and its children.
+         * @param renderGroup - The render group to update
+         * @param gcTick - The new tick value
+         */
+        _updateInstructionGCTick(renderGroup, gcTick) {
+          renderGroup.instructionSet.gcTick = gcTick;
+          for (const child of renderGroup.renderGroupChildren) {
+            this._updateInstructionGCTick(child, gcTick);
           }
         }
       };
@@ -29126,20 +29233,11 @@ ${parts.join("\n")}
         priority: 0
       };
       _RenderableGCSystem.defaultOptions = {
-        /**
-         * If set to true, this will enable the garbage collector on the GPU.
-         * @default true
-         */
+        /** Enable/disable the garbage collector */
         renderableGCActive: true,
-        /**
-         * The maximum idle frames before a texture is destroyed by garbage collection.
-         * @default 60 * 60
-         */
+        /** Time in ms before an unused resource is collected (default 1 minute) */
         renderableGCMaxUnusedTime: 6e4,
-        /**
-         * Frames between two garbage collections.
-         * @default 600
-         */
+        /** How often to run garbage collection in ms (default 30 seconds) */
         renderableGCFrequency: 3e4
       };
       RenderableGCSystem = _RenderableGCSystem;
@@ -39213,6 +39311,9 @@ ${parts.join("\n")}
   function Hex(q2, r2) {
     return { q: q2, r: r2 };
   }
+  function hexSub(hex, vec) {
+    return Hex(hex.q - vec.q, hex.r - vec.r);
+  }
   var HexDirectionVectors = [
     Hex(1, 0),
     Hex(1, -1),
@@ -39221,6 +39322,10 @@ ${parts.join("\n")}
     Hex(-1, 1),
     Hex(0, 1)
   ];
+  function hexDistance(a2, b2) {
+    var vec = hexSub(a2, b2);
+    return (Math.abs(vec.q) + Math.abs(vec.q + vec.r) + Math.abs(vec.r)) / 2;
+  }
   function hex2pixel(hex) {
     var x3 = HEX_SIZE * (Math.sqrt(3) * hex.q + Math.sqrt(3) / 2 * hex.r);
     var y2 = HEX_SIZE * (3 / 2 * hex.r);
@@ -39243,16 +39348,38 @@ ${parts.join("\n")}
   function on(hook, cb) {
     GAME_EVENTS.get(hook)?.push(cb);
   }
+  function use(data, cb) {
+    let memory = void 0;
+    function check(s2) {
+      const current = data(s2);
+      if (current !== memory) {
+        cb(current);
+        memory = current;
+      }
+    }
+    on(update, check);
+    check(STATE);
+  }
 
   // src/state.ts
+  function Pawn(coord) {
+    return { coord };
+  }
   var STATE = {
-    player: {
-      coord: Hex(0, 0)
-    }
+    selectedPawn: 0,
+    pawns: [
+      Pawn(Hex(0, 0)),
+      Pawn(Hex(2, 2)),
+      Pawn(Hex(-2, -2))
+    ]
   };
   function onclick(hex) {
     update((state) => {
-      state.player.coord = hex;
+      const pawn = state.pawns[state.selectedPawn];
+      if (hexDistance(pawn.coord, hex) <= 1) {
+        pawn.coord = hex;
+      }
+      state.selectedPawn = (state.selectedPawn + 1) % state.pawns.length;
     });
   }
   var update = GameEvent((change) => {
@@ -39273,18 +39400,17 @@ ${parts.join("\n")}
             if (q2 + r2 + s2 === 0) {
               this.hexs.set(`${q2}:${r2}`, {
                 coord: { q: q2, r: r2 },
-                color: Math.random() * 5592405
+                color: randomGreen()
               });
             }
           }
         }
       }
     }
-    render() {
-      const container = new Container();
-      const filter = new BlurFilter();
-      filter.blur = 2;
-      container.filters = [filter];
+    view() {
+      const container = new Container({
+        filters: [new BlurFilter({ strength: 2 })]
+      });
       for (const hex of this.hexs.values()) {
         const g2 = new Graphics().regularPoly(0, 0, HEX_SIZE, 6, 0).fill(hex.color);
         container.addChild(g2);
@@ -39297,24 +39423,53 @@ ${parts.join("\n")}
       return container;
     }
   };
+  function randomGreen() {
+    const greenComponent = Math.floor(Math.random() * 70) + 40;
+    return greenComponent << 8;
+  }
 
   // src/main.ts
   async function main() {
     const app = await App.createAndInit("black");
     const map = new HexMap({ size: 5 });
-    app.add(map.render());
-    app.add(drawPlayer());
+    app.add(map.view());
+    app.add(stateArrayView((s2) => s2.pawns, pawnView));
     app.viewport.fit();
   }
-  function drawPlayer() {
+  function pawnView(pawn) {
     const g2 = new Graphics().circle(0, 0, 30).fill("blue").stroke({ color: "black", width: 4 });
-    on(update, (state) => {
-      const hex = state.player.coord;
-      const { x: x3, y: y2 } = hex2pixel(hex);
+    use(() => pawn.coord, () => {
+      const { x: x3, y: y2 } = hex2pixel(pawn.coord);
       g2.x = x3;
       g2.y = y2;
     });
+    use((s2) => s2.pawns[s2.selectedPawn] === pawn, (selected) => {
+      if (selected) {
+        g2.clear().circle(0, 0, 30).fill("red").stroke({ color: "black", width: 4 });
+      } else {
+        g2.clear().circle(0, 0, 30).fill("blue").stroke({ color: "black", width: 4 });
+      }
+    });
     return g2;
+  }
+  function stateArrayView(data, draw) {
+    const sprites = /* @__PURE__ */ new Map();
+    const container = new Container();
+    use(data, (array) => {
+      for (const t2 of array) {
+        if (!sprites.has(t2)) {
+          sprites.set(t2, draw(t2));
+          container.addChild(sprites.get(t2));
+        }
+      }
+      for (const [t2, sprite] of sprites) {
+        if (!array.includes(t2)) {
+          sprite.destroy();
+          sprites.delete(t2);
+        }
+      }
+    });
+    return container;
   }
   main();
 })();

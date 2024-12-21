@@ -22,7 +22,7 @@ export class HexMap {
                     if (q + r + s === 0) {
                         this.hexs.set(`${q}:${r}`, {
                             coord: { q, r },
-                            color: Math.random() * 0x555555
+                            color: randomGreen()
                         })
                     }
                 }
@@ -30,13 +30,11 @@ export class HexMap {
         }
     }
 
-    render() {
-        const container = new Container()
+    view() {
+        const container = new Container({
+            filters: [ new BlurFilter({ strength: 2 }) ]
+        })
 
-        const filter = new BlurFilter()
-        filter.blur = 2
-        container.filters = [filter]
-    
         for (const hex of this.hexs.values()) {
             // Draw a hex with the right color
             const g = new Graphics()
@@ -56,4 +54,9 @@ export class HexMap {
 
         return container
     }
+}
+
+function randomGreen(): number {
+    const greenComponent = Math.floor(Math.random() * 70) + 40
+    return (greenComponent << 8)
 }

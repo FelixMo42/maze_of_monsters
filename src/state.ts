@@ -1,21 +1,38 @@
 import { GameEvent } from "./gameevents"
-import { Hex } from "./hex"
+import { Hex, hexDistance } from "./hex"
+
+export interface Pawn {
+    coord: Hex
+}
 
 export interface State {
-    player: {
-        coord: Hex
-    }
+    selectedPawn: number
+    pawns: Pawn[]
+}
+
+function Pawn(coord: Hex): Pawn {
+    return { coord }
 }
 
 export const STATE: State = {
-    player: {
-        coord: Hex(0, 0)
-    }
+    selectedPawn: 0,
+    pawns: [
+        Pawn(Hex(0, 0)),
+        Pawn(Hex(2, 2)),
+        Pawn(Hex(-2, -2)),
+    ],
 }
 
 export function onclick(hex: Hex) {
     update((state) => {
-        state.player.coord = hex
+        // Move selected pawn
+        const pawn = state.pawns[state.selectedPawn]
+        if (hexDistance(pawn.coord, hex) <= 1) {
+            pawn.coord = hex
+        }
+
+        // Select next pawn
+        state.selectedPawn = (state.selectedPawn + 1) % state.pawns.length
     })
 }
 
