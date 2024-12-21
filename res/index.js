@@ -38921,38 +38921,9 @@ ${parts.join("\n")}
     return hexs;
   }
 
-  // src/logic/pawn.ts
-  function Pawn(coord) {
-    return {
-      coord,
-      items: [],
-      actionsLeft: 3,
-      actionsFull: 3
-    };
-  }
-  function pawnItem(pawn, name) {
-    return pawn.items.find((i2) => i2.name === name);
-  }
-  function givePawnItem(pawn, item) {
-    if (pawnItem(pawn, item.name)) {
-      pawnItem(pawn, item.name).amount += item.amount;
-    } else {
-      pawn.items.push(item);
-    }
-  }
-  function pawnOnTile(world, hex) {
-    return world.pawns.find((pawn) => hexEqual(pawn.coord, hex));
-  }
-  function hasActionsLeft(pawn) {
-    return pawn.actionsLeft > 0;
-  }
-  function chopwood(pawn) {
-    if (hasActionsLeft(pawn)) {
-      pawn.actionsLeft -= 1;
-      givePawnItem(pawn, { name: "wood", amount: 1 });
-      return 1;
-    }
-    return 0;
+  // src/utils/misc.ts
+  function capitalize(s2) {
+    return s2.charAt(0).toUpperCase() + s2.slice(1);
   }
 
   // src/utils/gameevents.ts
@@ -39001,6 +38972,103 @@ ${parts.join("\n")}
     change(WORLD);
     return WORLD;
   });
+
+  // src/logic/pawn.ts
+  function Pawn(coord) {
+    return {
+      coord,
+      kind: "basic",
+      items: [],
+      actionsLeft: 3,
+      actionsFull: 3
+    };
+  }
+  function pawnOnTile(world, hex) {
+    return world.pawns.find((pawn) => hexEqual(pawn.coord, hex));
+  }
+  function pawnCanDoAction(pawn, action) {
+    if (pawn.actionsLeft < action.actionCost) {
+      return false;
+    }
+    for (const item of action.items) {
+      if (pawnGetItemAmount(pawn, item.name) < -item.amount) {
+        return false;
+      }
+    }
+    return true;
+  }
+  function pawnDoAction(pawn, action) {
+    update((_w) => {
+      if (pawnCanDoAction(pawn, action)) {
+        pawn.actionsLeft -= action.actionCost;
+        if (action.items) {
+          action.items.forEach((item) => {
+            givePawnItem(pawn, item);
+          });
+        }
+        action.effect(pawn);
+      }
+    });
+  }
+  function PawnJobAction(name, items = []) {
+    return {
+      name,
+      items,
+      type: "job",
+      actionCost: 1,
+      effect: () => {
+      }
+    };
+  }
+  function PawnUpgradeAction(name, items = []) {
+    return {
+      name: `UP: ${capitalize(name)}`,
+      items,
+      type: "upgrade",
+      actionCost: 0,
+      effect: (pawn) => {
+        pawn.kind = name;
+      }
+    };
+  }
+  function getPawnActions(pawn) {
+    if (pawn.kind === "basic") {
+      return [
+        PawnJobAction("Hunt", [{ name: "food", amount: 1 }]),
+        PawnJobAction("Gather", [{ name: "food", amount: 1 }]),
+        PawnJobAction("Chop Wood", [{ name: "wood", amount: 1 }]),
+        PawnUpgradeAction("hunter", [{ name: "wood", amount: -2 }]),
+        PawnUpgradeAction("farmer", [{ name: "wood", amount: -2 }]),
+        PawnUpgradeAction("lumber", [{ name: "wood", amount: -2 }])
+      ];
+    } else if (pawn.kind === "hunter") {
+      return [
+        PawnJobAction("Hunt", [{ name: "food", amount: 3 }])
+      ];
+    } else if (pawn.kind === "farmer") {
+      return [
+        PawnJobAction("Gather", [{ name: "food", amount: 3 }])
+      ];
+    } else if (pawn.kind === "lumber") {
+      return [
+        PawnJobAction("Chop Wood", [{ name: "food", amount: 3 }])
+      ];
+    }
+    return [PawnJobAction("Error!", [])];
+  }
+  function pawnGetItemAmount(pawn, name) {
+    return pawnItem(pawn, name)?.amount || 0;
+  }
+  function pawnItem(pawn, name) {
+    return pawn.items.find((i2) => i2.name === name);
+  }
+  function givePawnItem(pawn, item) {
+    if (pawnItem(pawn, item.name)) {
+      pawnItem(pawn, item.name).amount += item.amount;
+    } else {
+      pawn.items.push(item);
+    }
+  }
 
   // src/logic/inputs.ts
   function endturn() {
@@ -39110,17 +39178,26 @@ ${parts.join("\n")}
     use((w2) => w2.pawns[w2.selectedPawn].actionsLeft, () => {
       const pawn = WORLD.pawns[WORLD.selectedPawn];
       el?.replaceChildren(
-        m3("label", "Selected: Pawn"),
+        m3("label", `Selected: ${capitalize(pawn.kind)} Pawn`),
         m3("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`),
-        m3("p", `Items: ${pawn.items.map((i2) => `${i2.name} x${i2.amount}`).join(", ")}`),
-        button(`Chop Wood (+1 wood)`, () => {
-          update(() => chopwood(pawn));
-        })
+        m3("p", `Items: ${pawn.items.filter((i2) => i2.amount).map((i2) => `${i2.name} x${i2.amount}`).join(", ")}`),
+        ...getPawnActions(pawn).map(
+          (action) => button(
+            `${action.name} ${displayItems(action)}`,
+            () => pawnDoAction(pawn, action)
+          )
+        )
       );
     });
     document.getElementById("endturn").onclick = () => {
       endturn();
     };
+  }
+  function displayItems(o2) {
+    if (o2.items.length === 0) return "";
+    return `(${o2.items.map(
+      (i2) => i2.amount < 0 ? `-${-i2.amount} ${i2.name}` : `+${i2.amount} ${i2.name}`
+    ).join(", ")})`;
   }
   function button(text, onclick2) {
     const el = m3("button", text);

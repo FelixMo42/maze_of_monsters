@@ -1,7 +1,8 @@
 import App from './app'
 import { endturn } from './logic/inputs'
-import { chopwood } from './logic/pawn'
-import { update, WORLD } from './logic/world'
+import { getPawnActions, Item, pawnDoAction } from './logic/pawn'
+import { WORLD } from './logic/world'
+import { capitalize } from './utils/misc'
 import { use } from './utils/use'
 import { GameView } from './views/GameView'
 
@@ -17,18 +18,30 @@ async function main() {
         const pawn = WORLD.pawns[WORLD.selectedPawn]
 
         el?.replaceChildren(
-            m("label", "Selected: Pawn"),
+            m("label", `Selected: ${capitalize(pawn.kind)} Pawn`),
             m("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`),
-            m("p", `Items: ${pawn.items.map(i => `${i.name} x${i.amount}`).join(", ")}`),
-            button(`Chop Wood (+1 wood)`, () => {
-                update(() => chopwood(pawn))
-            })
+            m("p", `Items: ${pawn.items.filter(i => i.amount).map(i => `${i.name} x${i.amount}`).join(", ")}`),
+            
+            ...getPawnActions(pawn).map(action =>
+                button(
+                    `${action.name} ${displayItems(action)}`,
+                    () => pawnDoAction(pawn, action)
+                )
+            ),
         )
     })
 
     document.getElementById("endturn")!.onclick = () => {
         endturn()
     }
+}
+
+function displayItems(o: { items: Item[] }) {
+    if (o.items.length === 0) return ""
+    return `(${o.items.map(i =>
+        i.amount < 0 ? `-${-i.amount} ${i.name}` :
+            `+${i.amount} ${i.name}`
+    ).join(", ")})`
 }
 
 function button(text: string, onclick: () => void) {
