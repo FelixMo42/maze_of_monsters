@@ -1,8 +1,10 @@
-import { Application, ColorSource } from "pixi.js"
+import { Viewport } from "pixi-viewport"
+import { Application, ColorSource, Container, ContainerChild } from "pixi.js"
 
 export default class App extends Application {
     background: ColorSource
     keyboard: Map<string, boolean>
+    viewport: Viewport
 
     constructor(background: ColorSource) {
         super()
@@ -19,13 +21,27 @@ export default class App extends Application {
     }
 
     async init() {
+        // Register callbacks for keyboard manager
         window.addEventListener("keydown", this.onkeydown.bind(this))
         window.addEventListener("keyup", this.onkeyup.bind(this))
 
+        // Initilize the Pixijs app, and bind it to the window
         await super.init({
             background: this.background,
             resizeTo: window
         })
+
+        // Set up the camera
+        this.viewport = new Viewport({
+            events: this.renderer.events
+        })
+        this.stage.addChild(this.viewport)
+        this.viewport.moveCenter(0, 0) // center
+        this.viewport // plugings
+            .drag()
+            .pinch()
+            .wheel()
+            // .decelerate()
     }
 
     onkeydown(e: KeyboardEvent) {
@@ -34,5 +50,10 @@ export default class App extends Application {
     
     onkeyup(e: KeyboardEvent) {
         this.keyboard.set(e.key, false)
+    }
+
+    add<U extends Container<ContainerChild>[]>(...children: U): U[0] {
+        this.viewport.addChild(...children)
+        return children[0]
     }
 }

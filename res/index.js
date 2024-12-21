@@ -301,7 +301,7 @@
           }
           listeners.fn.apply(listeners.context, args);
         } else {
-          var length = listeners.length, j2;
+          var length = listeners.length, j3;
           for (i2 = 0; i2 < length; i2++) {
             if (listeners[i2].once) this.removeListener(event, listeners[i2].fn, void 0, true);
             switch (len) {
@@ -318,8 +318,8 @@
                 listeners[i2].fn.call(listeners[i2].context, a1, a2, a3);
                 break;
               default:
-                if (!args) for (j2 = 1, args = new Array(len - 1); j2 < len; j2++) {
-                  args[j2 - 1] = arguments[j2];
+                if (!args) for (j3 = 1, args = new Array(len - 1); j3 < len; j3++) {
+                  args[j3 - 1] = arguments[j3];
                 }
                 listeners[i2].fn.apply(listeners[i2].context, args);
             }
@@ -415,14 +415,14 @@
         return t2.length < 2 ? "0" + t2 : t2;
       };
       h = function(r2) {
-        var t2 = r2.r, n2 = r2.g, e2 = r2.b, u2 = r2.a, a2 = Math.max(t2, n2, e2), o2 = a2 - Math.min(t2, n2, e2), i2 = o2 ? a2 === t2 ? (n2 - e2) / o2 : a2 === n2 ? 2 + (e2 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
-        return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o2 / a2 * 100 : 0, v: a2 / 255 * 100, a: u2 };
+        var t2 = r2.r, n2 = r2.g, e2 = r2.b, u3 = r2.a, a2 = Math.max(t2, n2, e2), o2 = a2 - Math.min(t2, n2, e2), i2 = o2 ? a2 === t2 ? (n2 - e2) / o2 : a2 === n2 ? 2 + (e2 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
+        return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o2 / a2 * 100 : 0, v: a2 / 255 * 100, a: u3 };
       };
       b = function(r2) {
-        var t2 = r2.h, n2 = r2.s, e2 = r2.v, u2 = r2.a;
+        var t2 = r2.h, n2 = r2.s, e2 = r2.v, u3 = r2.a;
         t2 = t2 / 360 * 6, n2 /= 100, e2 /= 100;
         var a2 = Math.floor(t2), o2 = e2 * (1 - n2), i2 = e2 * (1 - (t2 - a2) * n2), s2 = e2 * (1 - (1 - t2 + a2) * n2), h2 = a2 % 6;
-        return { r: 255 * [e2, i2, o2, o2, s2, e2][h2], g: 255 * [s2, e2, e2, i2, o2, o2][h2], b: 255 * [o2, o2, s2, e2, e2, i2][h2], a: u2 };
+        return { r: 255 * [e2, i2, o2, o2, s2, e2][h2], g: 255 * [s2, e2, e2, i2, o2, o2][h2], b: 255 * [o2, o2, s2, e2, e2, i2][h2], a: u3 };
       };
       g = function(r2) {
         return { h: u(r2.h), s: e(r2.s, 0, 100), l: e(r2.l, 0, 100), a: e(r2.a) };
@@ -435,8 +435,8 @@
         var t2, n2, e2;
       };
       c = function(r2) {
-        return { h: (t2 = h(r2)).h, s: (u2 = (200 - (n2 = t2.s)) * (e2 = t2.v) / 100) > 0 && u2 < 200 ? n2 * e2 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t2.a };
-        var t2, n2, e2, u2;
+        return { h: (t2 = h(r2)).h, s: (u3 = (200 - (n2 = t2.s)) * (e2 = t2.v) / 100) > 0 && u3 < 200 ? n2 * e2 / 100 / (u3 <= 100 ? u3 : 200 - u3) * 100 : 0, l: u3 / 2, a: t2.a };
+        var t2, n2, e2, u3;
       };
       l = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s*,\s*([+-]?\d*\.?\d+)%\s*,\s*([+-]?\d*\.?\d+)%\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
       p = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s+([+-]?\d*\.?\d+)%\s+([+-]?\d*\.?\d+)%\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
@@ -451,15 +451,15 @@
       }, "rgb"], [function(t2) {
         var n2 = l.exec(t2) || p.exec(t2);
         if (!n2) return null;
-        var e2, u2, a2 = g({ h: (e2 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e2) * (r[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
+        var e2, u3, a2 = g({ h: (e2 = n2[1], u3 = n2[2], void 0 === u3 && (u3 = "deg"), Number(e2) * (r[u3] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
         return f(a2);
       }, "hsl"]], object: [[function(r2) {
-        var n2 = r2.r, e2 = r2.g, u2 = r2.b, o2 = r2.a, i2 = void 0 === o2 ? 1 : o2;
-        return t(n2) && t(e2) && t(u2) ? a({ r: Number(n2), g: Number(e2), b: Number(u2), a: Number(i2) }) : null;
+        var n2 = r2.r, e2 = r2.g, u3 = r2.b, o2 = r2.a, i2 = void 0 === o2 ? 1 : o2;
+        return t(n2) && t(e2) && t(u3) ? a({ r: Number(n2), g: Number(e2), b: Number(u3), a: Number(i2) }) : null;
       }, "rgb"], [function(r2) {
-        var n2 = r2.h, e2 = r2.s, u2 = r2.l, a2 = r2.a, o2 = void 0 === a2 ? 1 : a2;
-        if (!t(n2) || !t(e2) || !t(u2)) return null;
-        var i2 = g({ h: Number(n2), s: Number(e2), l: Number(u2), a: Number(o2) });
+        var n2 = r2.h, e2 = r2.s, u3 = r2.l, a2 = r2.a, o2 = void 0 === a2 ? 1 : a2;
+        if (!t(n2) || !t(e2) || !t(u3)) return null;
+        var i2 = g({ h: Number(n2), s: Number(e2), l: Number(u3), a: Number(o2) });
         return f(i2);
       }, "hsl"], [function(r2) {
         var n2 = r2.h, a2 = r2.s, o2 = r2.v, i2 = r2.a, s2 = void 0 === i2 ? 1 : i2;
@@ -503,18 +503,18 @@
         }, r2.prototype.isLight = function() {
           return H(this.rgba) >= 0.5;
         }, r2.prototype.toHex = function() {
-          return r3 = o(this.rgba), t2 = r3.r, e2 = r3.g, u2 = r3.b, i2 = (a2 = r3.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e2) + s(u2) + i2;
-          var r3, t2, e2, u2, a2, i2;
+          return r3 = o(this.rgba), t2 = r3.r, e2 = r3.g, u3 = r3.b, i2 = (a2 = r3.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e2) + s(u3) + i2;
+          var r3, t2, e2, u3, a2, i2;
         }, r2.prototype.toRgb = function() {
           return o(this.rgba);
         }, r2.prototype.toRgbString = function() {
-          return r3 = o(this.rgba), t2 = r3.r, n2 = r3.g, e2 = r3.b, (u2 = r3.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e2 + ", " + u2 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e2 + ")";
-          var r3, t2, n2, e2, u2;
+          return r3 = o(this.rgba), t2 = r3.r, n2 = r3.g, e2 = r3.b, (u3 = r3.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e2 + ", " + u3 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e2 + ")";
+          var r3, t2, n2, e2, u3;
         }, r2.prototype.toHsl = function() {
           return d(c(this.rgba));
         }, r2.prototype.toHslString = function() {
-          return r3 = d(c(this.rgba)), t2 = r3.h, n2 = r3.s, e2 = r3.l, (u2 = r3.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e2 + "%, " + u2 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e2 + "%)";
-          var r3, t2, n2, e2, u2;
+          return r3 = d(c(this.rgba)), t2 = r3.h, n2 = r3.s, e2 = r3.l, (u3 = r3.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e2 + "%, " + u3 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e2 + "%)";
+          var r3, t2, n2, e2, u3;
         }, r2.prototype.toHsv = function() {
           return r3 = h(this.rgba), { h: n(r3.h), s: n(r3.s), v: n(r3.v), a: n(r3.a, 3) };
           var r3;
@@ -558,25 +558,25 @@
   // node_modules/@pixi/colord/plugins/names.mjs
   function names_default(e2, f2) {
     var a2 = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r2 = {};
-    for (var d2 in a2) r2[a2[d2]] = d2;
+    for (var d3 in a2) r2[a2[d3]] = d3;
     var l2 = {};
     e2.prototype.toName = function(f3) {
       if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b)) return "transparent";
-      var d3, i2, n2 = r2[this.toHex()];
+      var d4, i2, n2 = r2[this.toHex()];
       if (n2) return n2;
       if (null == f3 ? void 0 : f3.closest) {
         var o2 = this.toRgb(), t2 = 1 / 0, b2 = "black";
         if (!l2.length) for (var c2 in a2) l2[c2] = new e2(a2[c2]).toRgb();
         for (var g2 in a2) {
-          var u2 = (d3 = o2, i2 = l2[g2], Math.pow(d3.r - i2.r, 2) + Math.pow(d3.g - i2.g, 2) + Math.pow(d3.b - i2.b, 2));
-          u2 < t2 && (t2 = u2, b2 = g2);
+          var u3 = (d4 = o2, i2 = l2[g2], Math.pow(d4.r - i2.r, 2) + Math.pow(d4.g - i2.g, 2) + Math.pow(d4.b - i2.b, 2));
+          u3 < t2 && (t2 = u3, b2 = g2);
         }
         return b2;
       }
     };
     f2.string.push([function(f3) {
-      var r3 = f3.toLowerCase(), d3 = "transparent" === r3 ? "#0000" : a2[r3];
-      return d3 ? new e2(d3).toRgb() : null;
+      var r3 = f3.toLowerCase(), d4 = "transparent" === r3 ? "#0000" : a2[r3];
+      return d4 ? new e2(d4).toRgb() : null;
     }, "name"]);
   }
   var init_names = __esm({
@@ -689,7 +689,7 @@
             if (value1.length !== value2.length) {
               return false;
             }
-            return value1.every((v2, i2) => v2 === value2[i2]);
+            return value1.every((v3, i2) => v3 === value2[i2]);
           } else if (value1 !== null && value2 !== null) {
             const keys1 = Object.keys(value1);
             const keys2 = Object.keys(value2);
@@ -940,8 +940,8 @@
           if (typeof value === "number") {
             return Math.min(Math.max(value, min), max);
           }
-          value.forEach((v2, i2) => {
-            value[i2] = Math.min(Math.max(v2, min), max);
+          value.forEach((v3, i2) => {
+            value[i2] = Math.min(Math.max(v3, min), max);
           });
           return value;
         }
@@ -1002,10 +1002,10 @@
          * @param {number} [x=0] - position of the point on the x axis
          * @param {number} [y=0] - position of the point on the y axis
          */
-        constructor(x2 = 0, y2 = 0) {
+        constructor(x3 = 0, y2 = 0) {
           this.x = 0;
           this.y = 0;
-          this.x = x2;
+          this.x = x3;
           this.y = y2;
         }
         /**
@@ -1048,8 +1048,8 @@
          * @param {number} [y=x] - position of the point on the `y` axis
          * @returns The point instance itself
          */
-        set(x2 = 0, y2 = x2) {
-          this.x = x2;
+        set(x3 = 0, y2 = x3) {
+          this.x = x3;
           this.y = y2;
           return this;
         }
@@ -1085,12 +1085,12 @@
          * @param tx - x translation
          * @param ty - y translation
          */
-        constructor(a2 = 1, b2 = 0, c2 = 0, d2 = 1, tx = 0, ty = 0) {
+        constructor(a2 = 1, b2 = 0, c2 = 0, d3 = 1, tx = 0, ty = 0) {
           this.array = null;
           this.a = a2;
           this.b = b2;
           this.c = c2;
-          this.d = d2;
+          this.d = d3;
           this.tx = tx;
           this.ty = ty;
         }
@@ -1123,11 +1123,11 @@
          * @param ty - Matrix component
          * @returns This matrix. Good for chaining method calls.
          */
-        set(a2, b2, c2, d2, tx, ty) {
+        set(a2, b2, c2, d3, tx, ty) {
           this.a = a2;
           this.b = b2;
           this.c = c2;
-          this.d = d2;
+          this.d = d3;
           this.tx = tx;
           this.ty = ty;
           return this;
@@ -1175,10 +1175,10 @@
          */
         apply(pos, newPos) {
           newPos = newPos || new Point();
-          const x2 = pos.x;
+          const x3 = pos.x;
           const y2 = pos.y;
-          newPos.x = this.a * x2 + this.c * y2 + this.tx;
-          newPos.y = this.b * x2 + this.d * y2 + this.ty;
+          newPos.x = this.a * x3 + this.c * y2 + this.tx;
+          newPos.y = this.b * x3 + this.d * y2 + this.ty;
           return newPos;
         }
         /**
@@ -1193,14 +1193,14 @@
           const a2 = this.a;
           const b2 = this.b;
           const c2 = this.c;
-          const d2 = this.d;
+          const d3 = this.d;
           const tx = this.tx;
           const ty = this.ty;
-          const id = 1 / (a2 * d2 + c2 * -b2);
-          const x2 = pos.x;
+          const id = 1 / (a2 * d3 + c2 * -b2);
+          const x3 = pos.x;
           const y2 = pos.y;
-          newPos.x = d2 * id * x2 + -c2 * id * y2 + (ty * c2 - tx * d2) * id;
-          newPos.y = a2 * id * y2 + -b2 * id * x2 + (-ty * a2 + tx * b2) * id;
+          newPos.x = d3 * id * x3 + -c2 * id * y2 + (ty * c2 - tx * d3) * id;
+          newPos.y = a2 * id * y2 + -b2 * id * x3 + (-ty * a2 + tx * b2) * id;
           return newPos;
         }
         /**
@@ -1209,8 +1209,8 @@
          * @param y - How much to translate y by
          * @returns This matrix. Good for chaining method calls.
          */
-        translate(x2, y2) {
-          this.tx += x2;
+        translate(x3, y2) {
+          this.tx += x3;
           this.ty += y2;
           return this;
         }
@@ -1220,12 +1220,12 @@
          * @param y - The amount to scale vertically
          * @returns This matrix. Good for chaining method calls.
          */
-        scale(x2, y2) {
-          this.a *= x2;
+        scale(x3, y2) {
+          this.a *= x3;
           this.d *= y2;
-          this.c *= x2;
+          this.c *= x3;
           this.b *= y2;
-          this.tx *= x2;
+          this.tx *= x3;
           this.ty *= y2;
           return this;
         }
@@ -1282,13 +1282,13 @@
           const a22 = b2.a;
           const b22 = b2.b;
           const c2 = b2.c;
-          const d2 = b2.d;
+          const d22 = b2.d;
           this.a = a1 * a22 + b1 * c2;
-          this.b = a1 * b22 + b1 * d2;
+          this.b = a1 * b22 + b1 * d22;
           this.c = c1 * a22 + d1 * c2;
-          this.d = c1 * b22 + d1 * d2;
+          this.d = c1 * b22 + d1 * d22;
           this.tx = tx * a22 + ty * c2 + b2.tx;
-          this.ty = tx * b22 + ty * d2 + b2.ty;
+          this.ty = tx * b22 + ty * d22 + b2.ty;
           return this;
         }
         /**
@@ -1304,12 +1304,12 @@
          * @param skewY - Skew on the y axis
          * @returns This matrix. Good for chaining method calls.
          */
-        setTransform(x2, y2, pivotX, pivotY, scaleX, scaleY, rotation, skewX, skewY) {
+        setTransform(x3, y2, pivotX, pivotY, scaleX, scaleY, rotation, skewX, skewY) {
           this.a = Math.cos(rotation + skewY) * scaleX;
           this.b = Math.sin(rotation + skewY) * scaleX;
           this.c = -Math.sin(rotation - skewX) * scaleY;
           this.d = Math.cos(rotation - skewX) * scaleY;
-          this.tx = x2 - (pivotX * this.a + pivotY * this.c);
+          this.tx = x3 - (pivotX * this.a + pivotY * this.c);
           this.ty = y2 - (pivotX * this.b + pivotY * this.d);
           return this;
         }
@@ -1341,9 +1341,9 @@
           const a2 = this.a;
           const b2 = this.b;
           const c2 = this.c;
-          const d2 = this.d;
+          const d3 = this.d;
           const pivot = transform2.pivot;
-          const skewX = -Math.atan2(-c2, d2);
+          const skewX = -Math.atan2(-c2, d3);
           const skewY = Math.atan2(b2, a2);
           const delta = Math.abs(skewX + skewY);
           if (delta < 1e-5 || Math.abs(PI_2 - delta) < 1e-5) {
@@ -1355,9 +1355,9 @@
             transform2.skew.y = skewY;
           }
           transform2.scale.x = Math.sqrt(a2 * a2 + b2 * b2);
-          transform2.scale.y = Math.sqrt(c2 * c2 + d2 * d2);
+          transform2.scale.y = Math.sqrt(c2 * c2 + d3 * d3);
           transform2.position.x = this.tx + (pivot.x * a2 + pivot.y * c2);
-          transform2.position.y = this.ty + (pivot.x * b2 + pivot.y * d2);
+          transform2.position.y = this.ty + (pivot.x * b2 + pivot.y * d3);
           return transform2;
         }
         /**
@@ -1485,8 +1485,8 @@
          * @param {number} [x=0] - position of the point on the x axis
          * @param {number} [y=0] - position of the point on the y axis
          */
-        constructor(observer, x2, y2) {
-          this._x = x2 || 0;
+        constructor(observer, x3, y2) {
+          this._x = x3 || 0;
           this._y = y2 || 0;
           this._observer = observer;
         }
@@ -1505,9 +1505,9 @@
          * @param {number} [y=x] - position of the point on the y axis
          * @returns The observable point instance itself
          */
-        set(x2 = 0, y2 = x2) {
-          if (this._x !== x2 || this._y !== y2) {
-            this._x = x2;
+        set(x3 = 0, y2 = x3) {
+          if (this._x !== x3 || this._y !== y2) {
+            this._x = x3;
             this._y = y2;
             this._observer._onUpdate(this);
           }
@@ -2385,9 +2385,9 @@ Deprecated since v${version}`);
          * @param width - The overall width of the rectangle
          * @param height - The overall height of the rectangle
          */
-        constructor(x2 = 0, y2 = 0, width = 0, height = 0) {
+        constructor(x3 = 0, y2 = 0, width = 0, height = 0) {
           this.type = "rectangle";
-          this.x = Number(x2);
+          this.x = Number(x3);
           this.y = Number(y2);
           this.width = Number(width);
           this.height = Number(height);
@@ -2462,11 +2462,11 @@ Deprecated since v${version}`);
          * @param y - The Y coordinate of the point to test
          * @returns Whether the x/y coordinates are within this Rectangle
          */
-        contains(x2, y2) {
+        contains(x3, y2) {
           if (this.width <= 0 || this.height <= 0) {
             return false;
           }
-          if (x2 >= this.x && x2 < this.x + this.width) {
+          if (x3 >= this.x && x3 < this.x + this.width) {
             if (y2 >= this.y && y2 < this.y + this.height) {
               return true;
             }
@@ -2480,7 +2480,7 @@ Deprecated since v${version}`);
          * @param strokeWidth - The width of the line to check
          * @returns Whether the x/y coordinates are within this rectangle
          */
-        strokeContains(x2, y2, strokeWidth) {
+        strokeContains(x3, y2, strokeWidth) {
           const { width, height } = this;
           if (width <= 0 || height <= 0)
             return false;
@@ -2494,7 +2494,7 @@ Deprecated since v${version}`);
           const innerRight = _x + width - strokeWidth / 2;
           const innerTop = _y + strokeWidth / 2;
           const innerBottom = _y + height - strokeWidth / 2;
-          return x2 >= outerLeft && x2 <= outerRight && y2 >= outerTop && y2 <= outerBottom && !(x2 > innerLeft && x2 < innerRight && y2 > innerTop && y2 < innerBottom);
+          return x3 >= outerLeft && x3 <= outerRight && y2 >= outerTop && y2 <= outerBottom && !(x3 > innerLeft && x3 < innerRight && y2 > innerTop && y2 < innerBottom);
         }
         /**
          * Determines whether the `other` Rectangle transformed by `transform` intersects with `this` Rectangle object.
@@ -2582,11 +2582,11 @@ Deprecated since v${version}`);
          */
         fit(rectangle) {
           const x1 = Math.max(this.x, rectangle.x);
-          const x2 = Math.min(this.x + this.width, rectangle.x + rectangle.width);
+          const x22 = Math.min(this.x + this.width, rectangle.x + rectangle.width);
           const y1 = Math.max(this.y, rectangle.y);
           const y2 = Math.min(this.y + this.height, rectangle.y + rectangle.height);
           this.x = x1;
-          this.width = Math.max(x2 - x1, 0);
+          this.width = Math.max(x22 - x1, 0);
           this.y = y1;
           this.height = Math.max(y2 - y1, 0);
           return this;
@@ -2598,11 +2598,11 @@ Deprecated since v${version}`);
          * @returns Returns itself.
          */
         ceil(resolution = 1, eps = 1e-3) {
-          const x2 = Math.ceil((this.x + this.width - eps) * resolution) / resolution;
+          const x22 = Math.ceil((this.x + this.width - eps) * resolution) / resolution;
           const y2 = Math.ceil((this.y + this.height - eps) * resolution) / resolution;
           this.x = Math.floor((this.x + eps) * resolution) / resolution;
           this.y = Math.floor((this.y + eps) * resolution) / resolution;
-          this.width = x2 - this.x;
+          this.width = x22 - this.x;
           this.height = y2 - this.y;
           return this;
         }
@@ -2613,11 +2613,11 @@ Deprecated since v${version}`);
          */
         enlarge(rectangle) {
           const x1 = Math.min(this.x, rectangle.x);
-          const x2 = Math.max(this.x + this.width, rectangle.x + rectangle.width);
+          const x22 = Math.max(this.x + this.width, rectangle.x + rectangle.width);
           const y1 = Math.min(this.y, rectangle.y);
           const y2 = Math.max(this.y + this.height, rectangle.y + rectangle.height);
           this.x = x1;
-          this.width = x2 - x1;
+          this.width = x22 - x1;
           this.y = y1;
           this.height = y2 - y1;
           return this;
@@ -2716,51 +2716,51 @@ Deprecated since v${version}`);
           const a2 = matrix.a;
           const b2 = matrix.b;
           const c2 = matrix.c;
-          const d2 = matrix.d;
+          const d3 = matrix.d;
           const tx = matrix.tx;
           const ty = matrix.ty;
           let minX = this.minX;
           let minY = this.minY;
           let maxX = this.maxX;
           let maxY = this.maxY;
-          let x2 = a2 * x0 + c2 * y0 + tx;
-          let y2 = b2 * x0 + d2 * y0 + ty;
-          if (x2 < minX)
-            minX = x2;
+          let x3 = a2 * x0 + c2 * y0 + tx;
+          let y2 = b2 * x0 + d3 * y0 + ty;
+          if (x3 < minX)
+            minX = x3;
           if (y2 < minY)
             minY = y2;
-          if (x2 > maxX)
-            maxX = x2;
+          if (x3 > maxX)
+            maxX = x3;
           if (y2 > maxY)
             maxY = y2;
-          x2 = a2 * x1 + c2 * y0 + tx;
-          y2 = b2 * x1 + d2 * y0 + ty;
-          if (x2 < minX)
-            minX = x2;
+          x3 = a2 * x1 + c2 * y0 + tx;
+          y2 = b2 * x1 + d3 * y0 + ty;
+          if (x3 < minX)
+            minX = x3;
           if (y2 < minY)
             minY = y2;
-          if (x2 > maxX)
-            maxX = x2;
+          if (x3 > maxX)
+            maxX = x3;
           if (y2 > maxY)
             maxY = y2;
-          x2 = a2 * x0 + c2 * y1 + tx;
-          y2 = b2 * x0 + d2 * y1 + ty;
-          if (x2 < minX)
-            minX = x2;
+          x3 = a2 * x0 + c2 * y1 + tx;
+          y2 = b2 * x0 + d3 * y1 + ty;
+          if (x3 < minX)
+            minX = x3;
           if (y2 < minY)
             minY = y2;
-          if (x2 > maxX)
-            maxX = x2;
+          if (x3 > maxX)
+            maxX = x3;
           if (y2 > maxY)
             maxY = y2;
-          x2 = a2 * x1 + c2 * y1 + tx;
-          y2 = b2 * x1 + d2 * y1 + ty;
-          if (x2 < minX)
-            minX = x2;
+          x3 = a2 * x1 + c2 * y1 + tx;
+          y2 = b2 * x1 + d3 * y1 + ty;
+          if (x3 < minX)
+            minX = x3;
           if (y2 < minY)
             minY = y2;
-          if (x2 > maxX)
-            maxX = x2;
+          if (x3 > maxX)
+            maxX = x3;
           if (y2 > maxY)
             maxY = y2;
           this.minX = minX;
@@ -2803,30 +2803,30 @@ Deprecated since v${version}`);
           const minY = this.minY;
           const maxX = this.maxX;
           const maxY = this.maxY;
-          const { a: a2, b: b2, c: c2, d: d2, tx, ty } = matrix;
-          let x2 = a2 * minX + c2 * minY + tx;
-          let y2 = b2 * minX + d2 * minY + ty;
-          this.minX = x2;
+          const { a: a2, b: b2, c: c2, d: d3, tx, ty } = matrix;
+          let x3 = a2 * minX + c2 * minY + tx;
+          let y2 = b2 * minX + d3 * minY + ty;
+          this.minX = x3;
           this.minY = y2;
-          this.maxX = x2;
+          this.maxX = x3;
           this.maxY = y2;
-          x2 = a2 * maxX + c2 * minY + tx;
-          y2 = b2 * maxX + d2 * minY + ty;
-          this.minX = x2 < this.minX ? x2 : this.minX;
+          x3 = a2 * maxX + c2 * minY + tx;
+          y2 = b2 * maxX + d3 * minY + ty;
+          this.minX = x3 < this.minX ? x3 : this.minX;
           this.minY = y2 < this.minY ? y2 : this.minY;
-          this.maxX = x2 > this.maxX ? x2 : this.maxX;
+          this.maxX = x3 > this.maxX ? x3 : this.maxX;
           this.maxY = y2 > this.maxY ? y2 : this.maxY;
-          x2 = a2 * minX + c2 * maxY + tx;
-          y2 = b2 * minX + d2 * maxY + ty;
-          this.minX = x2 < this.minX ? x2 : this.minX;
+          x3 = a2 * minX + c2 * maxY + tx;
+          y2 = b2 * minX + d3 * maxY + ty;
+          this.minX = x3 < this.minX ? x3 : this.minX;
           this.minY = y2 < this.minY ? y2 : this.minY;
-          this.maxX = x2 > this.maxX ? x2 : this.maxX;
+          this.maxX = x3 > this.maxX ? x3 : this.maxX;
           this.maxY = y2 > this.maxY ? y2 : this.maxY;
-          x2 = a2 * maxX + c2 * maxY + tx;
-          y2 = b2 * maxX + d2 * maxY + ty;
-          this.minX = x2 < this.minX ? x2 : this.minX;
+          x3 = a2 * maxX + c2 * maxY + tx;
+          y2 = b2 * maxX + d3 * maxY + ty;
+          this.minX = x3 < this.minX ? x3 : this.minX;
           this.minY = y2 < this.minY ? y2 : this.minY;
-          this.maxX = x2 > this.maxX ? x2 : this.maxX;
+          this.maxX = x3 > this.maxX ? x3 : this.maxX;
           this.maxY = y2 > this.maxY ? y2 : this.maxY;
         }
         /**
@@ -2892,10 +2892,10 @@ Deprecated since v${version}`);
          * @param x - The X value to scale by.
          * @param y - The Y value to scale by.
          */
-        scale(x2, y2 = x2) {
-          this.minX *= x2;
+        scale(x3, y2 = x3) {
+          this.minX *= x3;
           this.minY *= y2;
-          this.maxX *= x2;
+          this.maxX *= x3;
           this.maxY *= y2;
           return this;
         }
@@ -2970,17 +2970,17 @@ Deprecated since v${version}`);
           const a2 = matrix.a;
           const b2 = matrix.b;
           const c2 = matrix.c;
-          const d2 = matrix.d;
+          const d3 = matrix.d;
           const tx = matrix.tx;
           const ty = matrix.ty;
           for (let i2 = beginOffset; i2 < endOffset; i2 += 2) {
             const localX = vertexData[i2];
             const localY = vertexData[i2 + 1];
-            const x2 = a2 * localX + c2 * localY + tx;
-            const y2 = b2 * localX + d2 * localY + ty;
-            minX = x2 < minX ? x2 : minX;
+            const x3 = a2 * localX + c2 * localY + tx;
+            const y2 = b2 * localX + d3 * localY + ty;
+            minX = x3 < minX ? x3 : minX;
             minY = y2 < minY ? y2 : minY;
-            maxX = x2 > maxX ? x2 : maxX;
+            maxX = x3 > maxX ? x3 : maxX;
             maxY = y2 > maxY ? y2 : maxY;
           }
           this.minX = minX;
@@ -2993,8 +2993,8 @@ Deprecated since v${version}`);
          * @param x - x coordinate
          * @param y - y coordinate
          */
-        containsPoint(x2, y2) {
-          if (this.minX <= x2 && this.minY <= y2 && this.maxX >= x2 && this.maxY >= y2) {
+        containsPoint(x3, y2) {
+          if (this.minX <= x3 && this.minY <= y2 && this.maxX >= x3 && this.maxY >= y2) {
             return true;
           }
           return false;
@@ -3645,18 +3645,18 @@ Deprecated since v${version}`);
   });
 
   // node_modules/pixi.js/lib/maths/misc/pow2.mjs
-  function nextPow2(v2) {
-    v2 += v2 === 0 ? 1 : 0;
-    --v2;
-    v2 |= v2 >>> 1;
-    v2 |= v2 >>> 2;
-    v2 |= v2 >>> 4;
-    v2 |= v2 >>> 8;
-    v2 |= v2 >>> 16;
-    return v2 + 1;
+  function nextPow2(v3) {
+    v3 += v3 === 0 ? 1 : 0;
+    --v3;
+    v3 |= v3 >>> 1;
+    v3 |= v3 >>> 2;
+    v3 |= v3 >>> 4;
+    v3 |= v3 >>> 8;
+    v3 |= v3 >>> 16;
+    return v3 + 1;
   }
-  function isPow2(v2) {
-    return !(v2 & v2 - 1) && !!v2;
+  function isPow2(v3) {
+    return !(v3 & v3 - 1) && !!v3;
   }
   var init_pow2 = __esm({
     "node_modules/pixi.js/lib/maths/misc/pow2.mjs"() {
@@ -4058,14 +4058,14 @@ Deprecated since v${version}`);
     for (let i2 = 0; i2 < 16; i2++) {
       const row = [];
       rotationCayley.push(row);
-      for (let j2 = 0; j2 < 16; j2++) {
-        const _ux = signum(ux[i2] * ux[j2] + vx[i2] * uy[j2]);
-        const _uy = signum(uy[i2] * ux[j2] + vy[i2] * uy[j2]);
-        const _vx = signum(ux[i2] * vx[j2] + vx[i2] * vy[j2]);
-        const _vy = signum(uy[i2] * vx[j2] + vy[i2] * vy[j2]);
-        for (let k2 = 0; k2 < 16; k2++) {
-          if (ux[k2] === _ux && uy[k2] === _uy && vx[k2] === _vx && vy[k2] === _vy) {
-            row.push(k2);
+      for (let j3 = 0; j3 < 16; j3++) {
+        const _ux = signum(ux[i2] * ux[j3] + vx[i2] * uy[j3]);
+        const _uy = signum(uy[i2] * ux[j3] + vy[i2] * uy[j3]);
+        const _vx = signum(ux[i2] * vx[j3] + vx[i2] * vy[j3]);
+        const _vy = signum(uy[i2] * vx[j3] + vy[i2] * vy[j3]);
+        for (let k3 = 0; k3 < 16; k3++) {
+          if (ux[k3] === _ux && uy[k3] === _uy && vx[k3] === _vx && vy[k3] === _vy) {
+            row.push(k3);
             break;
           }
         }
@@ -4419,10 +4419,10 @@ Deprecated since v${version}`);
           }
           const mat = this.mapCoord;
           for (let i2 = 0; i2 < uvs.length; i2 += 2) {
-            const x2 = uvs[i2];
+            const x3 = uvs[i2];
             const y2 = uvs[i2 + 1];
-            out2[i2] = x2 * mat.a + y2 * mat.c + mat.tx;
-            out2[i2 + 1] = x2 * mat.b + y2 * mat.d + mat.ty;
+            out2[i2] = x3 * mat.a + y2 * mat.c + mat.tx;
+            out2[i2 + 1] = x3 * mat.b + y2 * mat.d + mat.ty;
           }
           return out2;
         }
@@ -4740,8 +4740,8 @@ Deprecated since v${version}`);
             for (const i2 in this._texturePool) {
               const textures = this._texturePool[i2];
               if (textures) {
-                for (let j2 = 0; j2 < textures.length; j2++) {
-                  textures[j2].destroy(true);
+                for (let j3 = 0; j3 < textures.length; j3++) {
+                  textures[j3].destroy(true);
                 }
               }
             }
@@ -6064,12 +6064,12 @@ Deprecated since v${version}`);
           if (this._renderer.lastObjectRendered) {
             this._updateAccessibleObjects(this._renderer.lastObjectRendered);
           }
-          const { x: x2, y: y2, width, height } = this._renderer.view.canvas.getBoundingClientRect();
+          const { x: x3, y: y2, width, height } = this._renderer.view.canvas.getBoundingClientRect();
           const { width: viewWidth, height: viewHeight, resolution } = this._renderer;
           const sx = width / viewWidth * resolution;
           const sy = height / viewHeight * resolution;
           let div = this._div;
-          div.style.left = `${x2}px`;
+          div.style.left = `${x3}px`;
           div.style.top = `${y2}px`;
           div.style.width = `${viewWidth}px`;
           div.style.height = `${viewHeight}px`;
@@ -7352,7 +7352,7 @@ Deprecated since v${version}`);
           }
           const mappers = this.mappingTable[e2.type];
           if (mappers) {
-            for (let i2 = 0, j2 = mappers.length; i2 < j2; i2++) {
+            for (let i2 = 0, j3 = mappers.length; i2 < j3; i2++) {
               mappers[i2].fn(e2);
             }
           } else {
@@ -7366,14 +7366,14 @@ Deprecated since v${version}`);
          * @param x - The x coordinate of the event.
          * @param y - The y coordinate of the event.
          */
-        hitTest(x2, y2) {
+        hitTest(x3, y2) {
           EventsTicker.pauseUpdate = true;
           const useMove = this._isPointerMoveEvent && this.enableGlobalMoveEvents;
           const fn = useMove ? "hitTestMoveRecursive" : "hitTestRecursive";
           const invertedPath = this[fn](
             this.rootTarget,
             this.rootTarget.eventMode,
-            tempHitLocation.set(x2, y2),
+            tempHitLocation.set(x3, y2),
             this.hitTestFn,
             this.hitPruneFn
           );
@@ -7391,7 +7391,7 @@ Deprecated since v${version}`);
           }
           const composedPath = e2.composedPath();
           e2.eventPhase = e2.CAPTURING_PHASE;
-          for (let i2 = 0, j2 = composedPath.length - 1; i2 < j2; i2++) {
+          for (let i2 = 0, j3 = composedPath.length - 1; i2 < j3; i2++) {
             e2.currentTarget = composedPath[i2];
             this.notifyTarget(e2, type);
             if (e2.propagationStopped || e2.propagationImmediatelyStopped)
@@ -8177,7 +8177,7 @@ Deprecated since v${version}`);
               e2.currentTarget.removeListener(type, listeners.fn, void 0, true);
             listeners.fn.call(listeners.context, e2);
           } else {
-            for (let i2 = 0, j2 = listeners.length; i2 < j2 && !e2.propagationImmediatelyStopped; i2++) {
+            for (let i2 = 0, j3 = listeners.length; i2 < j3 && !e2.propagationImmediatelyStopped; i2++) {
               if (listeners[i2].once)
                 e2.currentTarget.removeListener(type, listeners[i2].fn, void 0, true);
               listeners[i2].fn.call(listeners[i2].context, e2);
@@ -8333,7 +8333,7 @@ Deprecated since v${version}`);
               nativeEvent.preventDefault();
             }
           }
-          for (let i2 = 0, j2 = events.length; i2 < j2; i2++) {
+          for (let i2 = 0, j3 = events.length; i2 < j3; i2++) {
             const nativeEvent2 = events[i2];
             const federatedEvent = this._bootstrapEvent(this._rootPointerEvent, nativeEvent2);
             this.rootBoundary.mapEvent(federatedEvent);
@@ -8350,7 +8350,7 @@ Deprecated since v${version}`);
           this.rootBoundary.rootTarget = this.renderer.lastObjectRendered;
           EventsTicker.pointerMoved();
           const normalizedEvents = this._normalizeToPointerData(nativeEvent);
-          for (let i2 = 0, j2 = normalizedEvents.length; i2 < j2; i2++) {
+          for (let i2 = 0, j3 = normalizedEvents.length; i2 < j3; i2++) {
             const event = this._bootstrapEvent(this._rootPointerEvent, normalizedEvents[i2]);
             this.rootBoundary.mapEvent(event);
           }
@@ -8370,7 +8370,7 @@ Deprecated since v${version}`);
           }
           const outside = target !== this.domElement ? "outside" : "";
           const normalizedEvents = this._normalizeToPointerData(nativeEvent);
-          for (let i2 = 0, j2 = normalizedEvents.length; i2 < j2; i2++) {
+          for (let i2 = 0, j3 = normalizedEvents.length; i2 < j3; i2++) {
             const event = this._bootstrapEvent(this._rootPointerEvent, normalizedEvents[i2]);
             event.type += outside;
             this.rootBoundary.mapEvent(event);
@@ -8386,7 +8386,7 @@ Deprecated since v${version}`);
             return;
           this.rootBoundary.rootTarget = this.renderer.lastObjectRendered;
           const normalizedEvents = this._normalizeToPointerData(nativeEvent);
-          for (let i2 = 0, j2 = normalizedEvents.length; i2 < j2; i2++) {
+          for (let i2 = 0, j3 = normalizedEvents.length; i2 < j3; i2++) {
             const event = this._bootstrapEvent(this._rootPointerEvent, normalizedEvents[i2]);
             this.rootBoundary.mapEvent(event);
           }
@@ -8499,7 +8499,7 @@ Deprecated since v${version}`);
          * @param  {number} x - the x coord of the position to map
          * @param  {number} y - the y coord of the position to map
          */
-        mapPositionToPoint(point, x2, y2) {
+        mapPositionToPoint(point, x3, y2) {
           const rect = this.domElement.isConnected ? this.domElement.getBoundingClientRect() : {
             x: 0,
             y: 0,
@@ -8509,7 +8509,7 @@ Deprecated since v${version}`);
             top: 0
           };
           const resolutionMultiplier = 1 / this.resolution;
-          point.x = (x2 - rect.left) * (this.domElement.width / rect.width) * resolutionMultiplier;
+          point.x = (x3 - rect.left) * (this.domElement.width / rect.width) * resolutionMultiplier;
           point.y = (y2 - rect.top) * (this.domElement.height / rect.height) * resolutionMultiplier;
         }
         /**
@@ -9988,7 +9988,7 @@ Deprecated since v${version}`);
               if (typeof value === "string")
                 return value;
               if (Array.isArray(value))
-                return value.map((v2) => v2?.src ?? v2);
+                return value.map((v3) => v3?.src ?? v3);
               if (value?.src)
                 return value.src;
               return value;
@@ -10728,8 +10728,8 @@ Deprecated since v${version}`);
          */
         containsPoint(point) {
           const bounds = this.bounds;
-          const { x: x2, y: y2 } = point;
-          return x2 >= bounds.minX && x2 <= bounds.maxX && y2 >= bounds.minY && y2 <= bounds.maxY;
+          const { x: x3, y: y2 } = point;
+          return x3 >= bounds.minX && x3 <= bounds.maxX && y2 >= bounds.minY && y2 <= bounds.maxY;
         }
         /** @private */
         onViewUpdate() {
@@ -12684,14 +12684,14 @@ Deprecated since v${version}`);
     const offset = (attribute.offset || 0) / byteSize;
     const stride = (attribute.stride || 2 * 4) / byteSize;
     for (let i2 = offset; i2 < data.length; i2 += stride) {
-      const x2 = data[i2];
+      const x3 = data[i2];
       const y2 = data[i2 + 1];
-      if (x2 > maxX)
-        maxX = x2;
+      if (x3 > maxX)
+        maxX = x3;
       if (y2 > maxY)
         maxY = y2;
-      if (x2 < minX)
-        minX = x2;
+      if (x3 < minX)
+        minX = x3;
       if (y2 < minY)
         minY = y2;
     }
@@ -13627,8 +13627,8 @@ ${parts.join("\n")}
     return cacheMap[cacheId];
   }
   function compileInputsAndOutputs(template, bits) {
-    const vertexFragments = bits.map((shaderBit) => shaderBit.vertex).filter((v2) => !!v2);
-    const fragmentFragments = bits.map((shaderBit) => shaderBit.fragment).filter((v2) => !!v2);
+    const vertexFragments = bits.map((shaderBit) => shaderBit.vertex).filter((v3) => !!v3);
+    const fragmentFragments = bits.map((shaderBit) => shaderBit.fragment).filter((v3) => !!v3);
     let compiledVertex = compileInputs(vertexFragments, template.vertex, true);
     compiledVertex = compileOutputs(vertexFragments, compiledVertex);
     const compiledFragment = compileInputs(fragmentFragments, template.fragment, true);
@@ -14334,11 +14334,11 @@ ${parts.join("\n")}
             throw new Error("[Shader] No group map or WebGPU shader provided - consider using resources instead.");
           } else if (!gpuProgram3 && groups && groupMap) {
             for (const i2 in groupMap) {
-              for (const j2 in groupMap[i2]) {
-                const uniformName = groupMap[i2][j2];
+              for (const j3 in groupMap[i2]) {
+                const uniformName = groupMap[i2][j3];
                 nameHash[uniformName] = {
                   group: i2,
-                  binding: j2,
+                  binding: j3,
                   name: uniformName
                 };
               }
@@ -14540,7 +14540,7 @@ ${parts.join("\n")}
           const a2 = wt.a;
           const b2 = wt.b;
           const c2 = wt.c;
-          const d2 = wt.d;
+          const d3 = wt.d;
           const tx = wt.tx;
           const ty = wt.ty;
           const { positions, uvs } = element;
@@ -14549,10 +14549,10 @@ ${parts.join("\n")}
           const end = offset + element.attributeSize;
           for (let i2 = offset; i2 < end; i2++) {
             const i22 = i2 * 2;
-            const x2 = positions[i22];
+            const x3 = positions[i22];
             const y2 = positions[i22 + 1];
-            float32View[index++] = a2 * x2 + c2 * y2 + tx;
-            float32View[index++] = d2 * y2 + b2 * x2 + ty;
+            float32View[index++] = a2 * x3 + c2 * y2 + tx;
+            float32View[index++] = d3 * y2 + b2 * x3 + ty;
             float32View[index++] = uvs[i22];
             float32View[index++] = uvs[i22 + 1];
             uint32View[index++] = argb;
@@ -14573,7 +14573,7 @@ ${parts.join("\n")}
           const a2 = wt.a;
           const b2 = wt.b;
           const c2 = wt.c;
-          const d2 = wt.d;
+          const d3 = wt.d;
           const tx = wt.tx;
           const ty = wt.ty;
           const bounds = element.bounds;
@@ -14585,25 +14585,25 @@ ${parts.join("\n")}
           const argb = element.color;
           const textureIdAndRound = textureId << 16 | element.roundPixels & 65535;
           float32View[index + 0] = a2 * w1 + c2 * h1 + tx;
-          float32View[index + 1] = d2 * h1 + b2 * w1 + ty;
+          float32View[index + 1] = d3 * h1 + b2 * w1 + ty;
           float32View[index + 2] = uvs.x0;
           float32View[index + 3] = uvs.y0;
           uint32View[index + 4] = argb;
           uint32View[index + 5] = textureIdAndRound;
           float32View[index + 6] = a2 * w0 + c2 * h1 + tx;
-          float32View[index + 7] = d2 * h1 + b2 * w0 + ty;
+          float32View[index + 7] = d3 * h1 + b2 * w0 + ty;
           float32View[index + 8] = uvs.x1;
           float32View[index + 9] = uvs.y1;
           uint32View[index + 10] = argb;
           uint32View[index + 11] = textureIdAndRound;
           float32View[index + 12] = a2 * w0 + c2 * h0 + tx;
-          float32View[index + 13] = d2 * h0 + b2 * w0 + ty;
+          float32View[index + 13] = d3 * h0 + b2 * w0 + ty;
           float32View[index + 14] = uvs.x2;
           float32View[index + 15] = uvs.y2;
           uint32View[index + 16] = argb;
           uint32View[index + 17] = textureIdAndRound;
           float32View[index + 18] = a2 * w1 + c2 * h0 + tx;
-          float32View[index + 19] = d2 * h0 + b2 * w1 + ty;
+          float32View[index + 19] = d3 * h0 + b2 * w1 + ty;
           float32View[index + 20] = uvs.x3;
           float32View[index + 21] = uvs.y3;
           uint32View[index + 22] = argb;
@@ -14628,14 +14628,14 @@ ${parts.join("\n")}
     const a2 = matrix.a;
     const b2 = matrix.b;
     const c2 = matrix.c;
-    const d2 = matrix.d;
+    const d3 = matrix.d;
     const tx = matrix.tx;
     const ty = matrix.ty;
     while (index < size) {
-      const x2 = vertices[verticesOffset];
+      const x3 = vertices[verticesOffset];
       const y2 = vertices[verticesOffset + 1];
-      uvs[uvsOffset] = a2 * x2 + c2 * y2 + tx;
-      uvs[uvsOffset + 1] = b2 * x2 + d2 * y2 + ty;
+      uvs[uvsOffset] = a2 * x3 + c2 * y2 + tx;
+      uvs[uvsOffset + 1] = b2 * x3 + d3 * y2 + ty;
       uvsOffset += uvsStride;
       verticesOffset += verticesStride;
       index++;
@@ -14658,22 +14658,22 @@ ${parts.join("\n")}
   });
 
   // node_modules/pixi.js/lib/rendering/renderers/shared/geometry/utils/transformVertices.mjs
-  function transformVertices(vertices, m2, offset, stride, size) {
-    const a2 = m2.a;
-    const b2 = m2.b;
-    const c2 = m2.c;
-    const d2 = m2.d;
-    const tx = m2.tx;
-    const ty = m2.ty;
+  function transformVertices(vertices, m3, offset, stride, size) {
+    const a2 = m3.a;
+    const b2 = m3.b;
+    const c2 = m3.c;
+    const d3 = m3.d;
+    const tx = m3.tx;
+    const ty = m3.ty;
     offset || (offset = 0);
     stride || (stride = 2);
     size || (size = vertices.length / stride - offset);
     let index = offset * stride;
     for (let i2 = 0; i2 < size; i2++) {
-      const x2 = vertices[index];
+      const x3 = vertices[index];
       const y2 = vertices[index + 1];
-      vertices[index] = a2 * x2 + c2 * y2 + tx;
-      vertices[index + 1] = b2 * x2 + d2 * y2 + ty;
+      vertices[index] = a2 * x3 + c2 * y2 + tx;
+      vertices[index + 1] = b2 * x3 + d3 * y2 + ty;
       index += stride;
     }
   }
@@ -14758,7 +14758,7 @@ ${parts.join("\n")}
           name: "circle"
         },
         build(shape, points) {
-          let x2;
+          let x3;
           let y2;
           let dx;
           let dy;
@@ -14766,13 +14766,13 @@ ${parts.join("\n")}
           let ry;
           if (shape.type === "circle") {
             const circle = shape;
-            x2 = circle.x;
+            x3 = circle.x;
             y2 = circle.y;
             rx = ry = circle.radius;
             dx = dy = 0;
           } else if (shape.type === "ellipse") {
             const ellipse = shape;
-            x2 = ellipse.x;
+            x3 = ellipse.x;
             y2 = ellipse.y;
             rx = ellipse.halfWidth;
             ry = ellipse.halfHeight;
@@ -14781,7 +14781,7 @@ ${parts.join("\n")}
             const roundedRect = shape;
             const halfWidth = roundedRect.width / 2;
             const halfHeight = roundedRect.height / 2;
-            x2 = roundedRect.x + halfWidth;
+            x3 = roundedRect.x + halfWidth;
             y2 = roundedRect.y + halfHeight;
             rx = ry = Math.max(0, Math.min(roundedRect.radius, Math.min(halfWidth, halfHeight)));
             dx = halfWidth - rx;
@@ -14791,30 +14791,30 @@ ${parts.join("\n")}
             return points;
           }
           const n2 = Math.ceil(2.3 * Math.sqrt(rx + ry));
-          const m2 = n2 * 8 + (dx ? 4 : 0) + (dy ? 4 : 0);
-          if (m2 === 0) {
+          const m3 = n2 * 8 + (dx ? 4 : 0) + (dy ? 4 : 0);
+          if (m3 === 0) {
             return points;
           }
           if (n2 === 0) {
-            points[0] = points[6] = x2 + dx;
+            points[0] = points[6] = x3 + dx;
             points[1] = points[3] = y2 + dy;
-            points[2] = points[4] = x2 - dx;
+            points[2] = points[4] = x3 - dx;
             points[5] = points[7] = y2 - dy;
             return points;
           }
           let j1 = 0;
-          let j2 = n2 * 4 + (dx ? 2 : 0) + 2;
-          let j3 = j2;
-          let j4 = m2;
+          let j22 = n2 * 4 + (dx ? 2 : 0) + 2;
+          let j3 = j22;
+          let j4 = m3;
           let x0 = dx + rx;
           let y0 = dy;
-          let x1 = x2 + x0;
-          let x22 = x2 - x0;
+          let x1 = x3 + x0;
+          let x22 = x3 - x0;
           let y1 = y2 + y0;
           points[j1++] = x1;
           points[j1++] = y1;
-          points[--j2] = y1;
-          points[--j2] = x22;
+          points[--j22] = y1;
+          points[--j22] = x22;
           if (dy) {
             const y222 = y2 - y0;
             points[j3++] = x22;
@@ -14826,14 +14826,14 @@ ${parts.join("\n")}
             const a2 = Math.PI / 2 * (i2 / n2);
             const x02 = dx + Math.cos(a2) * rx;
             const y02 = dy + Math.sin(a2) * ry;
-            const x12 = x2 + x02;
-            const x222 = x2 - x02;
+            const x12 = x3 + x02;
+            const x222 = x3 - x02;
             const y12 = y2 + y02;
             const y222 = y2 - y02;
             points[j1++] = x12;
             points[j1++] = y12;
-            points[--j2] = y12;
-            points[--j2] = x222;
+            points[--j22] = y12;
+            points[--j22] = x222;
             points[j3++] = x222;
             points[j3++] = y222;
             points[--j4] = y222;
@@ -14841,8 +14841,8 @@ ${parts.join("\n")}
           }
           x0 = dx;
           y0 = dy + ry;
-          x1 = x2 + x0;
-          x22 = x2 - x0;
+          x1 = x3 + x0;
+          x22 = x3 - x0;
           y1 = y2 + y0;
           const y22 = y2 - y0;
           points[j1++] = x1;
@@ -14905,16 +14905,16 @@ ${parts.join("\n")}
 
   // node_modules/pixi.js/lib/scene/graphics/shared/utils/getOrientationOfPoints.mjs
   function getOrientationOfPoints(points) {
-    const m2 = points.length;
-    if (m2 < 6) {
+    const m3 = points.length;
+    if (m3 < 6) {
       return 1;
     }
     let area = 0;
-    for (let i2 = 0, x1 = points[m2 - 2], y1 = points[m2 - 1]; i2 < m2; i2 += 2) {
-      const x2 = points[i2];
+    for (let i2 = 0, x1 = points[m3 - 2], y1 = points[m3 - 1]; i2 < m3; i2 += 2) {
+      const x22 = points[i2];
       const y2 = points[i2 + 1];
-      area += (x2 - x1) * (y2 + y1);
-      x1 = x2;
+      area += (x22 - x1) * (y2 + y1);
+      x1 = x22;
       y1 = y2;
     }
     if (area < 0) {
@@ -14929,10 +14929,10 @@ ${parts.join("\n")}
   });
 
   // node_modules/pixi.js/lib/scene/graphics/shared/buildCommands/buildLine.mjs
-  function square(x2, y2, nx, ny, innerWeight, outerWeight, clockwise, verts) {
-    const ix = x2 - nx * innerWeight;
+  function square(x3, y2, nx, ny, innerWeight, outerWeight, clockwise, verts) {
+    const ix = x3 - nx * innerWeight;
     const iy = y2 - ny * innerWeight;
-    const ox = x2 + nx * outerWeight;
+    const ox = x3 + nx * outerWeight;
     const oy = y2 + ny * outerWeight;
     let exx;
     let eyy;
@@ -15035,7 +15035,7 @@ ${parts.join("\n")}
     let y0 = points[1];
     let x1 = points[2];
     let y1 = points[3];
-    let x2 = 0;
+    let x22 = 0;
     let y2 = 0;
     let perpX = -(y0 - y1);
     let perpY = x0 - x1;
@@ -15078,7 +15078,7 @@ ${parts.join("\n")}
       y0 = points[(i2 - 1) * 2 + 1];
       x1 = points[i2 * 2];
       y1 = points[i2 * 2 + 1];
-      x2 = points[(i2 + 1) * 2];
+      x22 = points[(i2 + 1) * 2];
       y2 = points[(i2 + 1) * 2 + 1];
       perpX = -(y0 - y1);
       perpY = x0 - x1;
@@ -15088,7 +15088,7 @@ ${parts.join("\n")}
       perpX *= width;
       perpY *= width;
       perp1x = -(y1 - y2);
-      perp1y = x1 - x2;
+      perp1y = x1 - x22;
       dist = Math.sqrt(perp1x * perp1x + perp1y * perp1y);
       perp1x /= dist;
       perp1y /= dist;
@@ -15096,7 +15096,7 @@ ${parts.join("\n")}
       perp1y *= width;
       const dx0 = x1 - x0;
       const dy0 = y0 - y1;
-      const dx1 = x1 - x2;
+      const dx1 = x1 - x22;
       const dy1 = y2 - y1;
       const dot = dx0 * dx1 + dy0 * dy1;
       const cross = dy0 * dx1 - dy1 * dx0;
@@ -15137,7 +15137,7 @@ ${parts.join("\n")}
         continue;
       }
       const c1 = (-perpX + x0) * (-perpY + y1) - (-perpX + x1) * (-perpY + y0);
-      const c2 = (-perp1x + x2) * (-perp1y + y1) - (-perp1x + x1) * (-perp1y + y2);
+      const c2 = (-perp1x + x22) * (-perp1y + y1) - (-perp1x + x1) * (-perp1y + y2);
       const px = (dx0 * c2 - dx1 * c1) / cross;
       const py = (dy1 * c1 - dy0 * c2) / cross;
       const pDist = (px - x1) * (px - x1) + (py - y1) * (py - y1);
@@ -15276,9 +15276,9 @@ ${parts.join("\n")}
       y0 = verts[i2 * 2 + 1];
       x1 = verts[(i2 + 1) * 2];
       y1 = verts[(i2 + 1) * 2 + 1];
-      x2 = verts[(i2 + 2) * 2];
+      x22 = verts[(i2 + 2) * 2];
       y2 = verts[(i2 + 2) * 2 + 1];
-      if (Math.abs(x0 * (y1 - y2) + x1 * (y2 - y0) + x2 * (y0 - y1)) < eps2) {
+      if (Math.abs(x0 * (y1 - y2) + x1 * (y2 - y0) + x22 * (y0 - y1)) < eps2) {
         continue;
       }
       indices.push(i2, i2 + 1, i2 + 2);
@@ -15333,17 +15333,17 @@ ${parts.join("\n")}
         dim = dim || 2;
         var hasHoles = holeIndices && holeIndices.length, outerLen = hasHoles ? holeIndices[0] * dim : data.length, outerNode = linkedList(data, 0, outerLen, dim, true), triangles = [];
         if (!outerNode || outerNode.next === outerNode.prev) return triangles;
-        var minX, minY, maxX, maxY, x2, y2, invSize;
+        var minX, minY, maxX, maxY, x3, y2, invSize;
         if (hasHoles) outerNode = eliminateHoles(data, holeIndices, outerNode, dim);
         if (data.length > 80 * dim) {
           minX = maxX = data[0];
           minY = maxY = data[1];
           for (var i2 = dim; i2 < outerLen; i2 += dim) {
-            x2 = data[i2];
+            x3 = data[i2];
             y2 = data[i2 + 1];
-            if (x2 < minX) minX = x2;
+            if (x3 < minX) minX = x3;
             if (y2 < minY) minY = y2;
-            if (x2 > maxX) maxX = x2;
+            if (x3 > maxX) maxX = x3;
             if (y2 > maxY) maxY = y2;
           }
           invSize = Math.max(maxX - minX, maxY - minY);
@@ -15509,35 +15509,35 @@ ${parts.join("\n")}
         return filterPoints(bridge, bridge.next);
       }
       function findHoleBridge(hole, outerNode) {
-        var p2 = outerNode, hx = hole.x, hy = hole.y, qx = -Infinity, m2;
+        var p2 = outerNode, hx = hole.x, hy = hole.y, qx = -Infinity, m3;
         do {
           if (hy <= p2.y && hy >= p2.next.y && p2.next.y !== p2.y) {
-            var x2 = p2.x + (hy - p2.y) * (p2.next.x - p2.x) / (p2.next.y - p2.y);
-            if (x2 <= hx && x2 > qx) {
-              qx = x2;
-              m2 = p2.x < p2.next.x ? p2 : p2.next;
-              if (x2 === hx) return m2;
+            var x3 = p2.x + (hy - p2.y) * (p2.next.x - p2.x) / (p2.next.y - p2.y);
+            if (x3 <= hx && x3 > qx) {
+              qx = x3;
+              m3 = p2.x < p2.next.x ? p2 : p2.next;
+              if (x3 === hx) return m3;
             }
           }
           p2 = p2.next;
         } while (p2 !== outerNode);
-        if (!m2) return null;
-        var stop = m2, mx = m2.x, my = m2.y, tanMin = Infinity, tan;
-        p2 = m2;
+        if (!m3) return null;
+        var stop = m3, mx = m3.x, my = m3.y, tanMin = Infinity, tan;
+        p2 = m3;
         do {
           if (hx >= p2.x && p2.x >= mx && hx !== p2.x && pointInTriangle(hy < my ? hx : qx, hy, mx, my, hy < my ? qx : hx, hy, p2.x, p2.y)) {
             tan = Math.abs(hy - p2.y) / (hx - p2.x);
-            if (locallyInside(p2, hole) && (tan < tanMin || tan === tanMin && (p2.x > m2.x || p2.x === m2.x && sectorContainsSector(m2, p2)))) {
-              m2 = p2;
+            if (locallyInside(p2, hole) && (tan < tanMin || tan === tanMin && (p2.x > m3.x || p2.x === m3.x && sectorContainsSector(m3, p2)))) {
+              m3 = p2;
               tanMin = tan;
             }
           }
           p2 = p2.next;
         } while (p2 !== stop);
-        return m2;
+        return m3;
       }
-      function sectorContainsSector(m2, p2) {
-        return area(m2.prev, m2, p2.prev) < 0 && area(p2.next, m2, m2.next) < 0;
+      function sectorContainsSector(m3, p2) {
+        return area(m3.prev, m3, p2.prev) < 0 && area(p2.next, m3, m3.next) < 0;
       }
       function indexCurve(start, minX, minY, invSize) {
         var p2 = start;
@@ -15552,7 +15552,7 @@ ${parts.join("\n")}
         sortLinked(p2);
       }
       function sortLinked(list) {
-        var i2, p2, q, e2, tail, numMerges, pSize, qSize, inSize = 1;
+        var i2, p2, q2, e2, tail, numMerges, pSize, qSize, inSize = 1;
         do {
           p2 = list;
           list = null;
@@ -15560,22 +15560,22 @@ ${parts.join("\n")}
           numMerges = 0;
           while (p2) {
             numMerges++;
-            q = p2;
+            q2 = p2;
             pSize = 0;
             for (i2 = 0; i2 < inSize; i2++) {
               pSize++;
-              q = q.nextZ;
-              if (!q) break;
+              q2 = q2.nextZ;
+              if (!q2) break;
             }
             qSize = inSize;
-            while (pSize > 0 || qSize > 0 && q) {
-              if (pSize !== 0 && (qSize === 0 || !q || p2.z <= q.z)) {
+            while (pSize > 0 || qSize > 0 && q2) {
+              if (pSize !== 0 && (qSize === 0 || !q2 || p2.z <= q2.z)) {
                 e2 = p2;
                 p2 = p2.nextZ;
                 pSize--;
               } else {
-                e2 = q;
-                q = q.nextZ;
+                e2 = q2;
+                q2 = q2.nextZ;
                 qSize--;
               }
               if (tail) tail.nextZ = e2;
@@ -15583,25 +15583,25 @@ ${parts.join("\n")}
               e2.prevZ = tail;
               tail = e2;
             }
-            p2 = q;
+            p2 = q2;
           }
           tail.nextZ = null;
           inSize *= 2;
         } while (numMerges > 1);
         return list;
       }
-      function zOrder(x2, y2, minX, minY, invSize) {
-        x2 = (x2 - minX) * invSize | 0;
+      function zOrder(x3, y2, minX, minY, invSize) {
+        x3 = (x3 - minX) * invSize | 0;
         y2 = (y2 - minY) * invSize | 0;
-        x2 = (x2 | x2 << 8) & 16711935;
-        x2 = (x2 | x2 << 4) & 252645135;
-        x2 = (x2 | x2 << 2) & 858993459;
-        x2 = (x2 | x2 << 1) & 1431655765;
+        x3 = (x3 | x3 << 8) & 16711935;
+        x3 = (x3 | x3 << 4) & 252645135;
+        x3 = (x3 | x3 << 2) & 858993459;
+        x3 = (x3 | x3 << 1) & 1431655765;
         y2 = (y2 | y2 << 8) & 16711935;
         y2 = (y2 | y2 << 4) & 252645135;
         y2 = (y2 | y2 << 2) & 858993459;
         y2 = (y2 | y2 << 1) & 1431655765;
-        return x2 | y2 << 1;
+        return x3 | y2 << 1;
       }
       function getLeftmost(start) {
         var p2 = start, leftmost = start;
@@ -15620,8 +15620,8 @@ ${parts.join("\n")}
         (area(a2.prev, a2, b2.prev) || area(a2, b2.prev, b2)) || // does not create opposite-facing sectors
         equals(a2, b2) && area(a2.prev, a2, a2.next) > 0 && area(b2.prev, b2, b2.next) > 0);
       }
-      function area(p2, q, r2) {
-        return (q.y - p2.y) * (r2.x - q.x) - (q.x - p2.x) * (r2.y - q.y);
+      function area(p2, q2, r2) {
+        return (q2.y - p2.y) * (r2.x - q2.x) - (q2.x - p2.x) * (r2.y - q2.y);
       }
       function equals(p1, p2) {
         return p1.x === p2.x && p1.y === p2.y;
@@ -15638,8 +15638,8 @@ ${parts.join("\n")}
         if (o4 === 0 && onSegment(p2, q1, q2)) return true;
         return false;
       }
-      function onSegment(p2, q, r2) {
-        return q.x <= Math.max(p2.x, r2.x) && q.x >= Math.min(p2.x, r2.x) && q.y <= Math.max(p2.y, r2.y) && q.y >= Math.min(p2.y, r2.y);
+      function onSegment(p2, q2, r2) {
+        return q2.x <= Math.max(p2.x, r2.x) && q2.x >= Math.min(p2.x, r2.x) && q2.y <= Math.max(p2.y, r2.y) && q2.y >= Math.min(p2.y, r2.y);
       }
       function sign(num) {
         return num > 0 ? 1 : num < 0 ? -1 : 0;
@@ -15676,8 +15676,8 @@ ${parts.join("\n")}
         b22.prev = bp;
         return b22;
       }
-      function insertNode(i2, x2, y2, last) {
-        var p2 = new Node(i2, x2, y2);
+      function insertNode(i2, x3, y2, last) {
+        var p2 = new Node(i2, x3, y2);
         if (!last) {
           p2.prev = p2;
           p2.next = p2;
@@ -15695,9 +15695,9 @@ ${parts.join("\n")}
         if (p2.prevZ) p2.prevZ.nextZ = p2.nextZ;
         if (p2.nextZ) p2.nextZ.prevZ = p2.prevZ;
       }
-      function Node(i2, x2, y2) {
+      function Node(i2, x3, y2) {
         this.i = i2;
-        this.x = x2;
+        this.x = x3;
         this.y = y2;
         this.prev = null;
         this.next = null;
@@ -15730,17 +15730,17 @@ ${parts.join("\n")}
       };
       function signedArea(data, start, end, dim) {
         var sum = 0;
-        for (var i2 = start, j2 = end - dim; i2 < end; i2 += dim) {
-          sum += (data[j2] - data[i2]) * (data[i2 + 1] + data[j2 + 1]);
-          j2 = i2;
+        for (var i2 = start, j3 = end - dim; i2 < end; i2 += dim) {
+          sum += (data[j3] - data[i2]) * (data[i2 + 1] + data[j3 + 1]);
+          j3 = i2;
         }
         return sum;
       }
       earcut2.flatten = function(data) {
         var dim = data[0][0].length, result = { vertices: [], holes: [], dimensions: dim }, holeIndex = 0;
         for (var i2 = 0; i2 < data.length; i2++) {
-          for (var j2 = 0; j2 < data[i2].length; j2++) {
-            for (var d2 = 0; d2 < dim; d2++) result.vertices.push(data[i2][j2][d2]);
+          for (var j3 = 0; j3 < data[i2].length; j3++) {
+            for (var d3 = 0; d3 < dim; d3++) result.vertices.push(data[i2][j3][d3]);
           }
           if (i2 > 0) {
             holeIndex += data[i2 - 1].length;
@@ -15814,20 +15814,20 @@ ${parts.join("\n")}
         },
         build(shape, points) {
           const rectData = shape;
-          const x2 = rectData.x;
+          const x3 = rectData.x;
           const y2 = rectData.y;
           const width = rectData.width;
           const height = rectData.height;
           if (!(width >= 0 && height >= 0)) {
             return points;
           }
-          points[0] = x2;
+          points[0] = x3;
           points[1] = y2;
-          points[2] = x2 + width;
+          points[2] = x3 + width;
           points[3] = y2;
-          points[4] = x2 + width;
+          points[4] = x3 + width;
           points[5] = y2 + height;
-          points[6] = x2;
+          points[6] = x3;
           points[7] = y2 + height;
           return points;
         },
@@ -16030,8 +16030,8 @@ ${parts.join("\n")}
       return [];
     const holePrimitives = shape.shapePrimitives;
     const holeArrays = [];
-    for (let k2 = 0; k2 < holePrimitives.length; k2++) {
-      const holePrimitive = holePrimitives[k2].shape;
+    for (let k3 = 0; k3 < holePrimitives.length; k3++) {
+      const holePrimitive = holePrimitives[k3].shape;
       const holePoints = [];
       const holeBuilder = shapeBuilders[holePrimitive.type];
       holeBuilder.build(holePrimitive, holePoints);
@@ -16822,13 +16822,13 @@ ${parts.join("\n")}
     if (outBuffer.length !== totalIndices) {
       throw new Error(`Out buffer length is incorrect, got ${outBuffer.length} and expected ${totalIndices}`);
     }
-    for (let i2 = 0, j2 = 0; i2 < totalIndices; i2 += 6, j2 += 4) {
-      outBuffer[i2 + 0] = j2 + 0;
-      outBuffer[i2 + 1] = j2 + 1;
-      outBuffer[i2 + 2] = j2 + 2;
-      outBuffer[i2 + 3] = j2 + 0;
-      outBuffer[i2 + 4] = j2 + 2;
-      outBuffer[i2 + 5] = j2 + 3;
+    for (let i2 = 0, j3 = 0; i2 < totalIndices; i2 += 6, j3 += 4) {
+      outBuffer[i2 + 0] = j3 + 0;
+      outBuffer[i2 + 1] = j3 + 1;
+      outBuffer[i2 + 2] = j3 + 2;
+      outBuffer[i2 + 3] = j3 + 0;
+      outBuffer[i2 + 4] = j3 + 2;
+      outBuffer[i2 + 5] = j3 + 3;
     }
     return outBuffer;
   }
@@ -17483,15 +17483,15 @@ ${parts.join("\n")}
 
   // node_modules/pixi.js/lib/utils/canvas/getCanvasBoundingBox.mjs
   function checkRow(data, width, y2) {
-    for (let x2 = 0, index = 4 * y2 * width; x2 < width; ++x2, index += 4) {
+    for (let x3 = 0, index = 4 * y2 * width; x3 < width; ++x3, index += 4) {
       if (data[index + 3] !== 0)
         return false;
     }
     return true;
   }
-  function checkColumn(data, width, x2, top, bottom) {
+  function checkColumn(data, width, x3, top, bottom) {
     const stride = 4 * width;
-    for (let y2 = top, index = top * stride + 4 * x2; y2 <= bottom; ++y2, index += stride) {
+    for (let y2 = top, index = top * stride + 4 * x3; y2 <= bottom; ++y2, index += stride) {
       if (data[index + 3] !== 0)
         return false;
     }
@@ -17582,16 +17582,16 @@ ${parts.join("\n")}
             })
           });
           const { x0, y0, x1, y1 } = this;
-          const m2 = new Matrix();
+          const m3 = new Matrix();
           const dx = x1 - x0;
           const dy = y1 - y0;
           const dist = Math.sqrt(dx * dx + dy * dy);
           const angle = Math.atan2(dy, dx);
-          m2.translate(-x0, -y0);
-          m2.scale(1 / defaultSize, 1 / defaultSize);
-          m2.rotate(-angle);
-          m2.scale(256 / dist, 1);
-          this.transform = m2;
+          m3.translate(-x0, -y0);
+          m3.scale(1 / defaultSize, 1 / defaultSize);
+          m3.rotate(-angle);
+          m3.scale(256 / dist, 1);
+          this.transform = m3;
           this._styleKey = null;
         }
         get styleKey() {
@@ -17676,7 +17676,7 @@ ${parts.join("\n")}
       var segment = /([astvzqmhlc])([^astvzqmhlc]*)/ig;
       function parse2(path2) {
         var data = [];
-        path2.replace(segment, function(_, command, args) {
+        path2.replace(segment, function(_2, command, args) {
           var type = command.toLowerCase();
           args = parseValues(args);
           if (type == "m" && args.length > 2) {
@@ -17903,9 +17903,9 @@ ${parts.join("\n")}
          * @param y - The Y coordinate of the center of this circle
          * @param radius - The radius of the circle
          */
-        constructor(x2 = 0, y2 = 0, radius = 0) {
+        constructor(x3 = 0, y2 = 0, radius = 0) {
           this.type = "circle";
-          this.x = x2;
+          this.x = x3;
           this.y = y2;
           this.radius = radius;
         }
@@ -17922,11 +17922,11 @@ ${parts.join("\n")}
          * @param y - The Y coordinate of the point to test
          * @returns Whether the x/y coordinates are within this Circle
          */
-        contains(x2, y2) {
+        contains(x3, y2) {
           if (this.radius <= 0)
             return false;
           const r2 = this.radius * this.radius;
-          let dx = this.x - x2;
+          let dx = this.x - x3;
           let dy = this.y - y2;
           dx *= dx;
           dy *= dy;
@@ -17939,10 +17939,10 @@ ${parts.join("\n")}
          * @param width - The width of the line to check
          * @returns Whether the x/y coordinates are within this Circle
          */
-        strokeContains(x2, y2, width) {
+        strokeContains(x3, y2, width) {
           if (this.radius === 0)
             return false;
-          const dx = this.x - x2;
+          const dx = this.x - x3;
           const dy = this.y - y2;
           const r2 = this.radius;
           const w2 = width / 2;
@@ -18001,9 +18001,9 @@ ${parts.join("\n")}
          * @param halfWidth - The half width of this ellipse
          * @param halfHeight - The half height of this ellipse
          */
-        constructor(x2 = 0, y2 = 0, halfWidth = 0, halfHeight = 0) {
+        constructor(x3 = 0, y2 = 0, halfWidth = 0, halfHeight = 0) {
           this.type = "ellipse";
-          this.x = x2;
+          this.x = x3;
           this.y = y2;
           this.halfWidth = halfWidth;
           this.halfHeight = halfHeight;
@@ -18021,11 +18021,11 @@ ${parts.join("\n")}
          * @param y - The Y coordinate of the point to test
          * @returns Whether the x/y coords are within this ellipse
          */
-        contains(x2, y2) {
+        contains(x3, y2) {
           if (this.halfWidth <= 0 || this.halfHeight <= 0) {
             return false;
           }
-          let normx = (x2 - this.x) / this.halfWidth;
+          let normx = (x3 - this.x) / this.halfWidth;
           let normy = (y2 - this.y) / this.halfHeight;
           normx *= normx;
           normy *= normy;
@@ -18038,7 +18038,7 @@ ${parts.join("\n")}
          * @param width
          * @returns Whether the x/y coords are within this ellipse
          */
-        strokeContains(x2, y2, width) {
+        strokeContains(x3, y2, width) {
           const { halfWidth, halfHeight } = this;
           if (halfWidth <= 0 || halfHeight <= 0) {
             return false;
@@ -18048,7 +18048,7 @@ ${parts.join("\n")}
           const innerB = halfHeight - halfStrokeWidth;
           const outerA = halfWidth + halfStrokeWidth;
           const outerB = halfHeight + halfStrokeWidth;
-          const normalizedX = x2 - this.x;
+          const normalizedX = x3 - this.x;
           const normalizedY = y2 - this.y;
           const innerEllipse = normalizedX * normalizedX / (innerA * innerA) + normalizedY * normalizedY / (innerB * innerB);
           const outerEllipse = normalizedX * normalizedX / (outerA * outerA) + normalizedY * normalizedY / (outerB * outerB);
@@ -18096,13 +18096,13 @@ ${parts.join("\n")}
   });
 
   // node_modules/pixi.js/lib/maths/misc/squaredDistanceToLineSegment.mjs
-  function squaredDistanceToLineSegment(x2, y2, x1, y1, x22, y22) {
-    const a2 = x2 - x1;
+  function squaredDistanceToLineSegment(x3, y2, x1, y1, x22, y22) {
+    const a2 = x3 - x1;
     const b2 = y2 - y1;
     const c2 = x22 - x1;
-    const d2 = y22 - y1;
-    const dot = a2 * c2 + b2 * d2;
-    const lenSq = c2 * c2 + d2 * d2;
+    const d3 = y22 - y1;
+    const dot = a2 * c2 + b2 * d3;
+    const lenSq = c2 * c2 + d3 * d3;
     let param = -1;
     if (lenSq !== 0) {
       param = dot / lenSq;
@@ -18117,9 +18117,9 @@ ${parts.join("\n")}
       yy = y22;
     } else {
       xx = x1 + param * c2;
-      yy = y1 + param * d2;
+      yy = y1 + param * d3;
     }
-    const dx = x2 - xx;
+    const dx = x3 - xx;
     const dy = y2 - yy;
     return dx * dx + dy * dy;
   }
@@ -18172,15 +18172,15 @@ ${parts.join("\n")}
          * @param y - The Y coordinate of the point to test.
          * @returns - Whether the x/y coordinates are within this polygon.
          */
-        contains(x2, y2) {
+        contains(x3, y2) {
           let inside = false;
           const length = this.points.length / 2;
-          for (let i2 = 0, j2 = length - 1; i2 < length; j2 = i2++) {
+          for (let i2 = 0, j3 = length - 1; i2 < length; j3 = i2++) {
             const xi = this.points[i2 * 2];
             const yi = this.points[i2 * 2 + 1];
-            const xj = this.points[j2 * 2];
-            const yj = this.points[j2 * 2 + 1];
-            const intersect = yi > y2 !== yj > y2 && x2 < (xj - xi) * ((y2 - yi) / (yj - yi)) + xi;
+            const xj = this.points[j3 * 2];
+            const yj = this.points[j3 * 2 + 1];
+            const intersect = yi > y2 !== yj > y2 && x3 < (xj - xi) * ((y2 - yi) / (yj - yi)) + xi;
             if (intersect) {
               inside = !inside;
             }
@@ -18194,7 +18194,7 @@ ${parts.join("\n")}
          * @param strokeWidth - The width of the line to check
          * @returns Whether the x/y coordinates are within this polygon
          */
-        strokeContains(x2, y2, strokeWidth) {
+        strokeContains(x3, y2, strokeWidth) {
           const halfStrokeWidth = strokeWidth / 2;
           const halfStrokeWidthSqrd = halfStrokeWidth * halfStrokeWidth;
           const { points } = this;
@@ -18204,7 +18204,7 @@ ${parts.join("\n")}
             const y1 = points[i2 + 1];
             const x22 = points[(i2 + 2) % points.length];
             const y22 = points[(i2 + 3) % points.length];
-            const distanceSqrd = squaredDistanceToLineSegment(x2, y2, x1, y1, x22, y22);
+            const distanceSqrd = squaredDistanceToLineSegment(x3, y2, x1, y1, x22, y22);
             if (distanceSqrd <= halfStrokeWidthSqrd) {
               return true;
             }
@@ -18224,10 +18224,10 @@ ${parts.join("\n")}
           let minY = Infinity;
           let maxY = -Infinity;
           for (let i2 = 0, n2 = points.length; i2 < n2; i2 += 2) {
-            const x2 = points[i2];
+            const x3 = points[i2];
             const y2 = points[i2 + 1];
-            minX = x2 < minX ? x2 : minX;
-            maxX = x2 > maxX ? x2 : maxX;
+            minX = x3 < minX ? x3 : minX;
+            maxX = x3 > maxX ? x3 : maxX;
             minY = y2 < minY ? y2 : minY;
             maxY = y2 > maxY ? y2 : maxY;
           }
@@ -18310,9 +18310,9 @@ ${parts.join("\n")}
          * @param height - The overall height of this rounded rectangle
          * @param radius - Controls the radius of the rounded corners
          */
-        constructor(x2 = 0, y2 = 0, width = 0, height = 0, radius = 20) {
+        constructor(x3 = 0, y2 = 0, width = 0, height = 0, radius = 20) {
           this.type = "roundedRectangle";
-          this.x = x2;
+          this.x = x3;
           this.y = y2;
           this.width = width;
           this.height = height;
@@ -18365,23 +18365,23 @@ ${parts.join("\n")}
          * @param y - The Y coordinate of the point to test.
          * @returns - Whether the x/y coordinates are within this Rounded Rectangle.
          */
-        contains(x2, y2) {
+        contains(x3, y2) {
           if (this.width <= 0 || this.height <= 0) {
             return false;
           }
-          if (x2 >= this.x && x2 <= this.x + this.width) {
+          if (x3 >= this.x && x3 <= this.x + this.width) {
             if (y2 >= this.y && y2 <= this.y + this.height) {
               const radius = Math.max(0, Math.min(this.radius, Math.min(this.width, this.height) / 2));
-              if (y2 >= this.y + radius && y2 <= this.y + this.height - radius || x2 >= this.x + radius && x2 <= this.x + this.width - radius) {
+              if (y2 >= this.y + radius && y2 <= this.y + this.height - radius || x3 >= this.x + radius && x3 <= this.x + this.width - radius) {
                 return true;
               }
-              let dx = x2 - (this.x + radius);
+              let dx = x3 - (this.x + radius);
               let dy = y2 - (this.y + radius);
               const radius2 = radius * radius;
               if (dx * dx + dy * dy <= radius2) {
                 return true;
               }
-              dx = x2 - (this.x + this.width - radius);
+              dx = x3 - (this.x + this.width - radius);
               if (dx * dx + dy * dy <= radius2) {
                 return true;
               }
@@ -18389,7 +18389,7 @@ ${parts.join("\n")}
               if (dx * dx + dy * dy <= radius2) {
                 return true;
               }
-              dx = x2 - (this.x + radius);
+              dx = x3 - (this.x + radius);
               if (dx * dx + dy * dy <= radius2) {
                 return true;
               }
@@ -18405,15 +18405,15 @@ ${parts.join("\n")}
          * @returns Whether the x/y coordinates are within this rectangle
          */
         strokeContains(pX, pY, strokeWidth) {
-          const { x: x2, y: y2, width, height, radius } = this;
+          const { x: x3, y: y2, width, height, radius } = this;
           const halfStrokeWidth = strokeWidth / 2;
-          const innerX = x2 + radius;
+          const innerX = x3 + radius;
           const innerY = y2 + radius;
           const innerWidth = width - radius * 2;
           const innerHeight = height - radius * 2;
-          const rightBound = x2 + width;
+          const rightBound = x3 + width;
           const bottomBound = y2 + height;
-          if ((pX >= x2 - halfStrokeWidth && pX <= x2 + halfStrokeWidth || pX >= rightBound - halfStrokeWidth && pX <= rightBound + halfStrokeWidth) && pY >= innerY && pY <= innerY + innerHeight) {
+          if ((pX >= x3 - halfStrokeWidth && pX <= x3 + halfStrokeWidth || pX >= rightBound - halfStrokeWidth && pX <= rightBound + halfStrokeWidth) && pY >= innerY && pY <= innerY + innerHeight) {
             return true;
           }
           if ((pY >= y2 - halfStrokeWidth && pY <= y2 + halfStrokeWidth || pY >= bottomBound - halfStrokeWidth && pY <= bottomBound + halfStrokeWidth) && pX >= innerX && pX <= innerX + innerWidth) {
@@ -18448,14 +18448,14 @@ ${parts.join("\n")}
     recursive(sX, sY, cp1x, cp1y, cp2x, cp2y, eX, eY, points, distanceTolerance, 0);
     points.push(eX, eY);
   }
-  function recursive(x1, y1, x2, y2, x3, y3, x4, y4, points, distanceTolerance, level) {
+  function recursive(x1, y1, x22, y2, x3, y3, x4, y4, points, distanceTolerance, level) {
     if (level > RECURSION_LIMIT) {
       return;
     }
     const pi = Math.PI;
-    const x12 = (x1 + x2) / 2;
+    const x12 = (x1 + x22) / 2;
     const y12 = (y1 + y2) / 2;
-    const x23 = (x2 + x3) / 2;
+    const x23 = (x22 + x3) / 2;
     const y23 = (y2 + y3) / 2;
     const x34 = (x3 + x4) / 2;
     const y34 = (y3 + y4) / 2;
@@ -18468,18 +18468,18 @@ ${parts.join("\n")}
     if (level > 0) {
       let dx = x4 - x1;
       let dy = y4 - y1;
-      const d2 = Math.abs((x2 - x4) * dy - (y2 - y4) * dx);
+      const d22 = Math.abs((x22 - x4) * dy - (y2 - y4) * dx);
       const d3 = Math.abs((x3 - x4) * dy - (y3 - y4) * dx);
       let da1;
       let da2;
-      if (d2 > FLT_EPSILON && d3 > FLT_EPSILON) {
-        if ((d2 + d3) * (d2 + d3) <= distanceTolerance * (dx * dx + dy * dy)) {
+      if (d22 > FLT_EPSILON && d3 > FLT_EPSILON) {
+        if ((d22 + d3) * (d22 + d3) <= distanceTolerance * (dx * dx + dy * dy)) {
           if (mAngleTolerance < curveAngleToleranceEpsilon) {
             points.push(x1234, y1234);
             return;
           }
-          const a23 = Math.atan2(y3 - y2, x3 - x2);
-          da1 = Math.abs(a23 - Math.atan2(y2 - y1, x2 - x1));
+          const a23 = Math.atan2(y3 - y2, x3 - x22);
+          da1 = Math.abs(a23 - Math.atan2(y2 - y1, x22 - x1));
           da2 = Math.abs(Math.atan2(y4 - y3, x4 - x3) - a23);
           if (da1 >= pi)
             da1 = 2 * pi - da1;
@@ -18491,7 +18491,7 @@ ${parts.join("\n")}
           }
           if (mCuspLimit !== 0) {
             if (da1 > mCuspLimit) {
-              points.push(x2, y2);
+              points.push(x22, y2);
               return;
             }
             if (da2 > mCuspLimit) {
@@ -18500,23 +18500,23 @@ ${parts.join("\n")}
             }
           }
         }
-      } else if (d2 > FLT_EPSILON) {
-        if (d2 * d2 <= distanceTolerance * (dx * dx + dy * dy)) {
+      } else if (d22 > FLT_EPSILON) {
+        if (d22 * d22 <= distanceTolerance * (dx * dx + dy * dy)) {
           if (mAngleTolerance < curveAngleToleranceEpsilon) {
             points.push(x1234, y1234);
             return;
           }
-          da1 = Math.abs(Math.atan2(y3 - y2, x3 - x2) - Math.atan2(y2 - y1, x2 - x1));
+          da1 = Math.abs(Math.atan2(y3 - y2, x3 - x22) - Math.atan2(y2 - y1, x22 - x1));
           if (da1 >= pi)
             da1 = 2 * pi - da1;
           if (da1 < mAngleTolerance) {
-            points.push(x2, y2);
+            points.push(x22, y2);
             points.push(x3, y3);
             return;
           }
           if (mCuspLimit !== 0) {
             if (da1 > mCuspLimit) {
-              points.push(x2, y2);
+              points.push(x22, y2);
               return;
             }
           }
@@ -18527,11 +18527,11 @@ ${parts.join("\n")}
             points.push(x1234, y1234);
             return;
           }
-          da1 = Math.abs(Math.atan2(y4 - y3, x4 - x3) - Math.atan2(y3 - y2, x3 - x2));
+          da1 = Math.abs(Math.atan2(y4 - y3, x4 - x3) - Math.atan2(y3 - y2, x3 - x22));
           if (da1 >= pi)
             da1 = 2 * pi - da1;
           if (da1 < mAngleTolerance) {
-            points.push(x2, y2);
+            points.push(x22, y2);
             points.push(x3, y3);
             return;
           }
@@ -18584,27 +18584,27 @@ ${parts.join("\n")}
     recursive2(points, sX, sY, cp1x, cp1y, eX, eY, distanceTolerance, 0);
     points.push(eX, eY);
   }
-  function recursive2(points, x1, y1, x2, y2, x3, y3, distanceTolerance, level) {
+  function recursive2(points, x1, y1, x22, y2, x3, y3, distanceTolerance, level) {
     if (level > RECURSION_LIMIT2) {
       return;
     }
     const pi = Math.PI;
-    const x12 = (x1 + x2) / 2;
+    const x12 = (x1 + x22) / 2;
     const y12 = (y1 + y2) / 2;
-    const x23 = (x2 + x3) / 2;
+    const x23 = (x22 + x3) / 2;
     const y23 = (y2 + y3) / 2;
     const x123 = (x12 + x23) / 2;
     const y123 = (y12 + y23) / 2;
     let dx = x3 - x1;
     let dy = y3 - y1;
-    const d2 = Math.abs((x2 - x3) * dy - (y2 - y3) * dx);
-    if (d2 > FLT_EPSILON2) {
-      if (d2 * d2 <= distanceTolerance * (dx * dx + dy * dy)) {
+    const d3 = Math.abs((x22 - x3) * dy - (y2 - y3) * dx);
+    if (d3 > FLT_EPSILON2) {
+      if (d3 * d3 <= distanceTolerance * (dx * dx + dy * dy)) {
         if (mAngleTolerance2 < curveAngleToleranceEpsilon2) {
           points.push(x123, y123);
           return;
         }
-        let da = Math.abs(Math.atan2(y3 - y2, x3 - x2) - Math.atan2(y2 - y1, x2 - x1));
+        let da = Math.abs(Math.atan2(y3 - y2, x3 - x22) - Math.atan2(y2 - y1, x22 - x1));
         if (da >= pi)
           da = 2 * pi - da;
         if (da < mAngleTolerance2) {
@@ -18636,7 +18636,7 @@ ${parts.join("\n")}
   });
 
   // node_modules/pixi.js/lib/scene/graphics/shared/buildCommands/buildArc.mjs
-  function buildArc(points, x2, y2, radius, start, end, clockwise, steps) {
+  function buildArc(points, x3, y2, radius, start, end, clockwise, steps) {
     let dist = Math.abs(start - end);
     if (!clockwise && start > end) {
       dist = 2 * Math.PI - dist;
@@ -18651,7 +18651,7 @@ ${parts.join("\n")}
     for (let i2 = 0; i2 < steps + 1; i2++) {
       const cs = Math.cos(t2);
       const sn = Math.sin(t2);
-      const nx = x2 + cs * radius;
+      const nx = x3 + cs * radius;
       const ny = y2 + sn * radius;
       points.push(nx, ny);
       t2 += f2;
@@ -18664,13 +18664,13 @@ ${parts.join("\n")}
   });
 
   // node_modules/pixi.js/lib/scene/graphics/shared/buildCommands/buildArcTo.mjs
-  function buildArcTo(points, x1, y1, x2, y2, radius) {
+  function buildArcTo(points, x1, y1, x22, y2, radius) {
     const fromX = points[points.length - 2];
     const fromY = points[points.length - 1];
     const a1 = fromY - y1;
     const b1 = fromX - x1;
     const a2 = y2 - y1;
-    const b2 = x2 - x1;
+    const b2 = x22 - x1;
     const mm = Math.abs(a1 * b2 - b1 * a2);
     if (mm < 1e-8 || radius === 0) {
       if (points[points.length - 2] !== x1 || points[points.length - 1] !== y1) {
@@ -18680,17 +18680,17 @@ ${parts.join("\n")}
     }
     const dd = a1 * a1 + b1 * b1;
     const cc = a2 * a2 + b2 * b2;
-    const tt = a1 * a2 + b1 * b2;
+    const tt2 = a1 * a2 + b1 * b2;
     const k1 = radius * Math.sqrt(dd) / mm;
-    const k2 = radius * Math.sqrt(cc) / mm;
-    const j1 = k1 * tt / dd;
-    const j2 = k2 * tt / cc;
-    const cx = k1 * b2 + k2 * b1;
-    const cy = k1 * a2 + k2 * a1;
-    const px = b1 * (k2 + j1);
-    const py = a1 * (k2 + j1);
-    const qx = b2 * (k1 + j2);
-    const qy = a2 * (k1 + j2);
+    const k22 = radius * Math.sqrt(cc) / mm;
+    const j1 = k1 * tt2 / dd;
+    const j22 = k22 * tt2 / cc;
+    const cx = k1 * b2 + k22 * b1;
+    const cy = k1 * a2 + k22 * a1;
+    const px = b1 * (k22 + j1);
+    const py = a1 * (k22 + j1);
+    const qx = b2 * (k1 + j22);
+    const qy = a2 * (k1 + j22);
     const startAngle = Math.atan2(py - cy, px - cx);
     const endAngle = Math.atan2(qy - cy, qx - cx);
     buildArc(
@@ -18715,7 +18715,7 @@ ${parts.join("\n")}
     const a2 = ang2 === 1.5707963267948966 ? 0.551915024494 : a1;
     const x1 = Math.cos(ang1);
     const y1 = Math.sin(ang1);
-    const x2 = Math.cos(ang1 + ang2);
+    const x22 = Math.cos(ang1 + ang2);
     const y2 = Math.sin(ang1 + ang2);
     return [
       {
@@ -18723,11 +18723,11 @@ ${parts.join("\n")}
         y: y1 + x1 * a2
       },
       {
-        x: x2 + y2 * a2,
-        y: y2 - x2 * a2
+        x: x22 + y2 * a2,
+        y: y2 - x22 * a2
       },
       {
-        x: x2,
+        x: x22,
         y: y2
       }
     ];
@@ -18779,7 +18779,7 @@ ${parts.join("\n")}
     for (let i2 = 0; i2 < segments; i2++) {
       const curve = approxUnitArc(ang1, ang2);
       const { x: x1, y: y1 } = mapToEllipse(curve[0], rx, ry, cosPhi, sinPhi, centerX, centerY, outCurvePoint);
-      const { x: x2, y: y2 } = mapToEllipse(curve[1], rx, ry, cosPhi, sinPhi, centerX, centerY, outCurvePoint);
+      const { x: x22, y: y2 } = mapToEllipse(curve[1], rx, ry, cosPhi, sinPhi, centerX, centerY, outCurvePoint);
       const { x: x3, y: y3 } = mapToEllipse(curve[2], rx, ry, cosPhi, sinPhi, centerX, centerY, outCurvePoint);
       buildAdaptiveBezier(
         points,
@@ -18787,7 +18787,7 @@ ${parts.join("\n")}
         lastY,
         x1,
         y1,
-        x2,
+        x22,
         y2,
         x3,
         y3
@@ -18808,11 +18808,11 @@ ${parts.join("\n")}
         ang1: 0,
         ang2: 0
       };
-      mapToEllipse = ({ x: x2, y: y2 }, rx, ry, cosPhi, sinPhi, centerX, centerY, out2) => {
-        x2 *= rx;
+      mapToEllipse = ({ x: x3, y: y2 }, rx, ry, cosPhi, sinPhi, centerX, centerY, out2) => {
+        x3 *= rx;
         y2 *= ry;
-        const xp = cosPhi * x2 - sinPhi * y2;
-        const yp = sinPhi * x2 + cosPhi * y2;
+        const xp = cosPhi * x3 - sinPhi * y2;
+        const yp = sinPhi * x3 + cosPhi * y2;
         out2.x = xp + centerX;
         out2.y = yp + centerY;
         return out2;
@@ -18866,10 +18866,10 @@ ${parts.join("\n")}
   // node_modules/pixi.js/lib/scene/graphics/shared/path/roundShape.mjs
   function roundedShapeArc(g2, points, radius) {
     const vecFrom = (p2, pp) => {
-      const x2 = pp.x - p2.x;
+      const x3 = pp.x - p2.x;
       const y2 = pp.y - p2.y;
-      const len = Math.sqrt(x2 * x2 + y2 * y2);
-      const nx = x2 / len;
+      const len = Math.sqrt(x3 * x3 + y2 * y2);
+      const nx = x3 / len;
       const ny = y2 / len;
       return { len, nx, ny };
     };
@@ -18891,16 +18891,16 @@ ${parts.join("\n")}
       }
       const p3 = points[(i2 + 1) % points.length];
       const v1 = vecFrom(p2, p1);
-      const v2 = vecFrom(p2, p3);
-      if (v1.len < 1e-4 || v2.len < 1e-4) {
+      const v22 = vecFrom(p2, p3);
+      if (v1.len < 1e-4 || v22.len < 1e-4) {
         sharpCorner(i2, p2);
         p1 = p2;
         continue;
       }
-      let angle = Math.asin(v1.nx * v2.ny - v1.ny * v2.nx);
+      let angle = Math.asin(v1.nx * v22.ny - v1.ny * v22.nx);
       let radDirection = 1;
       let drawDirection = false;
-      if (v1.nx * v2.nx - v1.ny * -v2.ny < 0) {
+      if (v1.nx * v22.nx - v1.ny * -v22.ny < 0) {
         if (angle < 0) {
           angle = Math.PI + angle;
         } else {
@@ -18917,16 +18917,16 @@ ${parts.join("\n")}
       let lenOut = Math.abs(
         Math.cos(halfAngle) * pRadius / Math.sin(halfAngle)
       );
-      if (lenOut > Math.min(v1.len / 2, v2.len / 2)) {
-        lenOut = Math.min(v1.len / 2, v2.len / 2);
+      if (lenOut > Math.min(v1.len / 2, v22.len / 2)) {
+        lenOut = Math.min(v1.len / 2, v22.len / 2);
         cRadius = Math.abs(lenOut * Math.sin(halfAngle) / Math.cos(halfAngle));
       } else {
         cRadius = pRadius;
       }
-      const cX = p2.x + v2.nx * lenOut + -v2.ny * cRadius * radDirection;
-      const cY = p2.y + v2.ny * lenOut + v2.nx * cRadius * radDirection;
+      const cX = p2.x + v22.nx * lenOut + -v22.ny * cRadius * radDirection;
+      const cY = p2.y + v22.ny * lenOut + v22.nx * cRadius * radDirection;
       const startAngle = Math.atan2(v1.ny, v1.nx) + Math.PI / 2 * radDirection;
-      const endAngle = Math.atan2(v2.ny, v2.nx) - Math.PI / 2 * radDirection;
+      const endAngle = Math.atan2(v22.ny, v22.nx) - Math.PI / 2 * radDirection;
       if (i2 === 0) {
         g2.moveTo(
           cX + Math.cos(startAngle) * cRadius,
@@ -19025,8 +19025,8 @@ ${parts.join("\n")}
          * @param y - The y-coordinate for the starting point.
          * @returns The instance of the current object for chaining.
          */
-        moveTo(x2, y2) {
-          this.startPoly(x2, y2);
+        moveTo(x3, y2) {
+          this.startPoly(x3, y2);
           return this;
         }
         /**
@@ -19035,13 +19035,13 @@ ${parts.join("\n")}
          * @param y - The y-coordinate of the new point to connect to.
          * @returns The instance of the current object for chaining.
          */
-        lineTo(x2, y2) {
+        lineTo(x3, y2) {
           this._ensurePoly();
           const points = this._currentPoly.points;
           const fromX = points[points.length - 2];
           const fromY = points[points.length - 1];
-          if (fromX !== x2 || fromY !== y2) {
-            points.push(x2, y2);
+          if (fromX !== x3 || fromY !== y2) {
+            points.push(x3, y2);
           }
           return this;
         }
@@ -19056,10 +19056,10 @@ ${parts.join("\n")}
          * @param counterclockwise - Specifies whether the arc should be drawn in the anticlockwise direction. False by default.
          * @returns The instance of the current object for chaining.
          */
-        arc(x2, y2, radius, startAngle, endAngle, counterclockwise) {
+        arc(x3, y2, radius, startAngle, endAngle, counterclockwise) {
           this._ensurePoly(false);
           const points = this._currentPoly.points;
-          buildArc(points, x2, y2, radius, startAngle, endAngle, counterclockwise);
+          buildArc(points, x3, y2, radius, startAngle, endAngle, counterclockwise);
           return this;
         }
         /**
@@ -19072,10 +19072,10 @@ ${parts.join("\n")}
          * @param radius - The radius of the arc.
          * @returns The instance of the current object for chaining.
          */
-        arcTo(x1, y1, x2, y2, radius) {
+        arcTo(x1, y1, x22, y2, radius) {
           this._ensurePoly();
           const points = this._currentPoly.points;
-          buildArcTo(points, x1, y1, x2, y2, radius);
+          buildArcTo(points, x1, y1, x22, y2, radius);
           return this;
         }
         /**
@@ -19090,13 +19090,13 @@ ${parts.join("\n")}
          * @param y - The y-coordinate of the arc's end point.
          * @returns The instance of the current object for chaining.
          */
-        arcToSvg(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x2, y2) {
+        arcToSvg(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x3, y2) {
           const points = this._currentPoly.points;
           buildArcToSvg(
             points,
             this._currentPoly.lastX,
             this._currentPoly.lastY,
-            x2,
+            x3,
             y2,
             rx,
             ry,
@@ -19119,7 +19119,7 @@ ${parts.join("\n")}
          * @param smoothness - Optional parameter to adjust the smoothness of the curve.
          * @returns The instance of the current object for chaining.
          */
-        bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x2, y2, smoothness) {
+        bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x3, y2, smoothness) {
           this._ensurePoly();
           const currentPoly = this._currentPoly;
           buildAdaptiveBezier(
@@ -19130,7 +19130,7 @@ ${parts.join("\n")}
             cp1y,
             cp2x,
             cp2y,
-            x2,
+            x3,
             y2,
             smoothness
           );
@@ -19146,7 +19146,7 @@ ${parts.join("\n")}
          * @param smoothing - Optional parameter to adjust the smoothness of the curve.
          * @returns The instance of the current object for chaining.
          */
-        quadraticCurveTo(cp1x, cp1y, x2, y2, smoothing) {
+        quadraticCurveTo(cp1x, cp1y, x3, y2, smoothing) {
           this._ensurePoly();
           const currentPoly = this._currentPoly;
           buildAdaptiveQuadratic(
@@ -19155,7 +19155,7 @@ ${parts.join("\n")}
             currentPoly.lastY,
             cp1x,
             cp1y,
-            x2,
+            x3,
             y2,
             smoothing
           );
@@ -19204,8 +19204,8 @@ ${parts.join("\n")}
          * @param transform - An optional `Matrix` object to apply a transformation to the rectangle.
          * @returns The instance of the current object for chaining.
          */
-        rect(x2, y2, w2, h2, transform2) {
-          this.drawShape(new Rectangle(x2, y2, w2, h2), transform2);
+        rect(x3, y2, w2, h2, transform2) {
+          this.drawShape(new Rectangle(x3, y2, w2, h2), transform2);
           return this;
         }
         /**
@@ -19216,8 +19216,8 @@ ${parts.join("\n")}
          * @param transform - An optional `Matrix` object to apply a transformation to the circle.
          * @returns The instance of the current object for chaining.
          */
-        circle(x2, y2, radius, transform2) {
-          this.drawShape(new Circle(x2, y2, radius), transform2);
+        circle(x3, y2, radius, transform2) {
+          this.drawShape(new Circle(x3, y2, radius), transform2);
           return this;
         }
         /**
@@ -19244,7 +19244,7 @@ ${parts.join("\n")}
          * @param transform - An optional `Matrix` object to apply a transformation to the polygon.
          * @returns The instance of the current object for chaining.
          */
-        regularPoly(x2, y2, radius, sides, rotation = 0, transform2) {
+        regularPoly(x3, y2, radius, sides, rotation = 0, transform2) {
           sides = Math.max(sides | 0, 3);
           const startAngle = -1 * Math.PI / 2 + rotation;
           const delta = Math.PI * 2 / sides;
@@ -19252,7 +19252,7 @@ ${parts.join("\n")}
           for (let i2 = 0; i2 < sides; i2++) {
             const angle = i2 * delta + startAngle;
             polygon.push(
-              x2 + radius * Math.cos(angle),
+              x3 + radius * Math.cos(angle),
               y2 + radius * Math.sin(angle)
             );
           }
@@ -19271,10 +19271,10 @@ ${parts.join("\n")}
          * @param smoothness - Optional parameter to adjust the smoothness of the rounding.
          * @returns The instance of the current object for chaining.
          */
-        roundPoly(x2, y2, radius, sides, corner, rotation = 0, smoothness) {
+        roundPoly(x3, y2, radius, sides, corner, rotation = 0, smoothness) {
           sides = Math.max(sides | 0, 3);
           if (corner <= 0) {
-            return this.regularPoly(x2, y2, radius, sides, rotation);
+            return this.regularPoly(x3, y2, radius, sides, rotation);
           }
           const sideLength = radius * Math.sin(Math.PI / sides) - 1e-3;
           corner = Math.min(corner, sideLength);
@@ -19283,20 +19283,20 @@ ${parts.join("\n")}
           const internalAngle = (sides - 2) * Math.PI / sides / 2;
           for (let i2 = 0; i2 < sides; i2++) {
             const angle = i2 * delta + startAngle;
-            const x0 = x2 + radius * Math.cos(angle);
+            const x0 = x3 + radius * Math.cos(angle);
             const y0 = y2 + radius * Math.sin(angle);
             const a1 = angle + Math.PI + internalAngle;
             const a2 = angle - Math.PI - internalAngle;
             const x1 = x0 + corner * Math.cos(a1);
             const y1 = y0 + corner * Math.sin(a1);
-            const x3 = x0 + corner * Math.cos(a2);
+            const x32 = x0 + corner * Math.cos(a2);
             const y3 = y0 + corner * Math.sin(a2);
             if (i2 === 0) {
               this.moveTo(x1, y1);
             } else {
               this.lineTo(x1, y1);
             }
-            this.quadraticCurveTo(x0, y0, x3, y3, smoothness);
+            this.quadraticCurveTo(x0, y0, x32, y3, smoothness);
           }
           return this.closePath();
         }
@@ -19333,17 +19333,17 @@ ${parts.join("\n")}
          * @param height - Height of rect
          * @param fillet - accept negative or positive values
          */
-        filletRect(x2, y2, width, height, fillet) {
+        filletRect(x3, y2, width, height, fillet) {
           if (fillet === 0) {
-            return this.rect(x2, y2, width, height);
+            return this.rect(x3, y2, width, height);
           }
           const maxFillet = Math.min(width, height) / 2;
           const inset = Math.min(maxFillet, Math.max(-maxFillet, fillet));
-          const right = x2 + width;
+          const right = x3 + width;
           const bottom = y2 + height;
           const dir = inset < 0 ? -inset : 0;
           const size = Math.abs(inset);
-          return this.moveTo(x2, y2 + size).arcTo(x2 + dir, y2 + dir, x2 + size, y2, size).lineTo(right - size, y2).arcTo(right - dir, y2 + dir, right, y2 + size, size).lineTo(right, bottom - size).arcTo(right - dir, bottom - dir, x2 + width - size, bottom, size).lineTo(x2 + size, bottom).arcTo(x2 + dir, bottom - dir, x2, bottom - size, size).closePath();
+          return this.moveTo(x3, y2 + size).arcTo(x3 + dir, y2 + dir, x3 + size, y2, size).lineTo(right - size, y2).arcTo(right - dir, y2 + dir, right, y2 + size, size).lineTo(right, bottom - size).arcTo(right - dir, bottom - dir, x3 + width - size, bottom, size).lineTo(x3 + size, bottom).arcTo(x3 + dir, bottom - dir, x3, bottom - size, size).closePath();
         }
         /**
          * Draw Rectangle with chamfer corners. These are angled corners.
@@ -19354,15 +19354,15 @@ ${parts.join("\n")}
          * @param chamfer - non-zero real number, size of corner cutout
          * @param transform
          */
-        chamferRect(x2, y2, width, height, chamfer, transform2) {
+        chamferRect(x3, y2, width, height, chamfer, transform2) {
           if (chamfer <= 0) {
-            return this.rect(x2, y2, width, height);
+            return this.rect(x3, y2, width, height);
           }
           const inset = Math.min(chamfer, Math.min(width, height) / 2);
-          const right = x2 + width;
+          const right = x3 + width;
           const bottom = y2 + height;
           const points = [
-            x2 + inset,
+            x3 + inset,
             y2,
             right - inset,
             y2,
@@ -19372,11 +19372,11 @@ ${parts.join("\n")}
             bottom - inset,
             right - inset,
             bottom,
-            x2 + inset,
+            x3 + inset,
             bottom,
-            x2,
+            x3,
             bottom - inset,
-            x2,
+            x3,
             y2 + inset
           ];
           for (let i2 = points.length - 1; i2 >= 2; i2 -= 2) {
@@ -19396,8 +19396,8 @@ ${parts.join("\n")}
          * @param transform - An optional `Matrix` object to apply a transformation to the ellipse. This can include rotations.
          * @returns The instance of the current object for chaining.
          */
-        ellipse(x2, y2, radiusX, radiusY, transform2) {
-          this.drawShape(new Ellipse(x2, y2, radiusX, radiusY), transform2);
+        ellipse(x3, y2, radiusX, radiusY, transform2) {
+          this.drawShape(new Ellipse(x3, y2, radiusX, radiusY), transform2);
           return this;
         }
         /**
@@ -19412,8 +19412,8 @@ ${parts.join("\n")}
          * @param transform - An optional `Matrix` object to apply a transformation to the rectangle.
          * @returns The instance of the current object for chaining.
          */
-        roundRect(x2, y2, w2, h2, radius, transform2) {
-          this.drawShape(new RoundedRectangle(x2, y2, w2, h2, radius), transform2);
+        roundRect(x3, y2, w2, h2, radius, transform2) {
+          this.drawShape(new RoundedRectangle(x3, y2, w2, h2, radius), transform2);
           return this;
         }
         /**
@@ -19437,13 +19437,13 @@ ${parts.join("\n")}
          * @param y - The y-coordinate of the starting point of the new polygon.
          * @returns The instance of the current object for chaining.
          */
-        startPoly(x2, y2) {
+        startPoly(x3, y2) {
           let currentPoly = this._currentPoly;
           if (currentPoly) {
             this.endPoly();
           }
           currentPoly = new Polygon();
-          currentPoly.points.push(x2, y2);
+          currentPoly.points.push(x3, y2);
           this._currentPoly = currentPoly;
           return this;
         }
@@ -19603,7 +19603,7 @@ ${parts.join("\n")}
          * @param smoothness - Optional parameter to adjust the smoothness of the curve.
          * @returns The instance of the current object for chaining.
          */
-        bezierCurveToShort(cp2x, cp2y, x2, y2, smoothness) {
+        bezierCurveToShort(cp2x, cp2y, x3, y2, smoothness) {
           const last = this.instructions[this.instructions.length - 1];
           const lastPoint = this.getLastPoint(Point.shared);
           let cp1x = 0;
@@ -19619,7 +19619,7 @@ ${parts.join("\n")}
             cp1x = currentX + (currentX - cp1x);
             cp1y = currentY + (currentY - cp1y);
           }
-          this.instructions.push({ action: "bezierCurveTo", data: [cp1x, cp1y, cp2x, cp2y, x2, y2, smoothness] });
+          this.instructions.push({ action: "bezierCurveTo", data: [cp1x, cp1y, cp2x, cp2y, x3, y2, smoothness] });
           this._dirty = true;
           return this;
         }
@@ -19659,7 +19659,7 @@ ${parts.join("\n")}
          * @param smoothness - Optional parameter to adjust the smoothness of the curve.
          * @returns The instance of the current object for chaining.
          */
-        quadraticCurveToShort(x2, y2, smoothness) {
+        quadraticCurveToShort(x3, y2, smoothness) {
           const last = this.instructions[this.instructions.length - 1];
           const lastPoint = this.getLastPoint(Point.shared);
           let cpx1 = 0;
@@ -19675,7 +19675,7 @@ ${parts.join("\n")}
             cpx1 = currentX + (currentX - cpx1);
             cpy1 = currentY + (currentY - cpy1);
           }
-          this.instructions.push({ action: "quadraticCurveTo", data: [cpx1, cpy1, x2, y2, smoothness] });
+          this.instructions.push({ action: "quadraticCurveTo", data: [cpx1, cpy1, x3, y2, smoothness] });
           this._dirty = true;
           return this;
         }
@@ -19688,8 +19688,8 @@ ${parts.join("\n")}
          * @param transform - An optional `Matrix` object to apply a transformation to the rectangle.
          * @returns The instance of the current object for chaining.
          */
-        rect(x2, y2, w2, h2, transform2) {
-          this.instructions.push({ action: "rect", data: [x2, y2, w2, h2, transform2] });
+        rect(x3, y2, w2, h2, transform2) {
+          this.instructions.push({ action: "rect", data: [x3, y2, w2, h2, transform2] });
           this._dirty = true;
           return this;
         }
@@ -19701,8 +19701,8 @@ ${parts.join("\n")}
          * @param transform - An optional `Matrix` object to apply a transformation to the circle.
          * @returns The instance of the current object for chaining.
          */
-        circle(x2, y2, radius, transform2) {
-          this.instructions.push({ action: "circle", data: [x2, y2, radius, transform2] });
+        circle(x3, y2, radius, transform2) {
+          this.instructions.push({ action: "circle", data: [x3, y2, radius, transform2] });
           this._dirty = true;
           return this;
         }
@@ -19760,7 +19760,7 @@ ${parts.join("\n")}
          * @returns The instance of the current object for chaining further drawing commands.
          */
         // eslint-disable-next-line max-len
-        star(x2, y2, points, radius, innerRadius, rotation, transform2) {
+        star(x3, y2, points, radius, innerRadius, rotation, transform2) {
           innerRadius || (innerRadius = radius / 2);
           const startAngle = -1 * Math.PI / 2 + rotation;
           const len = points * 2;
@@ -19770,7 +19770,7 @@ ${parts.join("\n")}
             const r2 = i2 % 2 ? innerRadius : radius;
             const angle = i2 * delta + startAngle;
             polygon.push(
-              x2 + r2 * Math.cos(angle),
+              x3 + r2 * Math.cos(angle),
               y2 + r2 * Math.sin(angle)
             );
           }
@@ -19822,10 +19822,10 @@ ${parts.join("\n")}
           const a2 = matrix.a;
           const b2 = matrix.b;
           const c2 = matrix.c;
-          const d2 = matrix.d;
+          const d3 = matrix.d;
           const tx = matrix.tx;
           const ty = matrix.ty;
-          let x2 = 0;
+          let x3 = 0;
           let y2 = 0;
           let cpx1 = 0;
           let cpy1 = 0;
@@ -19839,44 +19839,44 @@ ${parts.join("\n")}
             switch (instruction.action) {
               case "moveTo":
               case "lineTo":
-                x2 = data[0];
+                x3 = data[0];
                 y2 = data[1];
-                data[0] = a2 * x2 + c2 * y2 + tx;
-                data[1] = b2 * x2 + d2 * y2 + ty;
+                data[0] = a2 * x3 + c2 * y2 + tx;
+                data[1] = b2 * x3 + d3 * y2 + ty;
                 break;
               case "bezierCurveTo":
                 cpx1 = data[0];
                 cpy1 = data[1];
                 cpx2 = data[2];
                 cpy2 = data[3];
-                x2 = data[4];
+                x3 = data[4];
                 y2 = data[5];
                 data[0] = a2 * cpx1 + c2 * cpy1 + tx;
-                data[1] = b2 * cpx1 + d2 * cpy1 + ty;
+                data[1] = b2 * cpx1 + d3 * cpy1 + ty;
                 data[2] = a2 * cpx2 + c2 * cpy2 + tx;
-                data[3] = b2 * cpx2 + d2 * cpy2 + ty;
-                data[4] = a2 * x2 + c2 * y2 + tx;
-                data[5] = b2 * x2 + d2 * y2 + ty;
+                data[3] = b2 * cpx2 + d3 * cpy2 + ty;
+                data[4] = a2 * x3 + c2 * y2 + tx;
+                data[5] = b2 * x3 + d3 * y2 + ty;
                 break;
               case "quadraticCurveTo":
                 cpx1 = data[0];
                 cpy1 = data[1];
-                x2 = data[2];
+                x3 = data[2];
                 y2 = data[3];
                 data[0] = a2 * cpx1 + c2 * cpy1 + tx;
-                data[1] = b2 * cpx1 + d2 * cpy1 + ty;
-                data[2] = a2 * x2 + c2 * y2 + tx;
-                data[3] = b2 * x2 + d2 * y2 + ty;
+                data[1] = b2 * cpx1 + d3 * cpy1 + ty;
+                data[2] = a2 * x3 + c2 * y2 + tx;
+                data[3] = b2 * x3 + d3 * y2 + ty;
                 break;
               case "arcToSvg":
-                x2 = data[5];
+                x3 = data[5];
                 y2 = data[6];
                 rx = data[0];
                 ry = data[1];
                 data[0] = a2 * rx + c2 * ry;
-                data[1] = b2 * rx + d2 * ry;
-                data[5] = a2 * x2 + c2 * y2 + tx;
-                data[6] = b2 * x2 + d2 * y2 + ty;
+                data[1] = b2 * rx + d3 * ry;
+                data[5] = a2 * x3 + c2 * y2 + tx;
+                data[6] = b2 * x3 + d3 * y2 + ty;
                 break;
               case "circle":
                 data[4] = adjustTransform(data[3], matrix);
@@ -19996,7 +19996,7 @@ ${parts.join("\n")}
     }
     session.context.fillStyle = fillStyle;
     session.context.strokeStyle = strokeStyle;
-    let x2;
+    let x3;
     let y2;
     let x1;
     let y1;
@@ -20009,14 +20009,14 @@ ${parts.join("\n")}
     let ry;
     let points;
     let pointsString;
-    let d2;
+    let d3;
     let graphicsPath;
     let width;
     let height;
     switch (svg.nodeName.toLowerCase()) {
       case "path":
-        d2 = svg.getAttribute("d");
-        graphicsPath = new GraphicsPath(d2);
+        d3 = svg.getAttribute("d");
+        graphicsPath = new GraphicsPath(d3);
         session.context.path(graphicsPath);
         if (fillStyle)
           session.context.fill();
@@ -20034,16 +20034,16 @@ ${parts.join("\n")}
           session.context.stroke();
         break;
       case "rect":
-        x2 = parseFloatAttribute(svg, "x", 0);
+        x3 = parseFloatAttribute(svg, "x", 0);
         y2 = parseFloatAttribute(svg, "y", 0);
         width = parseFloatAttribute(svg, "width", 0);
         height = parseFloatAttribute(svg, "height", 0);
         rx = parseFloatAttribute(svg, "rx", 0);
         ry = parseFloatAttribute(svg, "ry", 0);
         if (rx || ry) {
-          session.context.roundRect(x2, y2, width, height, rx || ry);
+          session.context.roundRect(x3, y2, width, height, rx || ry);
         } else {
-          session.context.rect(x2, y2, width, height);
+          session.context.rect(x3, y2, width, height);
         }
         if (fillStyle)
           session.context.fill();
@@ -20205,10 +20205,10 @@ ${parts.join("\n")}
     const style = { ...defaultStyle, ...value };
     if (style.texture) {
       if (style.texture !== Texture.WHITE) {
-        const m2 = style.matrix?.clone().invert() || new Matrix();
-        m2.translate(style.texture.frame.x, style.texture.frame.y);
-        m2.scale(1 / style.texture.source.width, 1 / style.texture.source.height);
-        style.matrix = m2;
+        const m3 = style.matrix?.clone().invert() || new Matrix();
+        m3.translate(style.texture.frame.x, style.texture.frame.y);
+        m3.scale(1 / style.texture.source.width, 1 / style.texture.source.height);
+        style.matrix = m3;
       }
       const sourceStyle = style.texture.source.style;
       if (sourceStyle.addressMode === "clamp-to-edge") {
@@ -20412,9 +20412,9 @@ ${parts.join("\n")}
           return this;
         }
         _initNextPathLocation() {
-          const { x: x2, y: y2 } = this._activePath.getLastPoint(Point.shared);
+          const { x: x3, y: y2 } = this._activePath.getLastPoint(Point.shared);
           this._activePath.clear();
-          this._activePath.moveTo(x2, y2);
+          this._activePath.moveTo(x3, y2);
         }
         /**
          * Strokes the current path with the current stroke style. This method can take an optional
@@ -20480,12 +20480,12 @@ ${parts.join("\n")}
          * @param counterclockwise - (Optional) Specifies whether the arc is drawn counterclockwise (true) or clockwise (false). Defaults to false.
          * @returns The instance of the current GraphicsContext for method chaining.
          */
-        arc(x2, y2, radius, startAngle, endAngle, counterclockwise) {
+        arc(x3, y2, radius, startAngle, endAngle, counterclockwise) {
           this._tick++;
           const t2 = this._transform;
           this._activePath.arc(
-            t2.a * x2 + t2.c * y2 + t2.tx,
-            t2.b * x2 + t2.d * y2 + t2.ty,
+            t2.a * x3 + t2.c * y2 + t2.tx,
+            t2.b * x3 + t2.d * y2 + t2.ty,
             radius,
             startAngle,
             endAngle,
@@ -20503,14 +20503,14 @@ ${parts.join("\n")}
          * @param radius - The arc's radius.
          * @returns The instance of the current GraphicsContext for method chaining.
          */
-        arcTo(x1, y1, x2, y2, radius) {
+        arcTo(x1, y1, x22, y2, radius) {
           this._tick++;
           const t2 = this._transform;
           this._activePath.arcTo(
             t2.a * x1 + t2.c * y1 + t2.tx,
             t2.b * x1 + t2.d * y1 + t2.ty,
-            t2.a * x2 + t2.c * y2 + t2.tx,
-            t2.b * x2 + t2.d * y2 + t2.ty,
+            t2.a * x22 + t2.c * y2 + t2.tx,
+            t2.b * x22 + t2.d * y2 + t2.ty,
             radius
           );
           return this;
@@ -20527,7 +20527,7 @@ ${parts.join("\n")}
          * @param y - The y-coordinate of the arc's end point.
          * @returns The instance of the current object for chaining.
          */
-        arcToSvg(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x2, y2) {
+        arcToSvg(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x3, y2) {
           this._tick++;
           const t2 = this._transform;
           this._activePath.arcToSvg(
@@ -20537,8 +20537,8 @@ ${parts.join("\n")}
             // should we rotate this with transform??
             largeArcFlag,
             sweepFlag,
-            t2.a * x2 + t2.c * y2 + t2.tx,
-            t2.b * x2 + t2.d * y2 + t2.ty
+            t2.a * x3 + t2.c * y2 + t2.tx,
+            t2.b * x3 + t2.d * y2 + t2.ty
           );
           return this;
         }
@@ -20555,7 +20555,7 @@ ${parts.join("\n")}
          * @param smoothness - Optional parameter to adjust the smoothness of the curve.
          * @returns The instance of the current object for chaining.
          */
-        bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x2, y2, smoothness) {
+        bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x3, y2, smoothness) {
           this._tick++;
           const t2 = this._transform;
           this._activePath.bezierCurveTo(
@@ -20563,8 +20563,8 @@ ${parts.join("\n")}
             t2.b * cp1x + t2.d * cp1y + t2.ty,
             t2.a * cp2x + t2.c * cp2y + t2.tx,
             t2.b * cp2x + t2.d * cp2y + t2.ty,
-            t2.a * x2 + t2.c * y2 + t2.tx,
-            t2.b * x2 + t2.d * y2 + t2.ty,
+            t2.a * x3 + t2.c * y2 + t2.tx,
+            t2.b * x3 + t2.d * y2 + t2.ty,
             smoothness
           );
           return this;
@@ -20588,9 +20588,9 @@ ${parts.join("\n")}
          * @param radiusY - The vertical radius of the ellipse.
          * @returns The instance of the current object for chaining.
          */
-        ellipse(x2, y2, radiusX, radiusY) {
+        ellipse(x3, y2, radiusX, radiusY) {
           this._tick++;
-          this._activePath.ellipse(x2, y2, radiusX, radiusY, this._transform.clone());
+          this._activePath.ellipse(x3, y2, radiusX, radiusY, this._transform.clone());
           return this;
         }
         /**
@@ -20600,9 +20600,9 @@ ${parts.join("\n")}
          * @param radius - The radius of the circle.
          * @returns The instance of the current object for chaining.
          */
-        circle(x2, y2, radius) {
+        circle(x3, y2, radius) {
           this._tick++;
-          this._activePath.circle(x2, y2, radius, this._transform.clone());
+          this._activePath.circle(x3, y2, radius, this._transform.clone());
           return this;
         }
         /**
@@ -20621,12 +20621,12 @@ ${parts.join("\n")}
          * @param y - The y-coordinate of the new point to connect to.
          * @returns The instance of the current object for chaining.
          */
-        lineTo(x2, y2) {
+        lineTo(x3, y2) {
           this._tick++;
           const t2 = this._transform;
           this._activePath.lineTo(
-            t2.a * x2 + t2.c * y2 + t2.tx,
-            t2.b * x2 + t2.d * y2 + t2.ty
+            t2.a * x3 + t2.c * y2 + t2.tx,
+            t2.b * x3 + t2.d * y2 + t2.ty
           );
           return this;
         }
@@ -20636,12 +20636,12 @@ ${parts.join("\n")}
          * @param y - The y-coordinate for the starting point.
          * @returns The instance of the current object for chaining.
          */
-        moveTo(x2, y2) {
+        moveTo(x3, y2) {
           this._tick++;
           const t2 = this._transform;
           const instructions = this._activePath.instructions;
-          const transformedX = t2.a * x2 + t2.c * y2 + t2.tx;
-          const transformedY = t2.b * x2 + t2.d * y2 + t2.ty;
+          const transformedX = t2.a * x3 + t2.c * y2 + t2.tx;
+          const transformedY = t2.b * x3 + t2.d * y2 + t2.ty;
           if (instructions.length === 1 && instructions[0].action === "moveTo") {
             instructions[0].data[0] = transformedX;
             instructions[0].data[1] = transformedY;
@@ -20663,14 +20663,14 @@ ${parts.join("\n")}
          * @param smoothness - Optional parameter to adjust the smoothness of the curve.
          * @returns The instance of the current object for chaining.
          */
-        quadraticCurveTo(cpx, cpy, x2, y2, smoothness) {
+        quadraticCurveTo(cpx, cpy, x3, y2, smoothness) {
           this._tick++;
           const t2 = this._transform;
           this._activePath.quadraticCurveTo(
             t2.a * cpx + t2.c * cpy + t2.tx,
             t2.b * cpx + t2.d * cpy + t2.ty,
-            t2.a * x2 + t2.c * y2 + t2.tx,
-            t2.b * x2 + t2.d * y2 + t2.ty,
+            t2.a * x3 + t2.c * y2 + t2.tx,
+            t2.b * x3 + t2.d * y2 + t2.ty,
             smoothness
           );
           return this;
@@ -20683,9 +20683,9 @@ ${parts.join("\n")}
          * @param h - The height of the rectangle.
          * @returns The instance of the current object for chaining.
          */
-        rect(x2, y2, w2, h2) {
+        rect(x3, y2, w2, h2) {
           this._tick++;
-          this._activePath.rect(x2, y2, w2, h2, this._transform.clone());
+          this._activePath.rect(x3, y2, w2, h2, this._transform.clone());
           return this;
         }
         /**
@@ -20699,9 +20699,9 @@ ${parts.join("\n")}
          * @param radius - The radius of the rectangle's corners. If not specified, corners will be sharp.
          * @returns The instance of the current object for chaining.
          */
-        roundRect(x2, y2, w2, h2, radius) {
+        roundRect(x3, y2, w2, h2, radius) {
           this._tick++;
-          this._activePath.roundRect(x2, y2, w2, h2, radius, this._transform.clone());
+          this._activePath.roundRect(x3, y2, w2, h2, radius, this._transform.clone());
           return this;
         }
         /**
@@ -20727,9 +20727,9 @@ ${parts.join("\n")}
          * @param transform - An optional `Matrix` object to apply a transformation to the polygon.
          * @returns The instance of the current object for chaining.
          */
-        regularPoly(x2, y2, radius, sides, rotation = 0, transform2) {
+        regularPoly(x3, y2, radius, sides, rotation = 0, transform2) {
           this._tick++;
-          this._activePath.regularPoly(x2, y2, radius, sides, rotation, transform2);
+          this._activePath.regularPoly(x3, y2, radius, sides, rotation, transform2);
           return this;
         }
         /**
@@ -20743,9 +20743,9 @@ ${parts.join("\n")}
          * @param rotation - The rotation angle of the polygon, in radians. Zero by default.
          * @returns The instance of the current object for chaining.
          */
-        roundPoly(x2, y2, radius, sides, corner, rotation) {
+        roundPoly(x3, y2, radius, sides, corner, rotation) {
           this._tick++;
-          this._activePath.roundPoly(x2, y2, radius, sides, corner, rotation);
+          this._activePath.roundPoly(x3, y2, radius, sides, corner, rotation);
           return this;
         }
         /**
@@ -20775,9 +20775,9 @@ ${parts.join("\n")}
          * @param height - Height of rect
          * @param fillet - accept negative or positive values
          */
-        filletRect(x2, y2, width, height, fillet) {
+        filletRect(x3, y2, width, height, fillet) {
           this._tick++;
-          this._activePath.filletRect(x2, y2, width, height, fillet);
+          this._activePath.filletRect(x3, y2, width, height, fillet);
           return this;
         }
         /**
@@ -20789,9 +20789,9 @@ ${parts.join("\n")}
          * @param chamfer - non-zero real number, size of corner cutout
          * @param transform
          */
-        chamferRect(x2, y2, width, height, chamfer, transform2) {
+        chamferRect(x3, y2, width, height, chamfer, transform2) {
           this._tick++;
-          this._activePath.chamferRect(x2, y2, width, height, chamfer, transform2);
+          this._activePath.chamferRect(x3, y2, width, height, chamfer, transform2);
           return this;
         }
         /**
@@ -20810,9 +20810,9 @@ ${parts.join("\n")}
          * Defaults to 0, meaning one point is directly upward.
          * @returns The instance of the current object for chaining further drawing commands.
          */
-        star(x2, y2, points, radius, innerRadius = 0, rotation = 0) {
+        star(x3, y2, points, radius, innerRadius = 0, rotation = 0) {
           this._tick++;
-          this._activePath.star(x2, y2, points, radius, innerRadius, rotation, this._transform.clone());
+          this._activePath.star(x3, y2, points, radius, innerRadius, rotation, this._transform.clone());
           return this;
         }
         /**
@@ -20877,24 +20877,24 @@ ${parts.join("\n")}
          * @param y - (Optional) The scale factor in the vertical direction. If not specified, the x value is used for both directions.
          * @returns The instance of the current GraphicsContext for method chaining.
          */
-        scale(x2, y2 = x2) {
-          this._transform.scale(x2, y2);
+        scale(x3, y2 = x3) {
+          this._transform.scale(x3, y2);
           return this;
         }
-        setTransform(a2, b2, c2, d2, dx, dy) {
+        setTransform(a2, b2, c2, d3, dx, dy) {
           if (a2 instanceof Matrix) {
             this._transform.set(a2.a, a2.b, a2.c, a2.d, a2.tx, a2.ty);
             return this;
           }
-          this._transform.set(a2, b2, c2, d2, dx, dy);
+          this._transform.set(a2, b2, c2, d3, dx, dy);
           return this;
         }
-        transform(a2, b2, c2, d2, dx, dy) {
+        transform(a2, b2, c2, d3, dx, dy) {
           if (a2 instanceof Matrix) {
             this._transform.append(a2);
             return this;
           }
-          tempMatrix3.set(a2, b2, c2, d2, dx, dy);
+          tempMatrix3.set(a2, b2, c2, d3, dx, dy);
           this._transform.append(tempMatrix3);
           return this;
         }
@@ -20904,8 +20904,8 @@ ${parts.join("\n")}
          * @param y - (Optional) The amount to translate in the vertical direction. If not specified, the x value is used for both directions.
          * @returns The instance of the current GraphicsContext for method chaining.
          */
-        translate(x2, y2 = x2) {
-          this._transform.translate(x2, y2);
+        translate(x3, y2 = x3) {
+          this._transform.translate(x3, y2);
           return this;
         }
         /**
@@ -20968,8 +20968,8 @@ ${parts.join("\n")}
             return false;
           const instructions = this.instructions;
           let hasHit = false;
-          for (let k2 = 0; k2 < instructions.length; k2++) {
-            const instruction = instructions[k2];
+          for (let k3 = 0; k3 < instructions.length; k3++) {
+            const instruction = instructions[k3];
             const data = instruction.data;
             const path2 = data.path;
             if (!instruction.action || !path2)
@@ -20991,8 +20991,8 @@ ${parts.join("\n")}
               if (holes) {
                 const holeShapes = holes.shapePath?.shapePrimitives;
                 if (holeShapes) {
-                  for (let j2 = 0; j2 < holeShapes.length; j2++) {
-                    if (holeShapes[j2].shape.contains(transformedPoint.x, transformedPoint.y)) {
+                  for (let j3 = 0; j3 < holeShapes.length; j3++) {
+                    if (holeShapes[j3].shape.contains(transformedPoint.x, transformedPoint.y)) {
                       hasHit = false;
                     }
                   }
@@ -21847,21 +21847,21 @@ ${parts.join("\n")}
               }
               if (_CanvasTextMetrics2.canBreakWords(token, style.breakWords)) {
                 const characters = _CanvasTextMetrics2.wordWrapSplit(token);
-                for (let j2 = 0; j2 < characters.length; j2++) {
-                  let char = characters[j2];
+                for (let j3 = 0; j3 < characters.length; j3++) {
+                  let char = characters[j3];
                   let lastChar = char;
-                  let k2 = 1;
-                  while (characters[j2 + k2]) {
-                    const nextChar = characters[j2 + k2];
-                    if (!_CanvasTextMetrics2.canBreakChars(lastChar, nextChar, token, j2, style.breakWords)) {
+                  let k3 = 1;
+                  while (characters[j3 + k3]) {
+                    const nextChar = characters[j3 + k3];
+                    if (!_CanvasTextMetrics2.canBreakChars(lastChar, nextChar, token, j3, style.breakWords)) {
                       char += nextChar;
                     } else {
                       break;
                     }
                     lastChar = nextChar;
-                    k2++;
+                    k3++;
                   }
-                  j2 += k2 - 1;
+                  j3 += k3 - 1;
                   const characterWidth = _CanvasTextMetrics2._getFromCache(char, letterSpacing, cache, context2);
                   if (characterWidth + width > wordWrapWidth) {
                     lines += _CanvasTextMetrics2._addLine(line);
@@ -22134,7 +22134,7 @@ ${parts.join("\n")}
       _CanvasTextMetrics.graphemeSegmenter = (() => {
         if (typeof Intl?.Segmenter === "function") {
           const segmenter = new Intl.Segmenter();
-          return (s2) => [...segmenter.segment(s2)].map((x2) => x2.segment);
+          return (s2) => [...segmenter.segment(s2)].map((x3) => x3.segment);
         }
         return (s2) => [...s2];
       })();
@@ -22434,7 +22434,7 @@ ${parts.join("\n")}
          * @param isStroke - Is this drawing for the outside stroke of the
          *  text? If not, it's for the inside fill
          */
-        _drawLetterSpacing(text, style, canvasAndContext, x2, y2, isStroke = false) {
+        _drawLetterSpacing(text, style, canvasAndContext, x3, y2, isStroke = false) {
           const { context: context2 } = canvasAndContext;
           const letterSpacing = style.letterSpacing;
           let useExperimentalLetterSpacing = false;
@@ -22450,13 +22450,13 @@ ${parts.join("\n")}
           }
           if (letterSpacing === 0 || useExperimentalLetterSpacing) {
             if (isStroke) {
-              context2.strokeText(text, x2, y2);
+              context2.strokeText(text, x3, y2);
             } else {
-              context2.fillText(text, x2, y2);
+              context2.fillText(text, x3, y2);
             }
             return;
           }
-          let currentPosition = x2;
+          let currentPosition = x3;
           const stringArray = CanvasTextMetrics.graphemeSegmenter(text);
           let previousWidth = context2.measureText(text).width;
           let currentWidth = 0;
@@ -22468,8 +22468,8 @@ ${parts.join("\n")}
               context2.fillText(currentChar, currentPosition, y2);
             }
             let textStr = "";
-            for (let j2 = i2 + 1; j2 < stringArray.length; ++j2) {
-              textStr += stringArray[j2];
+            for (let j3 = i2 + 1; j3 < stringArray.length; ++j3) {
+              textStr += stringArray[j3];
             }
             currentWidth = context2.measureText(textStr).width;
             currentPosition += previousWidth - currentWidth + letterSpacing;
@@ -23216,7 +23216,7 @@ ${parts.join("\n")}
       chars = [chars];
     }
     const result = [];
-    for (let i2 = 0, j2 = chars.length; i2 < j2; i2++) {
+    for (let i2 = 0, j3 = chars.length; i2 < j3; i2++) {
       const item = chars[i2];
       if (Array.isArray(item)) {
         if (item.length !== 2) {
@@ -23405,8 +23405,8 @@ ${parts.join("\n")}
           const measureCache = this._measureCache;
           for (let i2 = 0; i2 < newChars.length; i2++) {
             const first = newChars[i2];
-            for (let j2 = 0; j2 < this._currentChars.length; j2++) {
-              const second = this._currentChars[j2];
+            for (let j3 = 0; j3 < this._currentChars.length; j3++) {
+              const second = this._currentChars[j3];
               let c1 = measureCache[first];
               if (!c1)
                 c1 = measureCache[first] = context2.measureText(first).width;
@@ -23485,12 +23485,12 @@ ${parts.join("\n")}
             context2.shadowOffsetY = 0;
           }
         }
-        _drawGlyph(context2, metrics, x2, y2, fontScale, style) {
+        _drawGlyph(context2, metrics, x3, y2, fontScale, style) {
           const char = metrics.text;
           const fontProperties = metrics.fontProperties;
           const stroke = style._stroke;
           const strokeThickness = (stroke?.width ?? 0) * fontScale;
-          const tx = x2 + strokeThickness / 2;
+          const tx = x3 + strokeThickness / 2;
           const ty = y2 - strokeThickness / 2;
           const descent = fontProperties.descent * fontScale;
           const lineHeight = metrics.lineHeight * fontScale;
@@ -23550,9 +23550,9 @@ ${parts.join("\n")}
     };
     const nextWord = (word) => {
       const start = currentLine.width;
-      for (let j2 = 0; j2 < currentWord.index; j2++) {
-        const position = word.positions[j2];
-        currentLine.chars.push(word.chars[j2]);
+      for (let j3 = 0; j3 < currentWord.index; j3++) {
+        const position = word.positions[j3];
+        currentLine.chars.push(word.chars[j3]);
         currentLine.charPositions.push(position + start);
       }
       currentLine.width += word.width;
@@ -23643,8 +23643,8 @@ ${parts.join("\n")}
     for (let i2 = 0; i2 < measurementData.lines.length; i2++) {
       const line = measurementData.lines[i2];
       const offset = measurementData.width / 2 - line.width / 2;
-      for (let j2 = 0; j2 < line.charPositions.length; j2++) {
-        line.charPositions[j2] += offset;
+      for (let j3 = 0; j3 < line.charPositions.length; j3++) {
+        line.charPositions[j3] += offset;
       }
     }
   }
@@ -23652,8 +23652,8 @@ ${parts.join("\n")}
     for (let i2 = 0; i2 < measurementData.lines.length; i2++) {
       const line = measurementData.lines[i2];
       const offset = measurementData.width - line.width;
-      for (let j2 = 0; j2 < line.charPositions.length; j2++) {
-        line.charPositions[j2] += offset;
+      for (let j3 = 0; j3 < line.charPositions.length; j3++) {
+        line.charPositions[j3] += offset;
       }
     }
   }
@@ -23667,12 +23667,12 @@ ${parts.join("\n")}
       const totalSpaces = line.spacesIndex.length;
       const newSpaceWidth = (width - line.width) / totalSpaces;
       const spaceWidth = newSpaceWidth;
-      for (let j2 = 0; j2 < line.charPositions.length; j2++) {
-        if (j2 === spaceIndex) {
+      for (let j3 = 0; j3 < line.charPositions.length; j3++) {
+        if (j3 === spaceIndex) {
           spaceIndex = line.spacesIndex[indy++];
           offset += spaceWidth;
         }
-        line.charPositions[j2] += offset;
+        line.charPositions[j3] += offset;
       }
     }
   }
@@ -23915,14 +23915,14 @@ ${parts.join("\n")}
           const tint = bitmapFont.applyFillAsTint ? style._fill.color : 16777215;
           for (let i2 = 0; i2 < bitmapTextLayout.lines.length; i2++) {
             const line = bitmapTextLayout.lines[i2];
-            for (let j2 = 0; j2 < line.charPositions.length; j2++) {
+            for (let j3 = 0; j3 < line.charPositions.length; j3++) {
               const char = chars[index++];
               const charData = bitmapFont.chars[char];
               if (charData?.texture) {
                 context2.texture(
                   charData.texture,
                   tint ? tint : "black",
-                  Math.round(line.charPositions[j2] + charData.xOffset),
+                  Math.round(line.charPositions[j3] + charData.xOffset),
                   Math.round(currentY + charData.yOffset)
                 );
               }
@@ -23944,9 +23944,9 @@ ${parts.join("\n")}
           const context2 = this._getGpuBitmapText(bitmapText).context;
           const fontFamily = bitmapText._style.fontFamily;
           const dynamicFont = Cache.get(`${fontFamily}-bitmap`);
-          const { a: a2, b: b2, c: c2, d: d2 } = bitmapText.groupTransform;
+          const { a: a2, b: b2, c: c2, d: d3 } = bitmapText.groupTransform;
           const dx = Math.sqrt(a2 * a2 + b2 * b2);
-          const dy = Math.sqrt(c2 * c2 + d2 * d2);
+          const dy = Math.sqrt(c2 * c2 + d3 * d3);
           const worldScale = (Math.abs(dx) + Math.abs(dy)) / 2;
           const fontScale = dynamicFont.baseRenderedFontSize / bitmapText._style.fontSize;
           const distance = worldScale * dynamicFont.distanceField.range * (1 / fontScale);
@@ -24192,9 +24192,9 @@ ${parts.join("\n")}
   }
   function dropShadowToCSS(dropShadowStyle) {
     const color = Color.shared.setValue(dropShadowStyle.color).setAlpha(dropShadowStyle.alpha).toHexa();
-    const x2 = Math.round(Math.cos(dropShadowStyle.angle) * dropShadowStyle.distance);
+    const x3 = Math.round(Math.cos(dropShadowStyle.angle) * dropShadowStyle.distance);
     const y2 = Math.round(Math.sin(dropShadowStyle.angle) * dropShadowStyle.distance);
-    const position = `${x2}px ${y2}px`;
+    const position = `${x3}px ${y2}px`;
     if (dropShadowStyle.blur > 0) {
       return `text-shadow: ${position} ${dropShadowStyle.blur}px ${color}`;
     }
@@ -24213,11 +24213,11 @@ ${parts.join("\n")}
     for (const i2 in tagStyles) {
       const tagStyle = tagStyles[i2];
       const cssTagStyle = [];
-      for (const j2 in tagStyle) {
-        if (transform[j2]) {
-          cssTagStyle.push(transform[j2](tagStyle[j2]));
-        } else if (templates[j2]) {
-          cssTagStyle.push(templates[j2].replace("{{VALUE}}", tagStyle[j2]));
+      for (const j3 in tagStyle) {
+        if (transform[j3]) {
+          cssTagStyle.push(transform[j3](tagStyle[j3]));
+        } else if (templates[j3]) {
+          cssTagStyle.push(templates[j3].replace("{{VALUE}}", tagStyle[j3]));
         }
       }
       out2.push(`${i2} { ${cssTagStyle.join(";")} }`);
@@ -24321,7 +24321,7 @@ ${parts.join("\n")}
          * style.addOverride('background-color: red');
          */
         addOverride(...value) {
-          const toAdd = value.filter((v2) => !this.cssOverrides.includes(v2));
+          const toAdd = value.filter((v3) => !this.cssOverrides.includes(v3));
           if (toAdd.length > 0) {
             this.cssOverrides.push(...toAdd);
             this.update();
@@ -24334,9 +24334,9 @@ ${parts.join("\n")}
          * style.removeOverride('background-color: red');
          */
         removeOverride(...value) {
-          const toRemove = value.filter((v2) => this.cssOverrides.includes(v2));
+          const toRemove = value.filter((v3) => this.cssOverrides.includes(v3));
           if (toRemove.length > 0) {
-            this.cssOverrides = this.cssOverrides.filter((v2) => !toRemove.includes(v2));
+            this.cssOverrides = this.cssOverrides.filter((v3) => !toRemove.includes(v3));
             this.update();
           }
         }
@@ -25102,15 +25102,15 @@ ${parts.join("\n")}
     const a2 = matrix.a;
     const b2 = matrix.b;
     const c2 = matrix.c;
-    const d2 = matrix.d;
+    const d3 = matrix.d;
     const tx = matrix.tx;
     const ty = matrix.ty;
     offset *= stride;
     while (index < size) {
-      const x2 = array[offset];
+      const x3 = array[offset];
       const y2 = array[offset + 1];
-      array[offset] = a2 * x2 + c2 * y2 + tx;
-      array[offset + 1] = b2 * x2 + d2 * y2 + ty;
+      array[offset] = a2 * x3 + c2 * y2 + tx;
+      array[offset + 1] = b2 * x3 + d3 * y2 + ty;
       offset += stride;
       index++;
     }
@@ -25364,10 +25364,10 @@ ${parts.join("\n")}
           const sizeX = this.width / verticesX;
           const sizeY = this.height / verticesY;
           for (let i2 = 0; i2 < total; i2++) {
-            const x2 = i2 % this.verticesX;
+            const x3 = i2 % this.verticesX;
             const y2 = i2 / this.verticesX | 0;
-            verts.push(x2 * sizeX, y2 * sizeY);
-            uvs.push(x2 / verticesX, y2 / verticesY);
+            verts.push(x3 * sizeX, y2 * sizeY);
+            uvs.push(x3 / verticesX, y2 / verticesY);
           }
           const totalSub = verticesX * verticesY;
           for (let i2 = 0; i2 < totalSub; i2++) {
@@ -25921,20 +25921,20 @@ ${parts.join("\n")}
             backgroundResolution,
             false
           );
-          let x2 = bounds.minX;
+          let x3 = bounds.minX;
           let y2 = bounds.minY;
           if (previousBounds) {
-            x2 -= previousBounds.minX;
+            x3 -= previousBounds.minX;
             y2 -= previousBounds.minY;
           }
-          x2 = Math.floor(x2 * backgroundResolution);
+          x3 = Math.floor(x3 * backgroundResolution);
           y2 = Math.floor(y2 * backgroundResolution);
           const width = Math.ceil(bounds.width * backgroundResolution);
           const height = Math.ceil(bounds.height * backgroundResolution);
           this.renderer.renderTarget.copyToTexture(
             lastRenderSurface,
             backTexture,
-            { x: x2, y: y2 },
+            { x: x3, y: y2 },
             { width, height },
             { x: 0, y: 0 }
           );
@@ -27218,9 +27218,9 @@ ${parts.join("\n")}
   // node_modules/pixi.js/lib/scene/container/utils/clearList.mjs
   function clearList(list, index) {
     index || (index = 0);
-    for (let j2 = index; j2 < list.length; j2++) {
-      if (list[j2]) {
-        list[j2] = null;
+    for (let j3 = index; j3 < list.length; j3++) {
+      if (list[j3]) {
+        list[j3] = null;
       } else {
         break;
       }
@@ -27237,9 +27237,9 @@ ${parts.join("\n")}
     updateRenderGroupTransform(renderGroup);
     const childrenToUpdate = renderGroup.childrenToUpdate;
     const updateTick = renderGroup.updateTick++;
-    for (const j2 in childrenToUpdate) {
-      const renderGroupDepth = Number(j2);
-      const childrenAtDepth = childrenToUpdate[j2];
+    for (const j3 in childrenToUpdate) {
+      const renderGroupDepth = Number(j3);
+      const childrenAtDepth = childrenToUpdate[j3];
       const list = childrenAtDepth.list;
       const index = childrenAtDepth.index;
       for (let i2 = 0; i2 < index; i2++) {
@@ -29591,8 +29591,8 @@ ${parts.join("\n")}
           const groupLayout = program.layout[groupIndex];
           const entries = [];
           const renderer = this._renderer;
-          for (const j2 in groupLayout) {
-            const resource = group.resources[j2] ?? group.resources[groupLayout[j2]];
+          for (const j3 in groupLayout) {
+            const resource = group.resources[j3] ?? group.resources[groupLayout[j3]];
             let gpuResource;
             if (resource._resourceType === "uniformGroup") {
               const uniformGroup = resource;
@@ -29625,7 +29625,7 @@ ${parts.join("\n")}
               gpuResource = renderer.texture.getGpuSource(texture).createView({});
             }
             entries.push({
-              binding: groupLayout[j2],
+              binding: groupLayout[j3],
               resource: gpuResource
             });
           }
@@ -29939,8 +29939,8 @@ ${parts.join("\n")}
           }
         }
         _syncBindGroup(bindGroup) {
-          for (const j2 in bindGroup.resources) {
-            const resource = bindGroup.resources[j2];
+          for (const j3 in bindGroup.resources) {
+            const resource = bindGroup.resources[j3];
             if (resource.isUniformGroup) {
               this._renderer.ubo.updateUniformGroup(resource);
             }
@@ -30358,14 +30358,14 @@ ${parts.join("\n")}
       const name = uboElement.data.name;
       let parsed = false;
       let offset = 0;
-      for (let j2 = 0; j2 < uniformParsers.length; j2++) {
-        const uniformParser = uniformParsers[j2];
+      for (let j3 = 0; j3 < uniformParsers.length; j3++) {
+        const uniformParser = uniformParsers[j3];
         if (uniformParser.test(uboElement.data)) {
           offset = uboElement.offset / 4;
           funcFragments.push(
             `name = "${name}";`,
             `offset += ${offset - prev};`,
-            uniformParsers[j2][parserCode] || uniformParsers[j2].ubo
+            uniformParsers[j3][parserCode] || uniformParsers[j3].ubo
           );
           parsed = true;
           break;
@@ -30799,17 +30799,17 @@ ${parts.join("\n")}
     const { buffers, attributes } = geometry;
     const tempStride = {};
     const tempStart = {};
-    for (const j2 in buffers) {
-      const buffer = buffers[j2];
+    for (const j3 in buffers) {
+      const buffer = buffers[j3];
       tempStride[buffer.uid] = 0;
       tempStart[buffer.uid] = 0;
     }
-    for (const j2 in attributes) {
-      const attribute = attributes[j2];
+    for (const j3 in attributes) {
+      const attribute = attributes[j3];
       tempStride[attribute.buffer.uid] += getAttributeInfoFromFormat(attribute.format).stride;
     }
-    for (const j2 in attributes) {
-      const attribute = attributes[j2];
+    for (const j3 in attributes) {
+      const attribute = attributes[j3];
       attribute.stride ?? (attribute.stride = tempStride[attribute.buffer.uid]);
       attribute.start ?? (attribute.start = tempStart[attribute.buffer.uid]);
       tempStart[attribute.buffer.uid] += getAttributeInfoFromFormat(attribute.format).stride;
@@ -31059,9 +31059,9 @@ ${parts.join("\n")}
           for (let i2 = 0; i2 < data.length; i2++) {
             const attributes = Object.values(data[i2].attributes);
             const shaderLocation = attributes[0].shaderLocation;
-            for (const j2 in attributeData) {
-              if (attributeData[j2].location === shaderLocation) {
-                bufferNamesToBind[i2] = j2;
+            for (const j3 in attributeData) {
+              if (attributeData[j3].location === shaderLocation) {
+                bufferNamesToBind[i2] = j3;
                 break;
               }
             }
@@ -31131,12 +31131,12 @@ ${parts.join("\n")}
   });
 
   // node_modules/pixi.js/lib/rendering/renderers/gpu/renderTarget/calculateProjection.mjs
-  function calculateProjection(pm, x2, y2, width, height, flipY) {
+  function calculateProjection(pm, x3, y2, width, height, flipY) {
     const sign = flipY ? 1 : -1;
     pm.identity();
     pm.a = 1 / width * 2;
     pm.d = sign * (1 / height * 2);
-    pm.tx = -1 - x2 * pm.a;
+    pm.tx = -1 - x3 * pm.a;
     pm.ty = -sign - y2 * pm.d;
     return pm;
   }
@@ -32377,8 +32377,8 @@ ${parts.join("\n")}
         destroy() {
           this.managedTextures.slice().forEach((source2) => this.onSourceDestroy(source2));
           this.managedTextures = null;
-          for (const k2 of Object.keys(this._bindGroupHash)) {
-            const key = Number(k2);
+          for (const k3 of Object.keys(this._bindGroupHash)) {
+            const key = Number(k3);
             const bindGroup = this._bindGroupHash[key];
             bindGroup?.destroy();
             this._bindGroupHash[key] = null;
@@ -32524,8 +32524,8 @@ ${parts.join("\n")}
           for (let i2 = 0; i2 < instructions.instructionSize; i2++) {
             const batch = batches[i2];
             if (batch.size) {
-              for (let j2 = 0; j2 < batch.textures.count; j2++) {
-                renderer.texture.bind(batch.textures.textures[j2], j2);
+              for (let j3 = 0; j3 < batch.textures.count; j3++) {
+                renderer.texture.bind(batch.textures.textures[j3], j3);
               }
               renderer.geometry.draw(batch.topology, batch.size, batch.start);
             }
@@ -33301,11 +33301,11 @@ ${parts.join("\n")}
           }
           const nativeInstancedExtension = this._renderer.context.extensions.vertexAttribDivisorANGLE;
           if (nativeInstancedExtension) {
-            gl.drawArraysInstanced = (a2, b2, c2, d2) => {
-              nativeInstancedExtension.drawArraysInstancedANGLE(a2, b2, c2, d2);
+            gl.drawArraysInstanced = (a2, b2, c2, d3) => {
+              nativeInstancedExtension.drawArraysInstancedANGLE(a2, b2, c2, d3);
             };
-            gl.drawElementsInstanced = (a2, b2, c2, d2, e2) => {
-              nativeInstancedExtension.drawElementsInstancedANGLE(a2, b2, c2, d2, e2);
+            gl.drawElementsInstanced = (a2, b2, c2, d3, e2) => {
+              nativeInstancedExtension.drawElementsInstancedANGLE(a2, b2, c2, d3, e2);
             };
             gl.vertexAttribDivisor = (a2, b2) => nativeInstancedExtension.vertexAttribDivisorANGLE(a2, b2);
           }
@@ -33349,9 +33349,9 @@ ${parts.join("\n")}
         checkCompatibility(geometry, program) {
           const geometryAttributes = geometry.attributes;
           const shaderAttributes = program._attributeData;
-          for (const j2 in shaderAttributes) {
-            if (!geometryAttributes[j2]) {
-              throw new Error(`shader and geometry incompatible, geometry missing the "${j2}" attribute`);
+          for (const j3 in shaderAttributes) {
+            if (!geometryAttributes[j3]) {
+              throw new Error(`shader and geometry incompatible, geometry missing the "${j3}" attribute`);
             }
           }
         }
@@ -33441,12 +33441,12 @@ ${parts.join("\n")}
           const gl = this.gl;
           for (const i2 in this._geometryVaoHash) {
             if (contextLost) {
-              for (const j2 in this._geometryVaoHash[i2]) {
+              for (const j3 in this._geometryVaoHash[i2]) {
                 const vaoObjectHash = this._geometryVaoHash[i2];
                 if (this._activeVao !== vaoObjectHash) {
                   this.unbind();
                 }
-                gl.deleteVertexArray(vaoObjectHash[j2]);
+                gl.deleteVertexArray(vaoObjectHash[j3]);
               }
             }
             this._geometryVaoHash[i2] = null;
@@ -33465,11 +33465,11 @@ ${parts.join("\n")}
             bufferSystem.bind(geometry.indexBuffer);
           }
           let lastBuffer = null;
-          for (const j2 in attributes) {
-            const attribute = attributes[j2];
+          for (const j3 in attributes) {
+            const attribute = attributes[j3];
             const buffer = attribute.buffer;
             const glBuffer = bufferSystem.getGlBuffer(buffer);
-            const programAttrib = program._attributeData[j2];
+            const programAttrib = program._attributeData[j3];
             if (programAttrib) {
               if (lastBuffer !== glBuffer) {
                 bufferSystem.bind(buffer);
@@ -34211,7 +34211,7 @@ ${parts.join("\n")}
             const viewFramebuffer = gl.createFramebuffer();
             glRenderTarget.framebuffer = viewFramebuffer;
             gl.bindFramebuffer(gl.FRAMEBUFFER, viewFramebuffer);
-            renderTarget.colorTextures.forEach((_, i2) => {
+            renderTarget.colorTextures.forEach((_2, i2) => {
               const msaaRenderBuffer = gl.createRenderbuffer();
               glRenderTarget.msaaRenderBuffer[i2] = msaaRenderBuffer;
             });
@@ -34363,34 +34363,34 @@ ${parts.join("\n")}
       funcFragments.push(`
             resources = g[${i2}].resources;
         `);
-      for (const j2 in group.resources) {
-        const resource = group.resources[j2];
+      for (const j3 in group.resources) {
+        const resource = group.resources[j3];
         if (resource instanceof UniformGroup) {
           if (resource.ubo) {
-            const resName = shader._uniformBindMap[i2][Number(j2)];
+            const resName = shader._uniformBindMap[i2][Number(j3)];
             funcFragments.push(`
                         sS.bindUniformBlock(
-                            resources[${j2}],
+                            resources[${j3}],
                             '${resName}',
                             ${shader.glProgram._uniformBlockData[resName].index}
                         );
                     `);
           } else {
             funcFragments.push(`
-                        ugS.updateUniformGroup(resources[${j2}], p, sD);
+                        ugS.updateUniformGroup(resources[${j3}], p, sD);
                     `);
           }
         } else if (resource instanceof BufferResource) {
-          const resName = shader._uniformBindMap[i2][Number(j2)];
+          const resName = shader._uniformBindMap[i2][Number(j3)];
           funcFragments.push(`
                     sS.bindUniformBlock(
-                        resources[${j2}],
+                        resources[${j3}],
                         '${resName}',
                         ${shader.glProgram._uniformBlockData[resName].index}
                     );
                 `);
         } else if (resource instanceof TextureSource) {
-          const uniformName = shader._uniformBindMap[i2][j2];
+          const uniformName = shader._uniformBindMap[i2][j3];
           const uniformData = programData.uniformData[uniformName];
           if (uniformData) {
             if (!addedTextreSystem) {
@@ -34401,7 +34401,7 @@ ${parts.join("\n")}
             }
             shaderSystem._gl.uniform1i(uniformData.location, textureCount);
             funcFragments.push(`
-                        tS.bind(resources[${j2}], ${textureCount});
+                        tS.bind(resources[${j3}], ${textureCount});
                     `);
             textureCount++;
           }
@@ -35105,10 +35105,10 @@ ${parts.join("\n")}
       }
       const uniform = group.uniformStructures[i2];
       let parsed = false;
-      for (let j2 = 0; j2 < uniformParsers.length; j2++) {
-        const parser = uniformParsers[j2];
+      for (let j3 = 0; j3 < uniformParsers.length; j3++) {
+        const parser = uniformParsers[j3];
         if (uniform.type === parser.type && parser.test(uniform)) {
-          funcFragments.push(`name = "${i2}";`, uniformParsers[j2].uniform);
+          funcFragments.push(`name = "${i2}";`, uniformParsers[j3].uniform);
           parsed = true;
           break;
         }
@@ -36635,17 +36635,2116 @@ ${parts.join("\n")}
   extensions.add(ApplicationInitHook);
 
   // node_modules/pixi.js/lib/index.mjs
+  init_Point();
+  init_Rectangle();
   init_textureFrom();
+  init_Container();
   init_Graphics();
   init_GraphicsContext();
+  init_Ticker();
   init_eventemitter3();
   var import_earcut2 = __toESM(require_earcut(), 1);
   extensions.add(browserExt, webworkerExt);
+
+  // node_modules/pixi-viewport/dist/pixi_viewport.js
+  var S2 = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
+  function M2(l2) {
+    return l2 && l2.__esModule && Object.prototype.hasOwnProperty.call(l2, "default") ? l2.default : l2;
+  }
+  var W = { exports: {} };
+  (function(l2, t2) {
+    (function() {
+      var e2, n2;
+      n2 = function(i2) {
+        return l2.exports = i2;
+      }, e2 = {
+        linear: function(i2, s2, h2, o2) {
+          return h2 * i2 / o2 + s2;
+        },
+        easeInQuad: function(i2, s2, h2, o2) {
+          return h2 * (i2 /= o2) * i2 + s2;
+        },
+        easeOutQuad: function(i2, s2, h2, o2) {
+          return -h2 * (i2 /= o2) * (i2 - 2) + s2;
+        },
+        easeInOutQuad: function(i2, s2, h2, o2) {
+          return (i2 /= o2 / 2) < 1 ? h2 / 2 * i2 * i2 + s2 : -h2 / 2 * (--i2 * (i2 - 2) - 1) + s2;
+        },
+        easeInCubic: function(i2, s2, h2, o2) {
+          return h2 * (i2 /= o2) * i2 * i2 + s2;
+        },
+        easeOutCubic: function(i2, s2, h2, o2) {
+          return h2 * ((i2 = i2 / o2 - 1) * i2 * i2 + 1) + s2;
+        },
+        easeInOutCubic: function(i2, s2, h2, o2) {
+          return (i2 /= o2 / 2) < 1 ? h2 / 2 * i2 * i2 * i2 + s2 : h2 / 2 * ((i2 -= 2) * i2 * i2 + 2) + s2;
+        },
+        easeInQuart: function(i2, s2, h2, o2) {
+          return h2 * (i2 /= o2) * i2 * i2 * i2 + s2;
+        },
+        easeOutQuart: function(i2, s2, h2, o2) {
+          return -h2 * ((i2 = i2 / o2 - 1) * i2 * i2 * i2 - 1) + s2;
+        },
+        easeInOutQuart: function(i2, s2, h2, o2) {
+          return (i2 /= o2 / 2) < 1 ? h2 / 2 * i2 * i2 * i2 * i2 + s2 : -h2 / 2 * ((i2 -= 2) * i2 * i2 * i2 - 2) + s2;
+        },
+        easeInQuint: function(i2, s2, h2, o2) {
+          return h2 * (i2 /= o2) * i2 * i2 * i2 * i2 + s2;
+        },
+        easeOutQuint: function(i2, s2, h2, o2) {
+          return h2 * ((i2 = i2 / o2 - 1) * i2 * i2 * i2 * i2 + 1) + s2;
+        },
+        easeInOutQuint: function(i2, s2, h2, o2) {
+          return (i2 /= o2 / 2) < 1 ? h2 / 2 * i2 * i2 * i2 * i2 * i2 + s2 : h2 / 2 * ((i2 -= 2) * i2 * i2 * i2 * i2 + 2) + s2;
+        },
+        easeInSine: function(i2, s2, h2, o2) {
+          return -h2 * Math.cos(i2 / o2 * (Math.PI / 2)) + h2 + s2;
+        },
+        easeOutSine: function(i2, s2, h2, o2) {
+          return h2 * Math.sin(i2 / o2 * (Math.PI / 2)) + s2;
+        },
+        easeInOutSine: function(i2, s2, h2, o2) {
+          return -h2 / 2 * (Math.cos(Math.PI * i2 / o2) - 1) + s2;
+        },
+        easeInExpo: function(i2, s2, h2, o2) {
+          return i2 === 0 ? s2 : h2 * Math.pow(2, 10 * (i2 / o2 - 1)) + s2;
+        },
+        easeOutExpo: function(i2, s2, h2, o2) {
+          return i2 === o2 ? s2 + h2 : h2 * (-Math.pow(2, -10 * i2 / o2) + 1) + s2;
+        },
+        easeInOutExpo: function(i2, s2, h2, o2) {
+          return (i2 /= o2 / 2) < 1 ? h2 / 2 * Math.pow(2, 10 * (i2 - 1)) + s2 : h2 / 2 * (-Math.pow(2, -10 * --i2) + 2) + s2;
+        },
+        easeInCirc: function(i2, s2, h2, o2) {
+          return -h2 * (Math.sqrt(1 - (i2 /= o2) * i2) - 1) + s2;
+        },
+        easeOutCirc: function(i2, s2, h2, o2) {
+          return h2 * Math.sqrt(1 - (i2 = i2 / o2 - 1) * i2) + s2;
+        },
+        easeInOutCirc: function(i2, s2, h2, o2) {
+          return (i2 /= o2 / 2) < 1 ? -h2 / 2 * (Math.sqrt(1 - i2 * i2) - 1) + s2 : h2 / 2 * (Math.sqrt(1 - (i2 -= 2) * i2) + 1) + s2;
+        },
+        easeInElastic: function(i2, s2, h2, o2) {
+          var r2, a2, p2;
+          return p2 = 1.70158, a2 = 0, r2 = h2, i2 === 0 || (i2 /= o2), a2 || (a2 = o2 * 0.3), r2 < Math.abs(h2) ? (r2 = h2, p2 = a2 / 4) : p2 = a2 / (2 * Math.PI) * Math.asin(h2 / r2), -(r2 * Math.pow(2, 10 * (i2 -= 1)) * Math.sin((i2 * o2 - p2) * (2 * Math.PI) / a2)) + s2;
+        },
+        easeOutElastic: function(i2, s2, h2, o2) {
+          var r2, a2, p2;
+          return p2 = 1.70158, a2 = 0, r2 = h2, i2 === 0 || (i2 /= o2), a2 || (a2 = o2 * 0.3), r2 < Math.abs(h2) ? (r2 = h2, p2 = a2 / 4) : p2 = a2 / (2 * Math.PI) * Math.asin(h2 / r2), r2 * Math.pow(2, -10 * i2) * Math.sin((i2 * o2 - p2) * (2 * Math.PI) / a2) + h2 + s2;
+        },
+        easeInOutElastic: function(i2, s2, h2, o2) {
+          var r2, a2, p2;
+          return p2 = 1.70158, a2 = 0, r2 = h2, i2 === 0 || (i2 /= o2 / 2), a2 || (a2 = o2 * (0.3 * 1.5)), r2 < Math.abs(h2) ? (r2 = h2, p2 = a2 / 4) : p2 = a2 / (2 * Math.PI) * Math.asin(h2 / r2), i2 < 1 ? -0.5 * (r2 * Math.pow(2, 10 * (i2 -= 1)) * Math.sin((i2 * o2 - p2) * (2 * Math.PI) / a2)) + s2 : r2 * Math.pow(2, -10 * (i2 -= 1)) * Math.sin((i2 * o2 - p2) * (2 * Math.PI) / a2) * 0.5 + h2 + s2;
+        },
+        easeInBack: function(i2, s2, h2, o2, r2) {
+          return r2 === void 0 && (r2 = 1.70158), h2 * (i2 /= o2) * i2 * ((r2 + 1) * i2 - r2) + s2;
+        },
+        easeOutBack: function(i2, s2, h2, o2, r2) {
+          return r2 === void 0 && (r2 = 1.70158), h2 * ((i2 = i2 / o2 - 1) * i2 * ((r2 + 1) * i2 + r2) + 1) + s2;
+        },
+        easeInOutBack: function(i2, s2, h2, o2, r2) {
+          return r2 === void 0 && (r2 = 1.70158), (i2 /= o2 / 2) < 1 ? h2 / 2 * (i2 * i2 * (((r2 *= 1.525) + 1) * i2 - r2)) + s2 : h2 / 2 * ((i2 -= 2) * i2 * (((r2 *= 1.525) + 1) * i2 + r2) + 2) + s2;
+        },
+        easeInBounce: function(i2, s2, h2, o2) {
+          var r2;
+          return r2 = e2.easeOutBounce(o2 - i2, 0, h2, o2), h2 - r2 + s2;
+        },
+        easeOutBounce: function(i2, s2, h2, o2) {
+          return (i2 /= o2) < 1 / 2.75 ? h2 * (7.5625 * i2 * i2) + s2 : i2 < 2 / 2.75 ? h2 * (7.5625 * (i2 -= 1.5 / 2.75) * i2 + 0.75) + s2 : i2 < 2.5 / 2.75 ? h2 * (7.5625 * (i2 -= 2.25 / 2.75) * i2 + 0.9375) + s2 : h2 * (7.5625 * (i2 -= 2.625 / 2.75) * i2 + 0.984375) + s2;
+        },
+        easeInOutBounce: function(i2, s2, h2, o2) {
+          var r2;
+          return i2 < o2 / 2 ? (r2 = e2.easeInBounce(i2 * 2, 0, h2, o2), r2 * 0.5 + s2) : (r2 = e2.easeOutBounce(i2 * 2 - o2, 0, h2, o2), r2 * 0.5 + h2 * 0.5 + s2);
+        }
+      }, n2(e2);
+    }).call(S2);
+  })(W);
+  var O = W.exports;
+  var v2 = /* @__PURE__ */ M2(O);
+  function x2(l2, t2) {
+    if (l2) {
+      if (typeof l2 == "function")
+        return l2;
+      if (typeof l2 == "string")
+        return v2[l2];
+    } else
+      return v2[t2];
+  }
+  var P = class {
+    constructor(t2) {
+      this.viewport = t2, this.touches = [], this.addListeners();
+    }
+    /** Add input listeners */
+    addListeners() {
+      this.viewport.eventMode = "static", this.viewport.forceHitArea || (this.viewport.hitArea = new Rectangle(0, 0, this.viewport.worldWidth, this.viewport.worldHeight)), this.viewport.on("pointerdown", this.down, this), this.viewport.options.allowPreserveDragOutside ? this.viewport.on("globalpointermove", this.move, this) : this.viewport.on("pointermove", this.move, this), this.viewport.on("pointerup", this.up, this), this.viewport.on("pointerupoutside", this.up, this), this.viewport.on("pointercancel", this.up, this), this.viewport.options.allowPreserveDragOutside || this.viewport.on("pointerleave", this.up, this), this.wheelFunction = (t2) => this.handleWheel(t2), this.viewport.options.events.domElement.addEventListener(
+        "wheel",
+        this.wheelFunction,
+        { passive: this.viewport.options.passiveWheel }
+      ), this.isMouseDown = false;
+    }
+    /**
+     * Removes all event listeners from viewport
+     * (useful for cleanup of wheel when removing viewport)
+     */
+    destroy() {
+      var t2;
+      (t2 = this.viewport.options.events.domElement) == null || t2.removeEventListener("wheel", this.wheelFunction);
+    }
+    /**
+     * handle down events for viewport
+     *
+     * @param {PIXI.FederatedPointerEvent} event
+     */
+    down(t2) {
+      if (this.viewport.pause || !this.viewport.visible)
+        return;
+      if (t2.pointerType === "mouse" ? this.isMouseDown = true : this.get(t2.pointerId) || this.touches.push({ id: t2.pointerId, last: null }), this.count() === 1) {
+        this.last = t2.global.clone();
+        const n2 = this.viewport.plugins.get("decelerate", true), i2 = this.viewport.plugins.get("bounce", true);
+        (!n2 || !n2.isActive()) && (!i2 || !i2.isActive()) ? this.clickedAvailable = true : this.clickedAvailable = false;
+      } else
+        this.clickedAvailable = false;
+      this.viewport.plugins.down(t2) && this.viewport.options.stopPropagation && t2.stopPropagation();
+    }
+    /** Clears all pointer events */
+    clear() {
+      this.isMouseDown = false, this.touches = [], this.last = null;
+    }
+    /**
+     * @param {number} change
+     * @returns whether change exceeds threshold
+     */
+    checkThreshold(t2) {
+      return Math.abs(t2) >= this.viewport.threshold;
+    }
+    /** Handle move events for viewport */
+    move(t2) {
+      if (this.viewport.pause || !this.viewport.visible)
+        return;
+      const e2 = this.viewport.plugins.move(t2);
+      if (this.clickedAvailable && this.last) {
+        const n2 = t2.global.x - this.last.x, i2 = t2.global.y - this.last.y;
+        (this.checkThreshold(n2) || this.checkThreshold(i2)) && (this.clickedAvailable = false);
+      }
+      e2 && this.viewport.options.stopPropagation && t2.stopPropagation();
+    }
+    /** Handle up events for viewport */
+    up(t2) {
+      if (this.viewport.pause || !this.viewport.visible)
+        return;
+      t2.pointerType === "mouse" && (this.isMouseDown = false), t2.pointerType !== "mouse" && this.remove(t2.pointerId);
+      const e2 = this.viewport.plugins.up(t2);
+      this.clickedAvailable && this.count() === 0 && this.last && (this.viewport.emit("clicked", {
+        event: t2,
+        screen: this.last,
+        world: this.viewport.toWorld(this.last),
+        viewport: this.viewport
+      }), this.clickedAvailable = false), e2 && this.viewport.options.stopPropagation && t2.stopPropagation();
+    }
+    /** Gets pointer position if this.interaction is set */
+    getPointerPosition(t2) {
+      const e2 = new Point();
+      return this.viewport.options.events.mapPositionToPoint(e2, t2.clientX, t2.clientY), e2;
+    }
+    /** Handle wheel events */
+    handleWheel(t2) {
+      if (this.viewport.pause || !this.viewport.visible)
+        return;
+      const e2 = this.viewport.toLocal(this.getPointerPosition(t2));
+      this.viewport.left <= e2.x && e2.x <= this.viewport.right && this.viewport.top <= e2.y && e2.y <= this.viewport.bottom && this.viewport.plugins.wheel(t2) && !this.viewport.options.passiveWheel && t2.preventDefault();
+    }
+    pause() {
+      this.touches = [], this.isMouseDown = false;
+    }
+    /** Get touch by id */
+    get(t2) {
+      for (const e2 of this.touches)
+        if (e2.id === t2)
+          return e2;
+      return null;
+    }
+    /** Remove touch by number */
+    remove(t2) {
+      for (let e2 = 0; e2 < this.touches.length; e2++)
+        if (this.touches[e2].id === t2) {
+          this.touches.splice(e2, 1);
+          return;
+        }
+    }
+    /**
+     * @returns {number} count of mouse/touch pointers that are down on the viewport
+     */
+    count() {
+      return (this.isMouseDown ? 1 : 0) + this.touches.length;
+    }
+  };
+  var m2 = [
+    "drag",
+    "pinch",
+    "wheel",
+    "follow",
+    "mouse-edges",
+    "decelerate",
+    "animate",
+    "bounce",
+    "snap-zoom",
+    "clamp-zoom",
+    "snap",
+    "clamp"
+  ];
+  var C = class {
+    /** This is called by {@link Viewport} to initialize the {@link Viewport.plugins plugins}. */
+    constructor(t2) {
+      this.viewport = t2, this.list = [], this.plugins = {};
+    }
+    /**
+     * Inserts a named plugin or a user plugin into the viewport
+     * default plugin order: 'drag', 'pinch', 'wheel', 'follow', 'mouse-edges', 'decelerate', 'bounce',
+     * 'snap-zoom', 'clamp-zoom', 'snap', 'clamp'
+     *
+     * @param {string} name of plugin
+     * @param {Plugin} plugin - instantiated Plugin class
+     * @param {number} index to insert userPlugin (otherwise inserts it at the end)
+     */
+    add(t2, e2, n2 = m2.length) {
+      const i2 = this.plugins[t2];
+      i2 && i2.destroy(), this.plugins[t2] = e2;
+      const s2 = m2.indexOf(t2);
+      s2 !== -1 && m2.splice(s2, 1), m2.splice(n2, 0, t2), this.sort();
+    }
+    /**
+     * Get plugin
+     *
+     * @param {string} name of plugin
+     * @param {boolean} [ignorePaused] return null if plugin is paused
+     */
+    get(t2, e2) {
+      var n2;
+      return e2 && (n2 = this.plugins[t2]) != null && n2.paused ? null : this.plugins[t2];
+    }
+    /**
+     * Update all active plugins
+     *
+     * @internal
+     * @ignore
+     * @param {number} elapsed type in milliseconds since last update
+     */
+    update(t2) {
+      for (const e2 of this.list)
+        e2.update(t2);
+    }
+    /**
+     * Resize all active plugins
+     *
+     * @internal
+     * @ignore
+     */
+    resize() {
+      for (const t2 of this.list)
+        t2.resize();
+    }
+    /** Clamps and resets bounce and decelerate (as needed) after manually moving viewport */
+    reset() {
+      for (const t2 of this.list)
+        t2.reset();
+    }
+    /** removes all installed plugins */
+    removeAll() {
+      this.list.forEach((t2) => {
+        t2.destroy();
+      }), this.plugins = {}, this.sort();
+    }
+    /**
+     * Removes installed plugin
+     *
+     * @param {string} name of plugin (e.g., 'drag', 'pinch')
+     */
+    remove(t2) {
+      var e2;
+      this.plugins[t2] && ((e2 = this.plugins[t2]) == null || e2.destroy(), delete this.plugins[t2], this.viewport.emit("plugin-remove", t2), this.sort());
+    }
+    /**
+     * Pause plugin
+     *
+     * @param {string} name of plugin (e.g., 'drag', 'pinch')
+     */
+    pause(t2) {
+      var e2;
+      (e2 = this.plugins[t2]) == null || e2.pause();
+    }
+    /**
+     * Resume plugin
+     *
+     * @param {string} name of plugin (e.g., 'drag', 'pinch')
+     */
+    resume(t2) {
+      var e2;
+      (e2 = this.plugins[t2]) == null || e2.resume();
+    }
+    /**
+     * Sort plugins according to PLUGIN_ORDER
+     *
+     * @internal
+     * @ignore
+     */
+    sort() {
+      this.list = [];
+      for (const t2 of m2)
+        this.plugins[t2] && this.list.push(this.plugins[t2]);
+    }
+    /**
+     * Handle down for all plugins
+     *
+     * @internal
+     * @ignore
+     */
+    down(t2) {
+      let e2 = false;
+      for (const n2 of this.list)
+        n2.down(t2) && (e2 = true);
+      return e2;
+    }
+    /**
+     * Handle move for all plugins
+     *
+     * @internal
+     * @ignore
+     */
+    move(t2) {
+      let e2 = false;
+      for (const n2 of this.viewport.plugins.list)
+        n2.move(t2) && (e2 = true);
+      return e2;
+    }
+    /**
+     * Handle up for all plugins
+     *
+     * @internal
+     * @ignore
+     */
+    up(t2) {
+      let e2 = false;
+      for (const n2 of this.list)
+        n2.up(t2) && (e2 = true);
+      return e2;
+    }
+    /**
+     * Handle wheel event for all plugins
+     *
+     * @internal
+     * @ignore
+     */
+    wheel(t2) {
+      let e2 = false;
+      for (const n2 of this.list)
+        n2.wheel(t2) && (e2 = true);
+      return e2;
+    }
+  };
+  var u2 = class {
+    /** @param {Viewport} parent */
+    constructor(t2) {
+      this.parent = t2, this.paused = false;
+    }
+    /** Called when plugin is removed */
+    destroy() {
+    }
+    /** Handler for pointerdown PIXI event */
+    down(t2) {
+      return false;
+    }
+    /** Handler for pointermove PIXI event */
+    move(t2) {
+      return false;
+    }
+    /** Handler for pointerup PIXI event */
+    up(t2) {
+      return false;
+    }
+    /** Handler for wheel event on div */
+    wheel(t2) {
+      return false;
+    }
+    /**
+     * Called on each tick
+     * @param {number} elapsed time in millisecond since last update
+     */
+    update(t2) {
+    }
+    /** Called when the viewport is resized */
+    resize() {
+    }
+    /** Called when the viewport is manually moved */
+    reset() {
+    }
+    /** Pause the plugin */
+    pause() {
+      this.paused = true;
+    }
+    /** Un-pause the plugin */
+    resume() {
+      this.paused = false;
+    }
+  };
+  var I = {
+    removeOnInterrupt: false,
+    ease: "linear",
+    time: 1e3
+  };
+  var k2 = class extends u2 {
+    /**
+     * This is called by {@link Viewport.animate}.
+     *
+     * @param parent
+     * @param options
+     */
+    constructor(t2, e2 = {}) {
+      super(t2), this.startWidth = null, this.startHeight = null, this.deltaWidth = null, this.deltaHeight = null, this.width = null, this.height = null, this.time = 0, this.options = Object.assign({}, I, e2), this.options.ease = x2(this.options.ease), this.setupPosition(), this.setupZoom(), this.time = 0;
+    }
+    /**
+     * Setup `startX`, `startY`, `deltaX`, `deltaY`, `keepCenter`.
+     *
+     * This is called during construction.
+     */
+    setupPosition() {
+      typeof this.options.position < "u" ? (this.startX = this.parent.center.x, this.startY = this.parent.center.y, this.deltaX = this.options.position.x - this.parent.center.x, this.deltaY = this.options.position.y - this.parent.center.y, this.keepCenter = false) : this.keepCenter = true;
+    }
+    /**
+     * Setup `startWidth, `startHeight`, `deltaWidth, `deltaHeight, `width`, `height`.
+     *
+     * This is called during construction.
+     */
+    setupZoom() {
+      this.width = null, this.height = null, typeof this.options.scale < "u" ? this.width = this.parent.screenWidth / this.options.scale : typeof this.options.scaleX < "u" || typeof this.options.scaleY < "u" ? (typeof this.options.scaleX < "u" && (this.width = this.parent.screenWidth / this.options.scaleX), typeof this.options.scaleY < "u" && (this.height = this.parent.screenHeight / this.options.scaleY)) : (typeof this.options.width < "u" && (this.width = this.options.width), typeof this.options.height < "u" && (this.height = this.options.height)), this.width !== null && (this.startWidth = this.parent.screenWidthInWorldPixels, this.deltaWidth = this.width - this.startWidth), this.height !== null && (this.startHeight = this.parent.screenHeightInWorldPixels, this.deltaHeight = this.height - this.startHeight);
+    }
+    down() {
+      return this.options.removeOnInterrupt && this.parent.plugins.remove("animate"), false;
+    }
+    complete() {
+      this.parent.plugins.remove("animate"), this.width !== null && this.parent.fitWidth(this.width, this.keepCenter, this.height === null), this.height !== null && this.parent.fitHeight(this.height, this.keepCenter, this.width === null), !this.keepCenter && this.options.position && this.parent.moveCenter(this.options.position), this.parent.emit("animate-end", this.parent), this.options.callbackOnComplete && this.options.callbackOnComplete(this.parent);
+    }
+    update(t2) {
+      if (this.paused)
+        return;
+      this.time += t2;
+      const e2 = new Point(this.parent.scale.x, this.parent.scale.y);
+      if (this.time >= this.options.time) {
+        const n2 = this.parent.width, i2 = this.parent.height;
+        this.complete(), (n2 !== this.parent.width || i2 !== this.parent.height) && this.parent.emit("zoomed", { viewport: this.parent, original: e2, type: "animate" });
+      } else {
+        const n2 = this.options.ease(this.time, 0, 1, this.options.time);
+        if (this.width !== null) {
+          const i2 = this.startWidth, s2 = this.deltaWidth;
+          this.parent.fitWidth(
+            i2 + s2 * n2,
+            this.keepCenter,
+            this.height === null
+          );
+        }
+        if (this.height !== null) {
+          const i2 = this.startHeight, s2 = this.deltaHeight;
+          this.parent.fitHeight(
+            i2 + s2 * n2,
+            this.keepCenter,
+            this.width === null
+          );
+        }
+        if (this.width === null ? this.parent.scale.x = this.parent.scale.y : this.height === null && (this.parent.scale.y = this.parent.scale.x), !this.keepCenter) {
+          const i2 = this.startX, s2 = this.startY, h2 = this.deltaX, o2 = this.deltaY, r2 = new Point(this.parent.x, this.parent.y);
+          this.parent.moveCenter(i2 + h2 * n2, s2 + o2 * n2), this.parent.emit("moved", { viewport: this.parent, original: r2, type: "animate" });
+        }
+        (this.width || this.height) && this.parent.emit("zoomed", { viewport: this.parent, original: e2, type: "animate" });
+      }
+    }
+  };
+  var Y = {
+    sides: "all",
+    friction: 0.5,
+    time: 150,
+    ease: "easeInOutSine",
+    underflow: "center",
+    bounceBox: null
+  };
+  var X = class extends u2 {
+    /**
+     * This is called by {@link Viewport.bounce}.
+     */
+    constructor(t2, e2 = {}) {
+      super(t2), this.options = Object.assign({}, Y, e2), this.ease = x2(this.options.ease, "easeInOutSine"), this.options.sides ? this.options.sides === "all" ? this.top = this.bottom = this.left = this.right = true : this.options.sides === "horizontal" ? (this.right = this.left = true, this.top = this.bottom = false) : this.options.sides === "vertical" ? (this.left = this.right = false, this.top = this.bottom = true) : (this.top = this.options.sides.indexOf("top") !== -1, this.bottom = this.options.sides.indexOf("bottom") !== -1, this.left = this.options.sides.indexOf("left") !== -1, this.right = this.options.sides.indexOf("right") !== -1) : this.left = this.top = this.right = this.bottom = false;
+      const n2 = this.options.underflow.toLowerCase();
+      n2 === "center" ? (this.underflowX = 0, this.underflowY = 0) : (this.underflowX = n2.indexOf("left") !== -1 ? -1 : n2.indexOf("right") !== -1 ? 1 : 0, this.underflowY = n2.indexOf("top") !== -1 ? -1 : n2.indexOf("bottom") !== -1 ? 1 : 0), this.reset();
+    }
+    isActive() {
+      return this.toX !== null || this.toY !== null;
+    }
+    down() {
+      return this.toX = this.toY = null, false;
+    }
+    up() {
+      return this.bounce(), false;
+    }
+    update(t2) {
+      if (!this.paused) {
+        if (this.bounce(), this.toX) {
+          const e2 = this.toX;
+          e2.time += t2, this.parent.emit("moved", { viewport: this.parent, type: "bounce-x" }), e2.time >= this.options.time ? (this.parent.x = e2.end, this.toX = null, this.parent.emit("bounce-x-end", this.parent)) : this.parent.x = this.ease(e2.time, e2.start, e2.delta, this.options.time);
+        }
+        if (this.toY) {
+          const e2 = this.toY;
+          e2.time += t2, this.parent.emit("moved", { viewport: this.parent, type: "bounce-y" }), e2.time >= this.options.time ? (this.parent.y = e2.end, this.toY = null, this.parent.emit("bounce-y-end", this.parent)) : this.parent.y = this.ease(e2.time, e2.start, e2.delta, this.options.time);
+        }
+      }
+    }
+    /** @internal */
+    calcUnderflowX() {
+      let t2;
+      switch (this.underflowX) {
+        case -1:
+          t2 = 0;
+          break;
+        case 1:
+          t2 = this.parent.screenWidth - this.parent.screenWorldWidth;
+          break;
+        default:
+          t2 = (this.parent.screenWidth - this.parent.screenWorldWidth) / 2;
+      }
+      return t2;
+    }
+    /** @internal */
+    calcUnderflowY() {
+      let t2;
+      switch (this.underflowY) {
+        case -1:
+          t2 = 0;
+          break;
+        case 1:
+          t2 = this.parent.screenHeight - this.parent.screenWorldHeight;
+          break;
+        default:
+          t2 = (this.parent.screenHeight - this.parent.screenWorldHeight) / 2;
+      }
+      return t2;
+    }
+    oob() {
+      const t2 = this.options.bounceBox;
+      if (t2) {
+        const e2 = typeof t2.x > "u" ? 0 : t2.x, n2 = typeof t2.y > "u" ? 0 : t2.y, i2 = typeof t2.width > "u" ? this.parent.worldWidth : t2.width, s2 = typeof t2.height > "u" ? this.parent.worldHeight : t2.height;
+        return {
+          left: this.parent.left < e2,
+          right: this.parent.right > i2,
+          top: this.parent.top < n2,
+          bottom: this.parent.bottom > s2,
+          topLeft: new Point(
+            e2 * this.parent.scale.x,
+            n2 * this.parent.scale.y
+          ),
+          bottomRight: new Point(
+            i2 * this.parent.scale.x - this.parent.screenWidth,
+            s2 * this.parent.scale.y - this.parent.screenHeight
+          )
+        };
+      }
+      return {
+        left: this.parent.left < 0,
+        right: this.parent.right > this.parent.worldWidth,
+        top: this.parent.top < 0,
+        bottom: this.parent.bottom > this.parent.worldHeight,
+        topLeft: new Point(0, 0),
+        bottomRight: new Point(
+          this.parent.worldWidth * this.parent.scale.x - this.parent.screenWidth,
+          this.parent.worldHeight * this.parent.scale.y - this.parent.screenHeight
+        )
+      };
+    }
+    bounce() {
+      var s2, h2;
+      if (this.paused)
+        return;
+      let t2, e2 = this.parent.plugins.get("decelerate", true);
+      e2 && (e2.x || e2.y) && (e2.x && e2.percentChangeX === ((s2 = e2.options) == null ? void 0 : s2.friction) || e2.y && e2.percentChangeY === ((h2 = e2.options) == null ? void 0 : h2.friction)) && (t2 = this.oob(), (t2.left && this.left || t2.right && this.right) && (e2.percentChangeX = this.options.friction), (t2.top && this.top || t2.bottom && this.bottom) && (e2.percentChangeY = this.options.friction));
+      const n2 = this.parent.plugins.get("drag", true) || {}, i2 = this.parent.plugins.get("pinch", true) || {};
+      if (e2 = e2 || {}, !(n2 != null && n2.active) && !(i2 != null && i2.active) && (!this.toX || !this.toY) && (!e2.x || !e2.y)) {
+        t2 = t2 || this.oob();
+        const o2 = t2.topLeft, r2 = t2.bottomRight;
+        if (!this.toX && !e2.x) {
+          let a2 = null;
+          t2.left && this.left ? a2 = this.parent.screenWorldWidth < this.parent.screenWidth ? this.calcUnderflowX() : -o2.x : t2.right && this.right && (a2 = this.parent.screenWorldWidth < this.parent.screenWidth ? this.calcUnderflowX() : -r2.x), a2 !== null && this.parent.x !== a2 && (this.toX = { time: 0, start: this.parent.x, delta: a2 - this.parent.x, end: a2 }, this.parent.emit("bounce-x-start", this.parent));
+        }
+        if (!this.toY && !e2.y) {
+          let a2 = null;
+          t2.top && this.top ? a2 = this.parent.screenWorldHeight < this.parent.screenHeight ? this.calcUnderflowY() : -o2.y : t2.bottom && this.bottom && (a2 = this.parent.screenWorldHeight < this.parent.screenHeight ? this.calcUnderflowY() : -r2.y), a2 !== null && this.parent.y !== a2 && (this.toY = { time: 0, start: this.parent.y, delta: a2 - this.parent.y, end: a2 }, this.parent.emit("bounce-y-start", this.parent));
+        }
+      }
+    }
+    reset() {
+      this.toX = this.toY = null, this.bounce();
+    }
+  };
+  var z = {
+    left: false,
+    right: false,
+    top: false,
+    bottom: false,
+    direction: null,
+    underflow: "center"
+  };
+  var A = class extends u2 {
+    /**
+    * This is called by {@link Viewport.clamp}.
+    */
+    constructor(t2, e2 = {}) {
+      super(t2), this.options = Object.assign({}, z, e2), this.options.direction && (this.options.left = this.options.direction === "x" || this.options.direction === "all" ? true : null, this.options.right = this.options.direction === "x" || this.options.direction === "all" ? true : null, this.options.top = this.options.direction === "y" || this.options.direction === "all" ? true : null, this.options.bottom = this.options.direction === "y" || this.options.direction === "all" ? true : null), this.parseUnderflow(), this.last = { x: null, y: null, scaleX: null, scaleY: null }, this.update();
+    }
+    parseUnderflow() {
+      const t2 = this.options.underflow.toLowerCase();
+      t2 === "none" ? this.noUnderflow = true : t2 === "center" ? (this.underflowX = this.underflowY = 0, this.noUnderflow = false) : (this.underflowX = t2.indexOf("left") !== -1 ? -1 : t2.indexOf("right") !== -1 ? 1 : 0, this.underflowY = t2.indexOf("top") !== -1 ? -1 : t2.indexOf("bottom") !== -1 ? 1 : 0, this.noUnderflow = false);
+    }
+    move() {
+      return this.update(), false;
+    }
+    update() {
+      if (this.paused || this.parent.x === this.last.x && this.parent.y === this.last.y && this.parent.scale.x === this.last.scaleX && this.parent.scale.y === this.last.scaleY)
+        return;
+      const t2 = new Point(this.parent.x, this.parent.y), e2 = this.parent.plugins.decelerate || {};
+      if (this.options.left !== null || this.options.right !== null) {
+        let n2 = false;
+        if (!this.noUnderflow && this.parent.screenWorldWidth < this.parent.screenWidth)
+          switch (this.underflowX) {
+            case -1:
+              this.parent.x !== 0 && (this.parent.x = 0, n2 = true);
+              break;
+            case 1:
+              this.parent.x !== this.parent.screenWidth - this.parent.screenWorldWidth && (this.parent.x = this.parent.screenWidth - this.parent.screenWorldWidth, n2 = true);
+              break;
+            default:
+              this.parent.x !== (this.parent.screenWidth - this.parent.screenWorldWidth) / 2 && (this.parent.x = (this.parent.screenWidth - this.parent.screenWorldWidth) / 2, n2 = true);
+          }
+        else
+          this.options.left !== null && this.parent.left < (this.options.left === true ? 0 : this.options.left) && (this.parent.x = -(this.options.left === true ? 0 : this.options.left) * this.parent.scale.x, e2.x = 0, n2 = true), this.options.right !== null && this.parent.right > (this.options.right === true ? this.parent.worldWidth : this.options.right) && (this.parent.x = -(this.options.right === true ? this.parent.worldWidth : this.options.right) * this.parent.scale.x + this.parent.screenWidth, e2.x = 0, n2 = true);
+        n2 && this.parent.emit("moved", {
+          viewport: this.parent,
+          original: t2,
+          type: "clamp-x"
+        });
+      }
+      if (this.options.top !== null || this.options.bottom !== null) {
+        let n2 = false;
+        if (!this.noUnderflow && this.parent.screenWorldHeight < this.parent.screenHeight)
+          switch (this.underflowY) {
+            case -1:
+              this.parent.y !== 0 && (this.parent.y = 0, n2 = true);
+              break;
+            case 1:
+              this.parent.y !== this.parent.screenHeight - this.parent.screenWorldHeight && (this.parent.y = this.parent.screenHeight - this.parent.screenWorldHeight, n2 = true);
+              break;
+            default:
+              this.parent.y !== (this.parent.screenHeight - this.parent.screenWorldHeight) / 2 && (this.parent.y = (this.parent.screenHeight - this.parent.screenWorldHeight) / 2, n2 = true);
+          }
+        else
+          this.options.top !== null && this.parent.top < (this.options.top === true ? 0 : this.options.top) && (this.parent.y = -(this.options.top === true ? 0 : this.options.top) * this.parent.scale.y, e2.y = 0, n2 = true), this.options.bottom !== null && this.parent.bottom > (this.options.bottom === true ? this.parent.worldHeight : this.options.bottom) && (this.parent.y = -(this.options.bottom === true ? this.parent.worldHeight : this.options.bottom) * this.parent.scale.y + this.parent.screenHeight, e2.y = 0, n2 = true);
+        n2 && this.parent.emit("moved", {
+          viewport: this.parent,
+          original: t2,
+          type: "clamp-y"
+        });
+      }
+      this.last.x = this.parent.x, this.last.y = this.parent.y, this.last.scaleX = this.parent.scale.x, this.last.scaleY = this.parent.scale.y;
+    }
+    reset() {
+      this.update();
+    }
+  };
+  var T = {
+    minWidth: null,
+    minHeight: null,
+    maxWidth: null,
+    maxHeight: null,
+    minScale: null,
+    maxScale: null
+  };
+  var _ = class extends u2 {
+    /**
+     * This is called by {@link Viewport.clampZoom}.
+     */
+    constructor(t2, e2 = {}) {
+      super(t2), this.options = Object.assign({}, T, e2), this.clamp();
+    }
+    resize() {
+      this.clamp();
+    }
+    /** Clamp the viewport scale zoom) */
+    clamp() {
+      if (!this.paused) {
+        if (this.options.minWidth || this.options.minHeight || this.options.maxWidth || this.options.maxHeight) {
+          let t2 = this.parent.worldScreenWidth, e2 = this.parent.worldScreenHeight;
+          if (this.options.minWidth !== null && t2 < this.options.minWidth) {
+            const n2 = this.parent.scale.x;
+            this.parent.fitWidth(this.options.minWidth, false, false, true), this.parent.scale.y *= this.parent.scale.x / n2, t2 = this.parent.worldScreenWidth, e2 = this.parent.worldScreenHeight, this.parent.emit("zoomed", { viewport: this.parent, type: "clamp-zoom" });
+          }
+          if (this.options.maxWidth !== null && t2 > this.options.maxWidth) {
+            const n2 = this.parent.scale.x;
+            this.parent.fitWidth(this.options.maxWidth, false, false, true), this.parent.scale.y *= this.parent.scale.x / n2, t2 = this.parent.worldScreenWidth, e2 = this.parent.worldScreenHeight, this.parent.emit("zoomed", { viewport: this.parent, type: "clamp-zoom" });
+          }
+          if (this.options.minHeight !== null && e2 < this.options.minHeight) {
+            const n2 = this.parent.scale.y;
+            this.parent.fitHeight(this.options.minHeight, false, false, true), this.parent.scale.x *= this.parent.scale.y / n2, t2 = this.parent.worldScreenWidth, e2 = this.parent.worldScreenHeight, this.parent.emit("zoomed", { viewport: this.parent, type: "clamp-zoom" });
+          }
+          if (this.options.maxHeight !== null && e2 > this.options.maxHeight) {
+            const n2 = this.parent.scale.y;
+            this.parent.fitHeight(this.options.maxHeight, false, false, true), this.parent.scale.x *= this.parent.scale.y / n2, this.parent.emit("zoomed", { viewport: this.parent, type: "clamp-zoom" });
+          }
+        } else if (this.options.minScale || this.options.maxScale) {
+          const t2 = { x: null, y: null }, e2 = { x: null, y: null };
+          if (typeof this.options.minScale == "number")
+            t2.x = this.options.minScale, t2.y = this.options.minScale;
+          else if (this.options.minScale !== null) {
+            const s2 = this.options.minScale;
+            t2.x = typeof s2.x > "u" ? null : s2.x, t2.y = typeof s2.y > "u" ? null : s2.y;
+          }
+          if (typeof this.options.maxScale == "number")
+            e2.x = this.options.maxScale, e2.y = this.options.maxScale;
+          else if (this.options.maxScale !== null) {
+            const s2 = this.options.maxScale;
+            e2.x = typeof s2.x > "u" ? null : s2.x, e2.y = typeof s2.y > "u" ? null : s2.y;
+          }
+          let n2 = this.parent.scale.x, i2 = this.parent.scale.y;
+          t2.x !== null && n2 < t2.x && (n2 = t2.x), e2.x !== null && n2 > e2.x && (n2 = e2.x), t2.y !== null && i2 < t2.y && (i2 = t2.y), e2.y !== null && i2 > e2.y && (i2 = e2.y), (n2 !== this.parent.scale.x || i2 !== this.parent.scale.y) && (this.parent.scale.set(n2, i2), this.parent.emit("zoomed", { viewport: this.parent, type: "clamp-zoom" }));
+        }
+      }
+    }
+    reset() {
+      this.clamp();
+    }
+  };
+  var L = {
+    friction: 0.98,
+    bounce: 0.8,
+    minSpeed: 0.01
+  };
+  var d2 = 16;
+  var E = class extends u2 {
+    /**
+     * This is called by {@link Viewport.decelerate}.
+     */
+    constructor(t2, e2 = {}) {
+      super(t2), this.options = Object.assign({}, L, e2), this.saved = [], this.timeSinceRelease = 0, this.reset(), this.parent.on("moved", (n2) => this.handleMoved(n2));
+    }
+    down() {
+      return this.saved = [], this.x = this.y = null, false;
+    }
+    isActive() {
+      return !!(this.x || this.y);
+    }
+    move() {
+      if (this.paused)
+        return false;
+      const t2 = this.parent.input.count();
+      return (t2 === 1 || t2 > 1 && !this.parent.plugins.get("pinch", true)) && (this.saved.push({ x: this.parent.x, y: this.parent.y, time: performance.now() }), this.saved.length > 60 && this.saved.splice(0, 30)), false;
+    }
+    /** Listener to viewport's "moved" event. */
+    handleMoved(t2) {
+      if (this.saved.length) {
+        const e2 = this.saved[this.saved.length - 1];
+        t2.type === "clamp-x" && t2.original ? e2.x === t2.original.x && (e2.x = this.parent.x) : t2.type === "clamp-y" && t2.original && e2.y === t2.original.y && (e2.y = this.parent.y);
+      }
+    }
+    up() {
+      if (this.parent.input.count() === 0 && this.saved.length) {
+        const t2 = performance.now();
+        for (const e2 of this.saved)
+          if (e2.time >= t2 - 100) {
+            const n2 = t2 - e2.time;
+            this.x = (this.parent.x - e2.x) / n2, this.y = (this.parent.y - e2.y) / n2, this.percentChangeX = this.percentChangeY = this.options.friction, this.timeSinceRelease = 0;
+            break;
+          }
+      }
+      return false;
+    }
+    /**
+     * Manually activate deceleration, starting from the (x, y) velocity components passed in the options.
+     *
+     * @param {object} options
+     * @param {number} [options.x] - Specify x-component of initial velocity.
+     * @param {number} [options.y] - Specify y-component of initial velocity.
+     */
+    activate(t2) {
+      t2 = t2 || {}, typeof t2.x < "u" && (this.x = t2.x, this.percentChangeX = this.options.friction), typeof t2.y < "u" && (this.y = t2.y, this.percentChangeY = this.options.friction);
+    }
+    update(t2) {
+      if (this.paused)
+        return;
+      const e2 = this.x || this.y, n2 = this.timeSinceRelease, i2 = this.timeSinceRelease + t2;
+      if (this.x) {
+        const s2 = this.percentChangeX, h2 = Math.log(s2);
+        this.parent.x += this.x * d2 / h2 * (Math.pow(s2, i2 / d2) - Math.pow(s2, n2 / d2)), this.x *= Math.pow(this.percentChangeX, t2 / d2);
+      }
+      if (this.y) {
+        const s2 = this.percentChangeY, h2 = Math.log(s2);
+        this.parent.y += this.y * d2 / h2 * (Math.pow(s2, i2 / d2) - Math.pow(s2, n2 / d2)), this.y *= Math.pow(this.percentChangeY, t2 / d2);
+      }
+      this.timeSinceRelease += t2, this.x && this.y ? Math.abs(this.x) < this.options.minSpeed && Math.abs(this.y) < this.options.minSpeed && (this.x = 0, this.y = 0) : (Math.abs(this.x || 0) < this.options.minSpeed && (this.x = 0), Math.abs(this.y || 0) < this.options.minSpeed && (this.y = 0)), e2 && this.parent.emit("moved", { viewport: this.parent, type: "decelerate" });
+    }
+    reset() {
+      this.x = this.y = null;
+    }
+  };
+  var D = {
+    direction: "all",
+    pressDrag: true,
+    wheel: true,
+    wheelScroll: 1,
+    reverse: false,
+    clampWheel: false,
+    underflow: "center",
+    factor: 1,
+    mouseButtons: "all",
+    keyToPress: null,
+    ignoreKeyToPressOnTouch: false,
+    lineHeight: 20,
+    wheelSwapAxes: false
+  };
+  var U = class extends u2 {
+    /**
+    * This is called by {@link Viewport.drag}.
+    */
+    constructor(t2, e2 = {}) {
+      super(t2), this.windowEventHandlers = [], this.options = Object.assign({}, D, e2), this.moved = false, this.reverse = this.options.reverse ? 1 : -1, this.xDirection = !this.options.direction || this.options.direction === "all" || this.options.direction === "x", this.yDirection = !this.options.direction || this.options.direction === "all" || this.options.direction === "y", this.keyIsPressed = false, this.parseUnderflow(), this.mouseButtons(this.options.mouseButtons), this.options.keyToPress && this.handleKeyPresses(this.options.keyToPress);
+    }
+    /**
+    * Handles keypress events and set the keyIsPressed boolean accordingly
+    *
+    * @param {array} codes - key codes that can be used to trigger drag event
+    */
+    handleKeyPresses(t2) {
+      const e2 = (i2) => {
+        t2.includes(i2.code) && (this.keyIsPressed = true);
+      }, n2 = (i2) => {
+        t2.includes(i2.code) && (this.keyIsPressed = false);
+      };
+      this.addWindowEventHandler("keyup", n2), this.addWindowEventHandler("keydown", e2);
+    }
+    addWindowEventHandler(t2, e2) {
+      typeof window > "u" || (window.addEventListener(t2, e2), this.windowEventHandlers.push({ event: t2, handler: e2 }));
+    }
+    destroy() {
+      typeof window > "u" || this.windowEventHandlers.forEach(({ event: t2, handler: e2 }) => {
+        window.removeEventListener(t2, e2);
+      });
+    }
+    /**
+    * initialize mousebuttons array
+    * @param {string} buttons
+    */
+    mouseButtons(t2) {
+      !t2 || t2 === "all" ? this.mouse = [true, true, true] : this.mouse = [
+        t2.indexOf("left") !== -1,
+        t2.indexOf("middle") !== -1,
+        t2.indexOf("right") !== -1
+      ];
+    }
+    parseUnderflow() {
+      const t2 = this.options.underflow.toLowerCase();
+      t2 === "center" ? (this.underflowX = 0, this.underflowY = 0) : (t2.includes("left") ? this.underflowX = -1 : t2.includes("right") ? this.underflowX = 1 : this.underflowX = 0, t2.includes("top") ? this.underflowY = -1 : t2.includes("bottom") ? this.underflowY = 1 : this.underflowY = 0);
+    }
+    /**
+    * @param {PIXI.FederatedPointerEvent} event
+    * @returns {boolean}
+    */
+    checkButtons(t2) {
+      const e2 = t2.pointerType === "mouse", n2 = this.parent.input.count();
+      return !!((n2 === 1 || n2 > 1 && !this.parent.plugins.get("pinch", true)) && (!e2 || this.mouse[t2.button]));
+    }
+    /**
+    * @param {PIXI.FederatedPointerEvent} event
+    * @returns {boolean}
+    */
+    checkKeyPress(t2) {
+      return !this.options.keyToPress || this.keyIsPressed || this.options.ignoreKeyToPressOnTouch && t2.data.pointerType === "touch";
+    }
+    down(t2) {
+      return this.paused || !this.options.pressDrag ? false : this.checkButtons(t2) && this.checkKeyPress(t2) ? (this.last = { x: t2.global.x, y: t2.global.y }, (this.parent.parent || this.parent).toLocal(
+        this.last,
+        void 0,
+        this.last
+      ), this.current = t2.pointerId, true) : (this.last = null, false);
+    }
+    get active() {
+      return this.moved;
+    }
+    move(t2) {
+      if (this.paused || !this.options.pressDrag)
+        return false;
+      if (this.last && this.current === t2.data.pointerId) {
+        const e2 = t2.global.x, n2 = t2.global.y, i2 = this.parent.input.count();
+        if (i2 === 1 || i2 > 1 && !this.parent.plugins.get("pinch", true)) {
+          const s2 = { x: e2, y: n2 };
+          (this.parent.parent || this.parent).toLocal(
+            s2,
+            void 0,
+            s2
+          );
+          const h2 = s2.x - this.last.x, o2 = s2.y - this.last.y;
+          if (this.moved || this.xDirection && this.parent.input.checkThreshold(h2) || this.yDirection && this.parent.input.checkThreshold(o2))
+            return this.xDirection && (this.parent.x += (s2.x - this.last.x) * this.options.factor), this.yDirection && (this.parent.y += (s2.y - this.last.y) * this.options.factor), this.last = s2, this.moved || this.parent.emit("drag-start", {
+              event: t2,
+              screen: new Point(this.last.x, this.last.y),
+              world: this.parent.toWorld(new Point(this.last.x, this.last.y)),
+              viewport: this.parent
+            }), this.moved = true, this.parent.emit("moved", { viewport: this.parent, type: "drag" }), true;
+        } else
+          this.moved = false;
+      }
+      return false;
+    }
+    up(t2) {
+      if (this.paused)
+        return false;
+      const e2 = this.parent.input.touches;
+      if (e2.length === 1) {
+        const n2 = e2[0];
+        return n2.last && (this.last = { x: n2.last.x, y: n2.last.y }, this.current = n2.id), this.moved = false, true;
+      } else if (this.last && this.moved) {
+        const n2 = new Point(this.last.x, this.last.y);
+        return (this.parent.parent || this.parent).toGlobal(n2, n2, true), this.parent.emit("drag-end", {
+          event: t2,
+          screen: n2,
+          world: this.parent.toWorld(n2),
+          viewport: this.parent
+        }), this.last = null, this.moved = false, true;
+      }
+      return false;
+    }
+    wheel(t2) {
+      if (this.paused)
+        return false;
+      if (this.options.wheel) {
+        const e2 = this.parent.plugins.get("wheel", true);
+        if (!e2 || !e2.options.wheelZoom && !t2.ctrlKey) {
+          const n2 = t2.deltaMode ? this.options.lineHeight : 1, i2 = [t2.deltaX, t2.deltaY], [s2, h2] = this.options.wheelSwapAxes ? i2.reverse() : i2;
+          return this.xDirection && (this.parent.x += s2 * n2 * this.options.wheelScroll * this.reverse), this.yDirection && (this.parent.y += h2 * n2 * this.options.wheelScroll * this.reverse), this.options.clampWheel && this.clamp(), this.parent.emit("wheel-scroll", this.parent), this.parent.emit("moved", { viewport: this.parent, type: "wheel" }), this.parent.options.passiveWheel || t2.preventDefault(), this.parent.options.stopPropagation && t2.stopPropagation(), true;
+        }
+      }
+      return false;
+    }
+    resume() {
+      this.last = null, this.paused = false;
+    }
+    clamp() {
+      const t2 = this.parent.plugins.get("decelerate", true) || {};
+      if (this.options.clampWheel !== "y")
+        if (this.parent.screenWorldWidth < this.parent.screenWidth)
+          switch (this.underflowX) {
+            case -1:
+              this.parent.x = 0;
+              break;
+            case 1:
+              this.parent.x = this.parent.screenWidth - this.parent.screenWorldWidth;
+              break;
+            default:
+              this.parent.x = (this.parent.screenWidth - this.parent.screenWorldWidth) / 2;
+          }
+        else
+          this.parent.left < 0 ? (this.parent.x = 0, t2.x = 0) : this.parent.right > this.parent.worldWidth && (this.parent.x = -this.parent.worldWidth * this.parent.scale.x + this.parent.screenWidth, t2.x = 0);
+      if (this.options.clampWheel !== "x")
+        if (this.parent.screenWorldHeight < this.parent.screenHeight)
+          switch (this.underflowY) {
+            case -1:
+              this.parent.y = 0;
+              break;
+            case 1:
+              this.parent.y = this.parent.screenHeight - this.parent.screenWorldHeight;
+              break;
+            default:
+              this.parent.y = (this.parent.screenHeight - this.parent.screenWorldHeight) / 2;
+          }
+        else
+          this.parent.top < 0 && (this.parent.y = 0, t2.y = 0), this.parent.bottom > this.parent.worldHeight && (this.parent.y = -this.parent.worldHeight * this.parent.scale.y + this.parent.screenHeight, t2.y = 0);
+    }
+  };
+  var F = {
+    speed: 0,
+    acceleration: null,
+    radius: null
+  };
+  var B = class extends u2 {
+    /**
+     * This is called by {@link Viewport.follow}.
+     *
+     * @param parent
+     * @param target - target to follow
+     * @param options
+     */
+    constructor(t2, e2, n2 = {}) {
+      super(t2), this.target = e2, this.options = Object.assign({}, F, n2), this.velocity = { x: 0, y: 0 };
+    }
+    update(t2) {
+      if (this.paused)
+        return;
+      const e2 = this.parent.center;
+      let n2 = this.target.x, i2 = this.target.y;
+      if (this.options.radius)
+        if (Math.sqrt(Math.pow(this.target.y - e2.y, 2) + Math.pow(this.target.x - e2.x, 2)) > this.options.radius) {
+          const r2 = Math.atan2(this.target.y - e2.y, this.target.x - e2.x);
+          n2 = this.target.x - Math.cos(r2) * this.options.radius, i2 = this.target.y - Math.sin(r2) * this.options.radius;
+        } else
+          return;
+      const s2 = n2 - e2.x, h2 = i2 - e2.y;
+      if (s2 || h2)
+        if (this.options.speed)
+          if (this.options.acceleration) {
+            const o2 = Math.atan2(i2 - e2.y, n2 - e2.x), r2 = Math.sqrt(Math.pow(s2, 2) + Math.pow(h2, 2));
+            if (r2) {
+              const a2 = (Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2)) / (2 * this.options.acceleration);
+              r2 > a2 ? this.velocity = {
+                x: Math.min(this.velocity.x + (this.options.acceleration * t2, this.options.speed)),
+                y: Math.min(this.velocity.y + (this.options.acceleration * t2, this.options.speed))
+              } : this.velocity = {
+                x: Math.max(this.velocity.x - this.options.acceleration * this.options.speed, 0),
+                y: Math.max(this.velocity.y - this.options.acceleration * this.options.speed, 0)
+              };
+              const p2 = Math.cos(o2) * this.velocity.x, f2 = Math.sin(o2) * this.velocity.y, g2 = Math.abs(p2) > Math.abs(s2) ? n2 : e2.x + p2, w2 = Math.abs(f2) > Math.abs(h2) ? i2 : e2.y + f2;
+              this.parent.moveCenter(g2, w2), this.parent.emit("moved", { viewport: this.parent, type: "follow" });
+            }
+          } else {
+            const o2 = Math.atan2(i2 - e2.y, n2 - e2.x), r2 = Math.cos(o2) * this.options.speed, a2 = Math.sin(o2) * this.options.speed, p2 = Math.abs(r2) > Math.abs(s2) ? n2 : e2.x + r2, f2 = Math.abs(a2) > Math.abs(h2) ? i2 : e2.y + a2;
+            this.parent.moveCenter(p2, f2), this.parent.emit("moved", { viewport: this.parent, type: "follow" });
+          }
+        else
+          this.parent.moveCenter(n2, i2), this.parent.emit("moved", { viewport: this.parent, type: "follow" });
+    }
+  };
+  var N2 = {
+    radius: null,
+    distance: null,
+    top: null,
+    bottom: null,
+    left: null,
+    right: null,
+    speed: 8,
+    reverse: false,
+    noDecelerate: false,
+    linear: false,
+    allowButtons: false
+  };
+  var V = class extends u2 {
+    /**
+     * This is called by {@link Viewport.mouseEdges}.
+     */
+    constructor(t2, e2 = {}) {
+      super(t2), this.options = Object.assign({}, N2, e2), this.reverse = this.options.reverse ? 1 : -1, this.radiusSquared = typeof this.options.radius == "number" ? Math.pow(this.options.radius, 2) : null, this.resize();
+    }
+    resize() {
+      const t2 = this.options.distance;
+      t2 !== null ? (this.left = t2, this.top = t2, this.right = this.parent.screenWidth - t2, this.bottom = this.parent.screenHeight - t2) : this.options.radius || (this.left = this.options.left, this.top = this.options.top, this.right = this.options.right === null ? null : this.parent.screenWidth - this.options.right, this.bottom = this.options.bottom === null ? null : this.parent.screenHeight - this.options.bottom);
+    }
+    down() {
+      return this.paused || this.options.allowButtons || (this.horizontal = this.vertical = null), false;
+    }
+    move(t2) {
+      if (this.paused || t2.pointerType !== "mouse" && t2.pointerId !== 1 || !this.options.allowButtons && t2.buttons !== 0)
+        return false;
+      const e2 = t2.global.x, n2 = t2.global.y;
+      if (this.radiusSquared) {
+        const i2 = this.parent.toScreen(this.parent.center);
+        if (Math.pow(i2.x - e2, 2) + Math.pow(i2.y - n2, 2) >= this.radiusSquared) {
+          const h2 = Math.atan2(i2.y - n2, i2.x - e2);
+          this.options.linear ? (this.horizontal = Math.round(Math.cos(h2)) * this.options.speed * this.reverse * (60 / 1e3), this.vertical = Math.round(Math.sin(h2)) * this.options.speed * this.reverse * (60 / 1e3)) : (this.horizontal = Math.cos(h2) * this.options.speed * this.reverse * (60 / 1e3), this.vertical = Math.sin(h2) * this.options.speed * this.reverse * (60 / 1e3));
+        } else
+          this.horizontal && this.decelerateHorizontal(), this.vertical && this.decelerateVertical(), this.horizontal = this.vertical = 0;
+      } else
+        this.left !== null && e2 < this.left ? this.horizontal = Number(this.reverse) * this.options.speed * (60 / 1e3) : this.right !== null && e2 > this.right ? this.horizontal = -1 * this.reverse * this.options.speed * (60 / 1e3) : (this.decelerateHorizontal(), this.horizontal = 0), this.top !== null && n2 < this.top ? this.vertical = Number(this.reverse) * this.options.speed * (60 / 1e3) : this.bottom !== null && n2 > this.bottom ? this.vertical = -1 * this.reverse * this.options.speed * (60 / 1e3) : (this.decelerateVertical(), this.vertical = 0);
+      return false;
+    }
+    decelerateHorizontal() {
+      const t2 = this.parent.plugins.get("decelerate", true);
+      this.horizontal && t2 && !this.options.noDecelerate && t2.activate({ x: this.horizontal * this.options.speed * this.reverse / (1e3 / 60) });
+    }
+    decelerateVertical() {
+      const t2 = this.parent.plugins.get("decelerate", true);
+      this.vertical && t2 && !this.options.noDecelerate && t2.activate({ y: this.vertical * this.options.speed * this.reverse / (1e3 / 60) });
+    }
+    up() {
+      return this.paused || (this.horizontal && this.decelerateHorizontal(), this.vertical && this.decelerateVertical(), this.horizontal = this.vertical = null), false;
+    }
+    update() {
+      if (!this.paused && (this.horizontal || this.vertical)) {
+        const t2 = this.parent.center;
+        this.horizontal && (t2.x += this.horizontal * this.options.speed), this.vertical && (t2.y += this.vertical * this.options.speed), this.parent.moveCenter(t2), this.parent.emit("moved", { viewport: this.parent, type: "mouse-edges" });
+      }
+    }
+  };
+  var Z = {
+    noDrag: false,
+    percent: 1,
+    center: null,
+    factor: 1,
+    axis: "all"
+  };
+  var R = new Point();
+  var j2 = class extends u2 {
+    /**
+    * This is called by {@link Viewport.pinch}.
+    */
+    constructor(t2, e2 = {}) {
+      super(t2), this.active = false, this.pinching = false, this.moved = false, this.options = Object.assign({}, Z, e2);
+    }
+    down() {
+      return this.parent.input.count() >= 2 ? (this.active = true, true) : false;
+    }
+    isAxisX() {
+      return ["all", "x"].includes(this.options.axis);
+    }
+    isAxisY() {
+      return ["all", "y"].includes(this.options.axis);
+    }
+    move(t2) {
+      if (this.paused || !this.active)
+        return false;
+      const { x: e2, y: n2 } = (this.parent.parent || this.parent).toLocal(
+        t2.global,
+        void 0,
+        R
+      ), i2 = this.parent.input.touches;
+      if (i2.length >= 2) {
+        const s2 = i2[0], h2 = i2[1], o2 = s2.last && h2.last ? Math.sqrt(
+          Math.pow(h2.last.x - s2.last.x, 2) + Math.pow(h2.last.y - s2.last.y, 2)
+        ) : null;
+        if (s2.id === t2.pointerId ? s2.last = { x: e2, y: n2, data: t2 } : h2.id === t2.pointerId && (h2.last = { x: e2, y: n2, data: t2 }), o2) {
+          let r2;
+          const a2 = new Point(
+            s2.last.x + (h2.last.x - s2.last.x) / 2,
+            s2.last.y + (h2.last.y - s2.last.y) / 2
+          );
+          this.options.center || (r2 = this.parent.toLocal(
+            a2,
+            this.parent.parent || this.parent
+          ));
+          let p2 = Math.sqrt(
+            Math.pow(
+              h2.last.x - s2.last.x,
+              2
+            ) + Math.pow(
+              h2.last.y - s2.last.y,
+              2
+            )
+          );
+          p2 = p2 === 0 ? p2 = 1e-10 : p2;
+          const f2 = (1 - o2 / p2) * this.options.percent * (this.isAxisX() ? this.parent.scale.x : this.parent.scale.y);
+          this.isAxisX() && (this.parent.scale.x += f2), this.isAxisY() && (this.parent.scale.y += f2), this.parent.emit("zoomed", {
+            viewport: this.parent,
+            type: "pinch",
+            center: a2
+          });
+          const g2 = this.parent.plugins.get("clamp-zoom", true);
+          if (g2 && g2.clamp(), this.options.center)
+            this.parent.moveCenter(this.options.center);
+          else {
+            const w2 = (this.parent.parent || this.parent).toLocal(
+              r2,
+              this.parent
+            );
+            this.parent.x += (a2.x - w2.x) * this.options.factor, this.parent.y += (a2.y - w2.y) * this.options.factor, this.parent.emit("moved", { viewport: this.parent, type: "pinch" });
+          }
+          !this.options.noDrag && this.lastCenter && (this.parent.x += (a2.x - this.lastCenter.x) * this.options.factor, this.parent.y += (a2.y - this.lastCenter.y) * this.options.factor, this.parent.emit("moved", { viewport: this.parent, type: "pinch" })), this.lastCenter = a2, this.moved = true;
+        } else
+          this.pinching || (this.parent.emit("pinch-start", this.parent), this.pinching = true);
+        return true;
+      }
+      return false;
+    }
+    up() {
+      return this.pinching && this.parent.input.touches.length <= 1 ? (this.active = false, this.lastCenter = null, this.pinching = false, this.moved = false, this.parent.emit("pinch-end", this.parent), true) : false;
+    }
+  };
+  var K = {
+    topLeft: false,
+    friction: 0.8,
+    time: 1e3,
+    ease: "easeInOutSine",
+    interrupt: true,
+    removeOnComplete: false,
+    removeOnInterrupt: false,
+    forceStart: false
+  };
+  var q = class extends u2 {
+    /**
+     * This is called by {@link Viewport.snap}.
+     */
+    constructor(t2, e2, n2, i2 = {}) {
+      super(t2), this.options = Object.assign({}, K, i2), this.ease = x2(i2.ease, "easeInOutSine"), this.x = e2, this.y = n2, this.options.forceStart && this.snapStart();
+    }
+    snapStart() {
+      this.percent = 0, this.snapping = { time: 0 };
+      const t2 = this.options.topLeft ? this.parent.corner : this.parent.center;
+      this.deltaX = this.x - t2.x, this.deltaY = this.y - t2.y, this.startX = t2.x, this.startY = t2.y, this.parent.emit("snap-start", this.parent);
+    }
+    wheel() {
+      return this.options.removeOnInterrupt && this.parent.plugins.remove("snap"), false;
+    }
+    down() {
+      return this.options.removeOnInterrupt ? this.parent.plugins.remove("snap") : this.options.interrupt && (this.snapping = null), false;
+    }
+    up() {
+      if (this.parent.input.count() === 0) {
+        const t2 = this.parent.plugins.get("decelerate", true);
+        t2 && (t2.x || t2.y) && (t2.percentChangeX = t2.percentChangeY = this.options.friction);
+      }
+      return false;
+    }
+    update(t2) {
+      if (!this.paused && !(this.options.interrupt && this.parent.input.count() !== 0))
+        if (this.snapping) {
+          const e2 = this.snapping;
+          e2.time += t2;
+          let n2, i2, s2;
+          const h2 = this.startX, o2 = this.startY, r2 = this.deltaX, a2 = this.deltaY;
+          if (e2.time > this.options.time)
+            n2 = true, i2 = h2 + r2, s2 = o2 + a2;
+          else {
+            const p2 = this.ease(e2.time, 0, 1, this.options.time);
+            i2 = h2 + r2 * p2, s2 = o2 + a2 * p2;
+          }
+          this.options.topLeft ? this.parent.moveCorner(i2, s2) : this.parent.moveCenter(i2, s2), this.parent.emit("moved", { viewport: this.parent, type: "snap" }), n2 && (this.options.removeOnComplete && this.parent.plugins.remove("snap"), this.parent.emit("snap-end", this.parent), this.snapping = null);
+        } else {
+          const e2 = this.options.topLeft ? this.parent.corner : this.parent.center;
+          (e2.x !== this.x || e2.y !== this.y) && this.snapStart();
+        }
+    }
+  };
+  var Q = {
+    width: 0,
+    height: 0,
+    time: 1e3,
+    ease: "easeInOutSine",
+    center: null,
+    interrupt: true,
+    removeOnComplete: false,
+    removeOnInterrupt: false,
+    forceStart: false,
+    noMove: false
+  };
+  var G = class extends u2 {
+    /**
+     * This is called by {@link Viewport.snapZoom}.
+     */
+    constructor(t2, e2 = {}) {
+      super(t2), this.options = Object.assign({}, Q, e2), this.ease = x2(this.options.ease), this.xIndependent = false, this.yIndependent = false, this.xScale = 0, this.yScale = 0, this.options.width > 0 && (this.xScale = t2.screenWidth / this.options.width, this.xIndependent = true), this.options.height > 0 && (this.yScale = t2.screenHeight / this.options.height, this.yIndependent = true), this.xScale = this.xIndependent ? this.xScale : this.yScale, this.yScale = this.yIndependent ? this.yScale : this.xScale, this.options.time === 0 ? (t2.container.scale.x = this.xScale, t2.container.scale.y = this.yScale, this.options.removeOnComplete && this.parent.plugins.remove("snap-zoom")) : e2.forceStart && this.createSnapping();
+    }
+    createSnapping() {
+      const t2 = this.parent.worldScreenWidth, e2 = this.parent.worldScreenHeight, n2 = this.parent.screenWidth / this.xScale, i2 = this.parent.screenHeight / this.yScale;
+      this.snapping = {
+        time: 0,
+        startX: t2,
+        startY: e2,
+        deltaX: n2 - t2,
+        deltaY: i2 - e2
+      }, this.parent.emit("snap-zoom-start", this.parent);
+    }
+    resize() {
+      this.snapping = null, this.options.width > 0 && (this.xScale = this.parent.screenWidth / this.options.width), this.options.height > 0 && (this.yScale = this.parent.screenHeight / this.options.height), this.xScale = this.xIndependent ? this.xScale : this.yScale, this.yScale = this.yIndependent ? this.yScale : this.xScale;
+    }
+    wheel() {
+      return this.options.removeOnInterrupt && this.parent.plugins.remove("snap-zoom"), false;
+    }
+    down() {
+      return this.options.removeOnInterrupt ? this.parent.plugins.remove("snap-zoom") : this.options.interrupt && (this.snapping = null), false;
+    }
+    update(t2) {
+      if (this.paused || this.options.interrupt && this.parent.input.count() !== 0)
+        return;
+      let e2;
+      if (!this.options.center && !this.options.noMove && (e2 = this.parent.center), !this.snapping)
+        (this.parent.scale.x !== this.xScale || this.parent.scale.y !== this.yScale) && this.createSnapping();
+      else if (this.snapping) {
+        const n2 = this.snapping;
+        if (n2.time += t2, n2.time >= this.options.time)
+          this.parent.scale.set(this.xScale, this.yScale), this.options.removeOnComplete && this.parent.plugins.remove("snap-zoom"), this.parent.emit("snap-zoom-end", this.parent), this.snapping = null;
+        else {
+          const s2 = this.snapping, h2 = this.ease(s2.time, s2.startX, s2.deltaX, this.options.time), o2 = this.ease(s2.time, s2.startY, s2.deltaY, this.options.time);
+          this.parent.scale.x = this.parent.screenWidth / h2, this.parent.scale.y = this.parent.screenHeight / o2;
+        }
+        const i2 = this.parent.plugins.get("clamp-zoom", true);
+        i2 && i2.clamp(), this.options.noMove || (this.options.center ? this.parent.moveCenter(this.options.center) : this.parent.moveCenter(e2));
+      }
+    }
+    resume() {
+      this.snapping = null, super.resume();
+    }
+  };
+  var J = {
+    percent: 0.1,
+    smooth: false,
+    interrupt: true,
+    reverse: false,
+    center: null,
+    lineHeight: 20,
+    axis: "all",
+    keyToPress: null,
+    trackpadPinch: false,
+    wheelZoom: true
+  };
+  var $2 = class extends u2 {
+    /**
+    * This is called by {@link Viewport.wheel}.
+    */
+    constructor(t2, e2 = {}) {
+      super(t2), this.options = Object.assign({}, J, e2), this.keyIsPressed = false, this.options.keyToPress && this.handleKeyPresses(this.options.keyToPress);
+    }
+    /**
+    * Handles keypress events and set the keyIsPressed boolean accordingly
+    *
+    * @param {array} codes - key codes that can be used to trigger zoom event
+    */
+    handleKeyPresses(t2) {
+      typeof window > "u" || (window.addEventListener("keydown", (e2) => {
+        t2.includes(e2.code) && (this.keyIsPressed = true);
+      }), window.addEventListener("keyup", (e2) => {
+        t2.includes(e2.code) && (this.keyIsPressed = false);
+      }));
+    }
+    checkKeyPress() {
+      return !this.options.keyToPress || this.keyIsPressed;
+    }
+    down() {
+      return this.options.interrupt && (this.smoothing = null), false;
+    }
+    isAxisX() {
+      return ["all", "x"].includes(this.options.axis);
+    }
+    isAxisY() {
+      return ["all", "y"].includes(this.options.axis);
+    }
+    update() {
+      if (this.smoothing) {
+        const t2 = this.smoothingCenter, e2 = this.smoothing;
+        let n2;
+        this.options.center || (n2 = this.parent.toLocal(t2)), this.isAxisX() && (this.parent.scale.x += e2.x), this.isAxisY() && (this.parent.scale.y += e2.y), this.parent.emit("zoomed", { viewport: this.parent, type: "wheel" });
+        const i2 = this.parent.plugins.get("clamp-zoom", true);
+        if (i2 && i2.clamp(), this.options.center)
+          this.parent.moveCenter(this.options.center);
+        else {
+          const s2 = this.parent.parent || this.parent;
+          s2.toLocal(n2, this.parent, n2);
+          const h2 = s2.toLocal(t2);
+          this.parent.x += h2.x - n2.x, this.parent.y += h2.y - n2.y;
+        }
+        this.parent.emit("moved", { viewport: this.parent, type: "wheel" }), this.smoothingCount++, typeof this.options.smooth == "number" && this.smoothingCount >= this.options.smooth && (this.smoothing = null);
+      }
+    }
+    pinch(t2) {
+      if (this.paused)
+        return;
+      const e2 = this.parent.input.getPointerPosition(t2), n2 = -t2.deltaY * (t2.deltaMode ? this.options.lineHeight : 1) / 200, i2 = Math.pow(2, (1 + this.options.percent) * n2);
+      let s2;
+      this.options.center || (s2 = this.parent.toLocal(e2)), this.isAxisX() && (this.parent.scale.x *= i2), this.isAxisY() && (this.parent.scale.y *= i2), this.parent.emit("zoomed", { viewport: this.parent, type: "wheel" });
+      const h2 = this.parent.plugins.get("clamp-zoom", true);
+      if (h2 && h2.clamp(), this.options.center)
+        this.parent.moveCenter(this.options.center);
+      else {
+        const o2 = this.parent.parent || this.parent;
+        o2.toLocal(s2, this.parent, s2);
+        const r2 = o2.toLocal(e2);
+        this.parent.x += r2.x - s2.x, this.parent.y += r2.y - s2.y;
+      }
+      this.parent.emit("moved", { viewport: this.parent, type: "wheel" }), this.parent.emit("wheel-start", { event: t2, viewport: this.parent });
+    }
+    wheel(t2) {
+      if (this.paused || !this.checkKeyPress())
+        return false;
+      if (t2.ctrlKey && this.options.trackpadPinch)
+        this.pinch(t2);
+      else if (this.options.wheelZoom) {
+        const e2 = this.parent.input.getPointerPosition(t2), i2 = (this.options.reverse ? -1 : 1) * -t2.deltaY * (t2.deltaMode ? this.options.lineHeight : 1) / 500, s2 = Math.pow(2, (1 + this.options.percent) * i2);
+        if (this.options.smooth) {
+          const h2 = {
+            x: this.smoothing ? this.smoothing.x * (this.options.smooth - this.smoothingCount) : 0,
+            y: this.smoothing ? this.smoothing.y * (this.options.smooth - this.smoothingCount) : 0
+          };
+          this.smoothing = {
+            x: ((this.parent.scale.x + h2.x) * s2 - this.parent.scale.x) / this.options.smooth,
+            y: ((this.parent.scale.y + h2.y) * s2 - this.parent.scale.y) / this.options.smooth
+          }, this.smoothingCount = 0, this.smoothingCenter = e2;
+        } else {
+          let h2;
+          this.options.center || (h2 = this.parent.toLocal(e2)), this.isAxisX() && (this.parent.scale.x *= s2), this.isAxisY() && (this.parent.scale.y *= s2), this.parent.emit("zoomed", { viewport: this.parent, type: "wheel" });
+          const o2 = this.parent.plugins.get("clamp-zoom", true);
+          if (o2 && o2.clamp(), this.options.center)
+            this.parent.moveCenter(this.options.center);
+          else {
+            const r2 = this.parent.parent || this.parent;
+            r2.toLocal(h2, this.parent, h2);
+            const a2 = r2.toLocal(e2);
+            this.parent.x += a2.x - h2.x, this.parent.y += a2.y - h2.y;
+          }
+        }
+        this.parent.emit("moved", { viewport: this.parent, type: "wheel" }), this.parent.emit("wheel-start", { event: t2, viewport: this.parent });
+      }
+      return !this.parent.options.passiveWheel;
+    }
+  };
+  var tt = {
+    screenWidth: typeof window > "u" ? 0 : window.innerWidth,
+    screenHeight: typeof window > "u" ? 0 : window.innerHeight,
+    worldWidth: null,
+    worldHeight: null,
+    threshold: 5,
+    passiveWheel: true,
+    stopPropagation: false,
+    forceHitArea: null,
+    noTicker: false,
+    disableOnContextMenu: false,
+    ticker: Ticker.shared,
+    allowPreserveDragOutside: false
+  };
+  var it = class extends Container {
+    /**
+     * @param {IViewportOptions} ViewportOptions
+     * @param {number} [options.screenWidth=window.innerWidth]
+     * @param {number} [options.screenHeight=window.innerHeight]
+     * @param {number} [options.worldWidth=this.width]
+     * @param {number} [options.worldHeight=this.height]
+     * @param {number} [options.threshold=5] number of pixels to move to trigger an input event (e.g., drag, pinch)
+     * or disable a clicked event
+     * @param {boolean} [options.passiveWheel=true] whether the 'wheel' event is set to passive (note: if false,
+     * e.preventDefault() will be called when wheel is used over the viewport)
+     * @param {boolean} [options.stopPropagation=false] whether to stopPropagation of events that impact the viewport
+     * (except wheel events, see options.passiveWheel)
+     * @param {HitArea} [options.forceHitArea] change the default hitArea from world size to a new value
+     * @param {boolean} [options.noTicker] set this if you want to manually call update() function on each frame
+     * @param {PIXI.Ticker} [options.ticker=PIXI.Ticker.shared] use this PIXI.ticker for updates
+     * @param {PIXI.EventSystem} [options.events] EventSystem available from app.events or added manually and passed here
+     * location on screen
+     * @param {boolean} [options.disableOnContextMenu] remove oncontextmenu=() => {} from the pixi's events.domElement
+     */
+    constructor(t2) {
+      super(), this._disableOnContextMenu = (e2) => e2.preventDefault(), this.options = {
+        ...tt,
+        ...t2
+      }, this.screenWidth = this.options.screenWidth, this.screenHeight = this.options.screenHeight, this._worldWidth = this.options.worldWidth, this._worldHeight = this.options.worldHeight, this.forceHitArea = this.options.forceHitArea, this.threshold = this.options.threshold, this.options.disableOnContextMenu && this.options.events.domElement.addEventListener("contextmenu", this._disableOnContextMenu), this.options.noTicker || (this.tickerFunction = () => this.update(this.options.ticker.elapsedMS), this.options.ticker.add(this.tickerFunction)), this.input = new P(this), this.plugins = new C(this);
+    }
+    /** Overrides PIXI.Container's destroy to also remove the 'wheel' and PIXI.Ticker listeners */
+    destroy(t2) {
+      var e2;
+      !this.options.noTicker && this.tickerFunction && this.options.ticker.remove(this.tickerFunction), this.options.disableOnContextMenu && ((e2 = this.options.events.domElement) == null || e2.removeEventListener("contextmenu", this._disableOnContextMenu)), this.input.destroy(), super.destroy(t2);
+    }
+    /**
+     * Update viewport on each frame.
+     *
+     * By default, you do not need to call this unless you set `options.noTicker=true`.
+     *
+     * @param {number} elapsed time in milliseconds since last update
+     */
+    update(t2) {
+      this.pause || (this.plugins.update(t2), this.lastViewport && (this.lastViewport.x !== this.x || this.lastViewport.y !== this.y ? this.moving = true : this.moving && (this.emit("moved-end", this), this.moving = false), this.lastViewport.scaleX !== this.scale.x || this.lastViewport.scaleY !== this.scale.y ? this.zooming = true : this.zooming && (this.emit("zoomed-end", this), this.zooming = false)), this.forceHitArea || (this._hitAreaDefault = new Rectangle(this.left, this.top, this.worldScreenWidth, this.worldScreenHeight), this.hitArea = this._hitAreaDefault), this._dirty = this._dirty || !this.lastViewport || this.lastViewport.x !== this.x || this.lastViewport.y !== this.y || this.lastViewport.scaleX !== this.scale.x || this.lastViewport.scaleY !== this.scale.y, this.lastViewport = {
+        x: this.x,
+        y: this.y,
+        scaleX: this.scale.x,
+        scaleY: this.scale.y
+      }, this.emit("frame-end", this));
+    }
+    /**
+     * Use this to set screen and world sizes, needed for pinch/wheel/clamp/bounce.
+     * @param {number} screenWidth=window.innerWidth
+     * @param {number} screenHeight=window.innerHeight
+     * @param {number} [worldWidth]
+     * @param {number} [worldHeight]
+     */
+    resize(t2 = typeof window > "u" ? 0 : window.innerWidth, e2 = typeof window > "u" ? 0 : window.innerHeight, n2, i2) {
+      this.screenWidth = t2, this.screenHeight = e2, typeof n2 < "u" && (this._worldWidth = n2), typeof i2 < "u" && (this._worldHeight = i2), this.plugins.resize(), this.dirty = true;
+    }
+    /** World width, in pixels */
+    get worldWidth() {
+      return this._worldWidth ? this._worldWidth : this.width / this.scale.x;
+    }
+    set worldWidth(t2) {
+      this._worldWidth = t2, this.plugins.resize();
+    }
+    /** World height, in pixels */
+    get worldHeight() {
+      return this._worldHeight ? this._worldHeight : this.height / this.scale.y;
+    }
+    set worldHeight(t2) {
+      this._worldHeight = t2, this.plugins.resize();
+    }
+    /** Get visible world bounds of viewport */
+    getVisibleBounds() {
+      return new Rectangle(this.left, this.top, this.worldScreenWidth, this.worldScreenHeight);
+    }
+    /**
+     * Changes coordinate from screen to world
+     * @param {number|PIXI.Point} x
+     * @param {number} y
+     * @returns {PIXI.Point}
+     */
+    toWorld(t2, e2) {
+      return arguments.length === 2 ? this.toLocal(new Point(t2, e2)) : this.toLocal(t2);
+    }
+    /**
+     * Changes coordinate from world to screen
+     * @param {number|PIXI.Point} x
+     * @param {number} y
+     * @returns {PIXI.Point}
+     */
+    toScreen(t2, e2) {
+      return arguments.length === 2 ? this.toGlobal(new Point(t2, e2)) : this.toGlobal(t2);
+    }
+    /** Screen width in world coordinates */
+    get worldScreenWidth() {
+      return this.screenWidth / this.scale.x;
+    }
+    /** Screen height in world coordinates */
+    get worldScreenHeight() {
+      return this.screenHeight / this.scale.y;
+    }
+    /** World width in screen coordinates */
+    get screenWorldWidth() {
+      return this.worldWidth * this.scale.x;
+    }
+    /** World height in screen coordinates */
+    get screenWorldHeight() {
+      return this.worldHeight * this.scale.y;
+    }
+    /** Center of screen in world coordinates */
+    get center() {
+      return new Point(
+        this.worldScreenWidth / 2 - this.x / this.scale.x,
+        this.worldScreenHeight / 2 - this.y / this.scale.y
+      );
+    }
+    set center(t2) {
+      this.moveCenter(t2);
+    }
+    /**
+     * Move center of viewport to (x, y)
+     * @param {number|PIXI.Point} x
+     * @param {number} [y]
+     * @return {Viewport}
+     */
+    moveCenter(...t2) {
+      let e2, n2;
+      typeof t2[0] == "number" ? (e2 = t2[0], n2 = t2[1]) : (e2 = t2[0].x, n2 = t2[0].y);
+      const i2 = (this.worldScreenWidth / 2 - e2) * this.scale.x, s2 = (this.worldScreenHeight / 2 - n2) * this.scale.y;
+      return (this.x !== i2 || this.y !== s2) && (this.position.set(i2, s2), this.plugins.reset(), this.dirty = true), this;
+    }
+    /** Top-left corner of Viewport */
+    get corner() {
+      return new Point(-this.x / this.scale.x, -this.y / this.scale.y);
+    }
+    set corner(t2) {
+      this.moveCorner(t2);
+    }
+    /**
+     * MoveCorner
+     * @param {number|PIXI.Point} x
+     * @param {number} [y]
+     * @returns {Viewport}
+     */
+    moveCorner(...t2) {
+      let e2, n2;
+      return t2.length === 1 ? (e2 = -t2[0].x * this.scale.x, n2 = -t2[0].y * this.scale.y) : (e2 = -t2[0] * this.scale.x, n2 = -t2[1] * this.scale.y), (e2 !== this.x || n2 !== this.y) && (this.position.set(e2, n2), this.plugins.reset(), this.dirty = true), this;
+    }
+    /** Get how many world pixels fit in screen's width */
+    get screenWidthInWorldPixels() {
+      return this.screenWidth / this.scale.x;
+    }
+    /** Get how many world pixels fit on screen's height */
+    get screenHeightInWorldPixels() {
+      return this.screenHeight / this.scale.y;
+    }
+    /**
+     * Find the scale value that fits a world width on the screen
+     * does not change the viewport (use fit... to change)
+     *
+     * @param width - Width in world pixels
+     * @return - scale
+     */
+    findFitWidth(t2) {
+      return this.screenWidth / t2;
+    }
+    /**
+     * Finds the scale value that fits a world height on the screens
+     * does not change the viewport (use fit... to change)
+     *
+     * @param height - Height in world pixels
+     * @return - scale
+     */
+    findFitHeight(t2) {
+      return this.screenHeight / t2;
+    }
+    /**
+     * Finds the scale value that fits the smaller of a world width and world height on the screen
+     * does not change the viewport (use fit... to change)
+     *
+     * @param {number} width in world pixels
+     * @param {number} height in world pixels
+     * @returns {number} scale
+     */
+    findFit(t2, e2) {
+      const n2 = this.screenWidth / t2, i2 = this.screenHeight / e2;
+      return Math.min(n2, i2);
+    }
+    /**
+     * Finds the scale value that fits the larger of a world width and world height on the screen
+     * does not change the viewport (use fit... to change)
+     *
+     * @param {number} width in world pixels
+     * @param {number} height in world pixels
+     * @returns {number} scale
+     */
+    findCover(t2, e2) {
+      const n2 = this.screenWidth / t2, i2 = this.screenHeight / e2;
+      return Math.max(n2, i2);
+    }
+    /**
+     * Change zoom so the width fits in the viewport
+     *
+     * @param width - width in world coordinates
+     * @param center - maintain the same center
+     * @param scaleY - whether to set scaleY=scaleX
+     * @param noClamp - whether to disable clamp-zoom
+     * @returns {Viewport} this
+     */
+    fitWidth(t2 = this.worldWidth, e2, n2 = true, i2) {
+      let s2;
+      e2 && (s2 = this.center), this.scale.x = this.screenWidth / t2, n2 && (this.scale.y = this.scale.x);
+      const h2 = this.plugins.get("clamp-zoom", true);
+      return !i2 && h2 && h2.clamp(), e2 && s2 && this.moveCenter(s2), this;
+    }
+    /**
+     * Change zoom so the height fits in the viewport
+     *
+     * @param {number} [height=this.worldHeight] in world coordinates
+     * @param {boolean} [center] maintain the same center of the screen after zoom
+     * @param {boolean} [scaleX=true] whether to set scaleX = scaleY
+     * @param {boolean} [noClamp] whether to disable clamp-zoom
+     * @returns {Viewport} this
+     */
+    fitHeight(t2 = this.worldHeight, e2, n2 = true, i2) {
+      let s2;
+      e2 && (s2 = this.center), this.scale.y = this.screenHeight / t2, n2 && (this.scale.x = this.scale.y);
+      const h2 = this.plugins.get("clamp-zoom", true);
+      return !i2 && h2 && h2.clamp(), e2 && s2 && this.moveCenter(s2), this;
+    }
+    /**
+     * Change zoom so it fits the entire world in the viewport
+     *
+     * @param {boolean} center maintain the same center of the screen after zoom
+     * @returns {Viewport} this
+     */
+    fitWorld(t2) {
+      let e2;
+      t2 && (e2 = this.center), this.scale.x = this.screenWidth / this.worldWidth, this.scale.y = this.screenHeight / this.worldHeight, this.scale.x < this.scale.y ? this.scale.y = this.scale.x : this.scale.x = this.scale.y;
+      const n2 = this.plugins.get("clamp-zoom", true);
+      return n2 && n2.clamp(), t2 && e2 && this.moveCenter(e2), this;
+    }
+    /**
+     * Change zoom so it fits the size or the entire world in the viewport
+     *
+     * @param {boolean} [center] maintain the same center of the screen after zoom
+     * @param {number} [width=this.worldWidth] desired width
+     * @param {number} [height=this.worldHeight] desired height
+     * @returns {Viewport} this
+     */
+    fit(t2, e2 = this.worldWidth, n2 = this.worldHeight) {
+      let i2;
+      t2 && (i2 = this.center), this.scale.x = this.screenWidth / e2, this.scale.y = this.screenHeight / n2, this.scale.x < this.scale.y ? this.scale.y = this.scale.x : this.scale.x = this.scale.y;
+      const s2 = this.plugins.get("clamp-zoom", true);
+      return s2 && s2.clamp(), t2 && i2 && this.moveCenter(i2), this;
+    }
+    /**
+     * Zoom viewport to specific value.
+     *
+     * @param {number} scale value (e.g., 1 would be 100%, 0.25 would be 25%)
+     * @param {boolean} [center] maintain the same center of the screen after zoom
+     * @return {Viewport} this
+     */
+    setZoom(t2, e2) {
+      let n2;
+      e2 && (n2 = this.center), this.scale.set(t2);
+      const i2 = this.plugins.get("clamp-zoom", true);
+      return i2 && i2.clamp(), e2 && n2 && this.moveCenter(n2), this;
+    }
+    /**
+     * Zoom viewport by a certain percent (in both x and y direction).
+     *
+     * @param {number} percent change (e.g., 0.25 would increase a starting scale of 1.0 to 1.25)
+     * @param {boolean} [center] maintain the same center of the screen after zoom
+     * @return {Viewport} this
+     */
+    zoomPercent(t2, e2) {
+      return this.setZoom(this.scale.x + this.scale.x * t2, e2);
+    }
+    /**
+     * Zoom viewport by increasing/decreasing width by a certain number of pixels.
+     *
+     * @param {number} change in pixels
+     * @param {boolean} [center] maintain the same center of the screen after zoom
+     * @return {Viewport} this
+     */
+    zoom(t2, e2) {
+      return this.fitWidth(t2 + this.worldScreenWidth, e2), this;
+    }
+    /** Changes scale of viewport and maintains center of viewport */
+    get scaled() {
+      return this.scale.x;
+    }
+    set scaled(t2) {
+      this.setZoom(t2, true);
+    }
+    /**
+     * Returns zoom to the desired scale
+     *
+     * @param {ISnapZoomOptions} options
+     * @param {number} [options.width=0] - the desired width to snap (to maintain aspect ratio, choose width or height)
+     * @param {number} [options.height=0] - the desired height to snap (to maintain aspect ratio, choose width or height)
+     * @param {number} [options.time=1000] - time for snapping in ms
+     * @param {(string|function)} [options.ease=easeInOutSine] ease function or name (see http://easings.net/
+     *   for supported names)
+     * @param {PIXI.Point} [options.center] - place this point at center during zoom instead of center of the viewport
+     * @param {boolean} [options.interrupt=true] - pause snapping with any user input on the viewport
+     * @param {boolean} [options.removeOnComplete] - removes this plugin after snapping is complete
+     * @param {boolean} [options.removeOnInterrupt] - removes this plugin if interrupted by any user input
+     * @param {boolean} [options.forceStart] - starts the snap immediately regardless of whether the viewport is at the
+     *   desired zoom
+     * @param {boolean} [options.noMove] - zoom but do not move
+     */
+    snapZoom(t2) {
+      return this.plugins.add("snap-zoom", new G(this, t2)), this;
+    }
+    /** Is container out of world bounds */
+    OOB() {
+      return {
+        left: this.left < 0,
+        right: this.right > this.worldWidth,
+        top: this.top < 0,
+        bottom: this.bottom > this.worldHeight,
+        cornerPoint: new Point(
+          this.worldWidth * this.scale.x - this.screenWidth,
+          this.worldHeight * this.scale.y - this.screenHeight
+        )
+      };
+    }
+    /** World coordinates of the right edge of the screen */
+    get right() {
+      return -this.x / this.scale.x + this.worldScreenWidth;
+    }
+    set right(t2) {
+      this.x = -t2 * this.scale.x + this.screenWidth, this.plugins.reset();
+    }
+    /** World coordinates of the left edge of the screen */
+    get left() {
+      return -this.x / this.scale.x;
+    }
+    set left(t2) {
+      this.x = -t2 * this.scale.x, this.plugins.reset();
+    }
+    /** World coordinates of the top edge of the screen */
+    get top() {
+      return -this.y / this.scale.y;
+    }
+    set top(t2) {
+      this.y = -t2 * this.scale.y, this.plugins.reset();
+    }
+    /** World coordinates of the bottom edge of the screen */
+    get bottom() {
+      return -this.y / this.scale.y + this.worldScreenHeight;
+    }
+    set bottom(t2) {
+      this.y = -t2 * this.scale.y + this.screenHeight, this.plugins.reset();
+    }
+    /**
+     * Determines whether the viewport is dirty (i.e., needs to be rendered to the screen because of a change)
+     */
+    get dirty() {
+      return !!this._dirty;
+    }
+    set dirty(t2) {
+      this._dirty = t2;
+    }
+    /**
+     * Permanently changes the Viewport's hitArea
+     *
+     * NOTE: if not set then hitArea = PIXI.Rectangle(Viewport.left, Viewport.top, Viewport.worldScreenWidth,
+     * Viewport.worldScreenHeight)
+     */
+    get forceHitArea() {
+      return this._forceHitArea;
+    }
+    set forceHitArea(t2) {
+      t2 ? (this._forceHitArea = t2, this.hitArea = t2) : (this._forceHitArea = null, this.hitArea = new Rectangle(0, 0, this.worldWidth, this.worldHeight));
+    }
+    /**
+     * Enable one-finger touch to drag
+     *
+     * NOTE: if you expect users to use right-click dragging, you should enable `viewport.options.disableOnContextMenu`
+     * to avoid the context menu popping up on each right-click drag.
+     *
+     * @param {IDragOptions} [options]
+     * @param {string} [options.direction=all] direction to drag
+     * @param {boolean} [options.pressDrag=true] whether click to drag is active
+     * @param {boolean} [options.wheel=true] use wheel to scroll in direction (unless wheel plugin is active)
+     * @param {number} [options.wheelScroll=1] number of pixels to scroll with each wheel spin
+     * @param {boolean} [options.reverse] reverse the direction of the wheel scroll
+     * @param {(boolean|string)} [options.clampWheel=false] clamp wheel(to avoid weird bounce with mouse wheel)
+     * @param {string} [options.underflow=center] where to place world if too small for screen
+     * @param {number} [options.factor=1] factor to multiply drag to increase the speed of movement
+     * @param {string} [options.mouseButtons=all] changes which mouse buttons trigger drag, use: 'all', 'left',
+     *  'right' 'middle', or some combination, like, 'middle-right'; you may want to set
+     *   viewport.options.disableOnContextMenu if you want to use right-click dragging
+     * @param {string[]} [options.keyToPress=null] - array containing
+     *  {@link key|https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code} codes of keys that can be
+     *  pressed for the drag to be triggered, e.g.: ['ShiftLeft', 'ShiftRight'}.
+     * @param {boolean} [options.ignoreKeyToPressOnTouch=false] - ignore keyToPress for touch events
+     * @param {number} [options.lineHeight=20] - scaling factor for non-DOM_DELTA_PIXEL scrolling events
+     * @returns {Viewport} this
+     */
+    drag(t2) {
+      return this.plugins.add("drag", new U(this, t2)), this;
+    }
+    /**
+     * Clamp to world boundaries or other provided boundaries
+     * There are three ways to clamp:
+     * 1. direction: 'all' = the world is clamped to its world boundaries, ie, you cannot drag any part of offscreen
+     *    direction: 'x' | 'y' = only the x or y direction is clamped to its world boundary
+     * 2. left, right, top, bottom = true | number = the world is clamped to the world's pixel location for each side;
+     *    if any of these are set to true, then the location is set to the boundary
+     *    [0, viewport.worldWidth/viewport.worldHeight], eg: to allow the world to be completely dragged offscreen,
+     *    set [-viewport.worldWidth, -viewport.worldHeight, viewport.worldWidth * 2, viewport.worldHeight * 2]
+     *
+     * Underflow determines what happens when the world is smaller than the viewport
+     * 1. none = the world is clamped but there is no special behavior
+     * 2. center = the world is centered on the viewport
+     * 3. combination of top/bottom/center and left/right/center (case insensitive) = the world is stuck to the
+     *     appropriate boundaries
+     *
+     * NOTES:
+     *   clamp is disabled if called with no options; use { direction: 'all' } for all edge clamping
+     *   screenWidth, screenHeight, worldWidth, and worldHeight needs to be set for this to work properly
+     *
+     * @param {object} [options]
+     * @param {(number|boolean)} [options.left=false] - clamp left; true = 0
+     * @param {(number|boolean)} [options.right=false] - clamp right; true = viewport.worldWidth
+     * @param {(number|boolean)} [options.top=false] - clamp top; true = 0
+     * @param {(number|boolean)} [options.bottom=false] - clamp bottom; true = viewport.worldHeight
+     * @param {string} [direction] - (all, x, or y) using clamps of [0, viewport.worldWidth/viewport.worldHeight];
+     *  replaces left/right/top/bottom if set
+     * @param {string} [underflow=center] - where to place world if too small for screen (e.g., top-right, center,
+     *  none, bottomLeft)     * @returns {Viewport} this
+     */
+    clamp(t2) {
+      return this.plugins.add("clamp", new A(this, t2)), this;
+    }
+    /**
+     * Decelerate after a move
+     *
+     * NOTE: this fires 'moved' event during deceleration
+     *
+     * @param {IDecelerateOptions} [options]
+     * @param {number} [options.friction=0.95] - percent to decelerate after movement
+     * @param {number} [options.bounce=0.8] - percent to decelerate when past boundaries (only applicable when
+     *   viewport.bounce() is active)
+     * @param {number} [options.minSpeed=0.01] - minimum velocity before stopping/reversing acceleration
+     * @return {Viewport} this
+     */
+    decelerate(t2) {
+      return this.plugins.add("decelerate", new E(this, t2)), this;
+    }
+    /**
+     * Bounce on borders
+     * NOTES:
+     *    screenWidth, screenHeight, worldWidth, and worldHeight needs to be set for this to work properly
+     *    fires 'moved', 'bounce-x-start', 'bounce-y-start', 'bounce-x-end', and 'bounce-y-end' events
+     * @param {object} [options]
+     * @param {string} [options.sides=all] - all, horizontal, vertical, or combination of top, bottom, right, left
+     *  (e.g., 'top-bottom-right')
+     * @param {number} [options.friction=0.5] - friction to apply to decelerate if active
+     * @param {number} [options.time=150] - time in ms to finish bounce
+     * @param {object} [options.bounceBox] - use this bounceBox instead of (0, 0, viewport.worldWidth, viewport.worldHeight)
+     * @param {number} [options.bounceBox.x=0]
+     * @param {number} [options.bounceBox.y=0]
+     * @param {number} [options.bounceBox.width=viewport.worldWidth]
+     * @param {number} [options.bounceBox.height=viewport.worldHeight]
+     * @param {string|function} [options.ease=easeInOutSine] - ease function or name
+     *  (see http://easings.net/ for supported names)
+     * @param {string} [options.underflow=center] - (top/bottom/center and left/right/center, or center)
+     *  where to place world if too small for screen
+     * @return {Viewport} this
+     */
+    bounce(t2) {
+      return this.plugins.add("bounce", new X(this, t2)), this;
+    }
+    /**
+     * Enable pinch to zoom and two-finger touch to drag
+     *
+     * @param {PinchOptions} [options]
+     * @param {boolean} [options.noDrag] - disable two-finger dragging
+     * @param {number} [options.percent=1] - percent to modify pinch speed
+     * @param {number} [options.factor=1] - factor to multiply two-finger drag to increase the speed of movement
+     * @param {PIXI.Point} [options.center] - place this point at center during zoom instead of center of two fingers
+     * @param {('all'|'x'|'y')} [options.axis=all] - axis to zoom
+     * @return {Viewport} this
+     */
+    pinch(t2) {
+      return this.plugins.add("pinch", new j2(this, t2)), this;
+    }
+    /**
+     * Snap to a point
+     *
+     * @param {number} x
+     * @param {number} y
+     * @param {ISnapOptions} [options]
+     * @param {boolean} [options.topLeft] - snap to the top-left of viewport instead of center
+     * @param {number} [options.friction=0.8] - friction/frame to apply if decelerate is active
+     * @param {number} [options.time=1000] - time in ms to snap
+     * @param {string|function} [options.ease=easeInOutSine] - ease function or name (see http://easings.net/
+     *   for supported names)
+     * @param {boolean} [options.interrupt=true] - pause snapping with any user input on the viewport
+     * @param {boolean} [options.removeOnComplete] - removes this plugin after snapping is complete
+     * @param {boolean} [options.removeOnInterrupt] - removes this plugin if interrupted by any user input
+     * @param {boolean} [options.forceStart] - starts the snap immediately regardless of whether the viewport is at
+     *   the desired location
+     * @return {Viewport} this
+     */
+    snap(t2, e2, n2) {
+      return this.plugins.add("snap", new q(this, t2, e2, n2)), this;
+    }
+    /**
+     * Follow a target
+     *
+     * NOTES:
+     *    uses the (x, y) as the center to follow; for PIXI.Sprite to work properly, use sprite.anchor.set(0.5)
+     *    options.acceleration is not perfect as it doesn't know the velocity of the target. It adds acceleration
+     *    to the start of movement and deceleration to the end of movement when the target is stopped.
+     *    To cancel the follow, use: `viewport.plugins.remove('follow')`
+     *
+     * @fires 'moved' event
+     *
+     * @param {PIXI.DisplayObject} target to follow
+     * @param {IFollowOptions} [options]
+     * @param {number} [options.speed=0] - to follow in pixels/frame (0=teleport to location)
+     * @param {number} [options.acceleration] - set acceleration to accelerate and decelerate at this rate; speed
+     *   cannot be 0 to use acceleration
+     * @param {number} [options.radius] - radius (in world coordinates) of center circle where movement is allowed
+     *   without moving the viewport     * @returns {Viewport} this
+     * @returns {Viewport} this
+     */
+    follow(t2, e2) {
+      return this.plugins.add("follow", new B(this, t2, e2)), this;
+    }
+    /**
+     * Zoom using mouse wheel
+     *
+     * NOTE: the default event listener for 'wheel' event is the options.events.domElement.
+     *
+     * @param {IWheelOptions} [options]
+     * @param {number} [options.percent=0.1] - percent to scroll with each spin
+     * @param {number} [options.smooth] - smooth the zooming by providing the number of frames to zoom between wheel spins
+     * @param {boolean} [options.interrupt=true] - stop smoothing with any user input on the viewport
+     * @param {boolean} [options.reverse] - reverse the direction of the scroll
+     * @param {PIXI.Point} [options.center] - place this point at center during zoom instead of current mouse position
+     * @param {number} [options.lineHeight=20] - scaling factor for non-DOM_DELTA_PIXEL scrolling events
+     * @param {('all'|'x'|'y')} [options.axis=all] - axis to zoom
+     * @return {Viewport} this
+     */
+    wheel(t2) {
+      return this.plugins.add("wheel", new $2(this, t2)), this;
+    }
+    /**
+     * Animate the position and/or scale of the viewport
+     * To set the zoom level, use: (1) scale, (2) scaleX and scaleY, or (3) width and/or height
+     * @param {object} options
+     * @param {number} [options.time=1000] - time to animate
+     * @param {PIXI.Point} [options.position=viewport.center] - position to move viewport
+     * @param {number} [options.width] - desired viewport width in world pixels (use instead of scale;
+     *  aspect ratio is maintained if height is not provided)
+     * @param {number} [options.height] - desired viewport height in world pixels (use instead of scale;
+     *  aspect ratio is maintained if width is not provided)
+     * @param {number} [options.scale] - scale to change zoom (scale.x = scale.y)
+     * @param {number} [options.scaleX] - independently change zoom in x-direction
+     * @param {number} [options.scaleY] - independently change zoom in y-direction
+     * @param {(function|string)} [options.ease=linear] - easing function to use
+     * @param {function} [options.callbackOnComplete]
+     * @param {boolean} [options.removeOnInterrupt] removes this plugin if interrupted by any user input
+     * @returns {Viewport} this
+     */
+    animate(t2) {
+      return this.plugins.add("animate", new k2(this, t2)), this;
+    }
+    /**
+     * Enable clamping of zoom to constraints
+     *
+     * The minWidth/Height settings are how small the world can get (as it would appear on the screen)
+     * before clamping. The maxWidth/maxHeight is how larger the world can scale (as it would appear on
+     * the screen) before clamping.
+     *
+     * For example, if you have a world size of 1000 x 1000 and a screen size of 100 x 100, if you set
+     * minWidth/Height = 100 then the world will not be able to zoom smaller than the screen size (ie,
+     * zooming out so it appears smaller than the screen). Similarly, if you set maxWidth/Height = 100
+     * the world will not be able to zoom larger than the screen size (ie, zooming in so it appears
+     * larger than the screen).
+     *
+     * @param {object} [options]
+     * @param {number} [options.minWidth] - minimum width
+     * @param {number} [options.minHeight] - minimum height
+     * @param {number} [options.maxWidth] - maximum width
+     * @param {number} [options.maxHeight] - maximum height
+     * @param {number} [options.minScale] - minimum scale
+     * @param {number} [options.maxScale] - minimum scale
+     * @return {Viewport} this
+     */
+    clampZoom(t2) {
+      return this.plugins.add("clamp-zoom", new _(this, t2)), this;
+    }
+    /**
+     * Scroll viewport when mouse hovers near one of the edges or radius-distance from center of screen.
+     *
+     * NOTES: fires 'moved' event; there's a known bug where the mouseEdges does not work properly with "windowed" viewports
+     *
+     * @param {IMouseEdgesOptions} [options]
+     * @param {number} [options.radius] - distance from center of screen in screen pixels
+     * @param {number} [options.distance] - distance from all sides in screen pixels
+     * @param {number} [options.top] - alternatively, set top distance (leave unset for no top scroll)
+     * @param {number} [options.bottom] - alternatively, set bottom distance (leave unset for no top scroll)
+     * @param {number} [options.left] - alternatively, set left distance (leave unset for no top scroll)
+     * @param {number} [options.right] - alternatively, set right distance (leave unset for no top scroll)
+     * @param {number} [options.speed=8] - speed in pixels/frame to scroll viewport
+     * @param {boolean} [options.reverse] - reverse direction of scroll
+     * @param {boolean} [options.noDecelerate] - don't use decelerate plugin even if it's installed
+     * @param {boolean} [options.linear] - if using radius, use linear movement (+/- 1, +/- 1) instead of angled
+     *   movement (Math.cos(angle from center), Math.sin(angle from center))
+     * @param {boolean} [options.allowButtons] allows plugin to continue working even when there's a mousedown event
+     */
+    mouseEdges(t2) {
+      return this.plugins.add("mouse-edges", new V(this, t2)), this;
+    }
+    /** Pause viewport (including animation updates such as decelerate) */
+    get pause() {
+      return !!this._pause;
+    }
+    set pause(t2) {
+      this._pause = t2, this.lastViewport = null, this.moving = false, this.zooming = false, t2 && this.input.pause();
+    }
+    /**
+     * Move the viewport so the bounding box is visible
+     *
+     * @param x - left
+     * @param y - top
+     * @param width
+     * @param height
+     * @param resizeToFit - Resize the viewport so the box fits within the viewport
+     */
+    ensureVisible(t2, e2, n2, i2, s2) {
+      s2 && (n2 > this.worldScreenWidth || i2 > this.worldScreenHeight) && (this.fit(true, n2, i2), this.emit("zoomed", { viewport: this, type: "ensureVisible" }));
+      let h2 = false;
+      t2 < this.left ? (this.left = t2, h2 = true) : t2 + n2 > this.right && (this.right = t2 + n2, h2 = true), e2 < this.top ? (this.top = e2, h2 = true) : e2 + i2 > this.bottom && (this.bottom = e2 + i2, h2 = true), h2 && this.emit("moved", { viewport: this, type: "ensureVisible" });
+    }
+  };
 
   // src/app.ts
   var App = class _App extends Application {
     background;
     keyboard;
+    viewport;
     constructor(background) {
       super();
       this.background = background;
@@ -36664,6 +38763,12 @@ ${parts.join("\n")}
         background: this.background,
         resizeTo: window
       });
+      this.viewport = new it({
+        events: this.renderer.events
+      });
+      this.stage.addChild(this.viewport);
+      this.viewport.moveCenter(0, 0);
+      this.viewport.drag().pinch().wheel();
     }
     onkeydown(e2) {
       this.keyboard.set(e2.key, true);
@@ -36671,12 +38776,16 @@ ${parts.join("\n")}
     onkeyup(e2) {
       this.keyboard.set(e2.key, false);
     }
+    add(...children) {
+      this.viewport.addChild(...children);
+      return children[0];
+    }
   };
 
   // src/hexagon.ts
   var HEX_SIZE = 60;
-  function Hex(q, r2) {
-    return { q, r: r2 };
+  function Hex(q2, r2) {
+    return { q: q2, r: r2 };
   }
   var HexDirectionVectors = [
     Hex(1, 0),
@@ -36687,9 +38796,9 @@ ${parts.join("\n")}
     Hex(0, 1)
   ];
   function hex2pixel(hex) {
-    var x2 = HEX_SIZE * (Math.sqrt(3) * hex.q + Math.sqrt(3) / 2 * hex.r);
+    var x3 = HEX_SIZE * (Math.sqrt(3) * hex.q + Math.sqrt(3) / 2 * hex.r);
     var y2 = HEX_SIZE * (3 / 2 * hex.r);
-    return { x: x2, y: y2 };
+    return { x: x3, y: y2 };
   }
 
   // src/main.ts
@@ -36697,15 +38806,17 @@ ${parts.join("\n")}
   async function main() {
     const app = await App.createAndInit("black");
     let circleContext = new GraphicsContext().regularPoly(0, 0, HEX_SIZE - 5, 6, 0).fill(21760);
-    for (let q = -MAP_SIZE; q < MAP_SIZE; q++) {
-      for (let r2 = -MAP_SIZE; r2 < MAP_SIZE; r2++) {
-        for (let s2 = -MAP_SIZE; s2 < MAP_SIZE; s2++) {
-          if (q + r2 + s2 === 0) {
+    for (let q2 = -MAP_SIZE; q2 <= MAP_SIZE; q2++) {
+      for (let r2 = -MAP_SIZE; r2 <= MAP_SIZE; r2++) {
+        for (let s2 = -MAP_SIZE; s2 <= MAP_SIZE; s2++) {
+          if (q2 + r2 + s2 === 0) {
             let g2 = new Graphics(circleContext);
-            const { x: x2, y: y2 } = hex2pixel({ q, r: r2 });
-            g2.x = x2;
+            const { x: x3, y: y2 } = hex2pixel({ q: q2, r: r2 });
+            g2.x = x3;
             g2.y = y2;
-            app.stage.addChild(g2);
+            g2.interactive = true;
+            g2.onclick = () => console.log({ q: q2, r: r2 });
+            app.add(g2);
           }
         }
       }

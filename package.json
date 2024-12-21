@@ -9,8 +9,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@esotericsoftware/spine-pixi-v8": "^4.2.68",
-    "@types/matter-js": "^0.19.8",
     "esbuild": "0.24.0",
     "pixi-viewport": "^6.0.3",
     "pixi.js": "8.6.4"
