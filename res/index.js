@@ -38916,6 +38916,9 @@ ${parts.join("\n")}
   function hexSub(hex, vec) {
     return Hex(hex.q - vec.q, hex.r - vec.r);
   }
+  function hexEqual(a2, b2) {
+    return a2.q === b2.q && a2.r === b2.r;
+  }
   var HexDirectionVectors = [
     Hex(1, 0),
     Hex(1, -1),
@@ -38972,13 +38975,20 @@ ${parts.join("\n")}
     return greenComponent << 8;
   }
   var WORLD = createWorld({ mapSize: 5 });
+  function pawnOnTile(world, hex) {
+    return world.pawns.find((pawn) => hexEqual(pawn.coord, hex));
+  }
   function onclick(hex) {
-    update((world) => {
-      const pawn = world.pawns[world.selectedPawn];
-      if (hexDistance(pawn.coord, hex) <= 1) {
-        pawn.coord = hex;
+    update((w2) => {
+      if (pawnOnTile(w2, hex)) {
+        w2.selectedPawn = w2.pawns.findIndex((p2) => hexEqual(p2.coord, hex));
+      } else {
+        const pawn = w2.pawns[w2.selectedPawn];
+        if (hexDistance(pawn.coord, hex) <= 1) {
+          pawn.coord = hex;
+        }
+        w2.selectedPawn = (w2.selectedPawn + 1) % w2.pawns.length;
       }
-      world.selectedPawn = (world.selectedPawn + 1) % world.pawns.length;
     });
   }
   var update = GameEvent((change) => {

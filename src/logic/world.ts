@@ -1,5 +1,5 @@
 import { GameEvent } from "../utils/gameevents"
-import { Hex, hexDistance, hexsInRange } from "../utils/hex"
+import { Hex, hexDistance, hexEqual, hexsInRange } from "../utils/hex"
 
 export interface Pawn {
     coord: Hex
@@ -49,17 +49,24 @@ function randomGreen(): number {
 
 export const WORLD: World = createWorld({ mapSize: 5 })
 
+function pawnOnTile(world: World, hex: Hex) {
+    return world.pawns.find((pawn) => hexEqual(pawn.coord, hex))
+}
 
 export function onclick(hex: Hex) {
-    update((world) => {
-        // Move selected pawn
-        const pawn = world.pawns[world.selectedPawn]
-        if (hexDistance(pawn.coord, hex) <= 1) {
-            pawn.coord = hex
-        }
+    update((w) => {
+        if (pawnOnTile(w, hex)) {
+            w.selectedPawn = w.pawns.findIndex((p) => hexEqual(p.coord, hex))
+        } else {
+            // Move selected pawn
+            const pawn = w.pawns[w.selectedPawn]
+            if (hexDistance(pawn.coord, hex) <= 1) {
+                pawn.coord = hex
+            }
 
-        // Select next pawn
-        world.selectedPawn = (world.selectedPawn + 1) % world.pawns.length
+            // Select next pawn
+            w.selectedPawn = (w.selectedPawn + 1) % w.pawns.length
+        }
     })
 }
 

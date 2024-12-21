@@ -21,6 +21,10 @@ function hexSub(hex: Hex, vec: Hex) {
     return Hex(hex.q - vec.q, hex.r - vec.r)
 }
 
+export function hexEqual(a: Hex, b: Hex) {
+    return a.q === b.q && a.r === b.r
+}
+
 // Neighbors
 
 const HexDirectionVectors = [
