@@ -30,22 +30,25 @@
                 flex-direction: column;
             }
 
-            article h1 {
-                background-color: gray;
+            article > * {
+                margin: 10px;
+                margin-bottom: 0px;
+            }
+
+            article > *:last-child {
+                margin-bottom: 10px;
+            }
+
+            article label {
                 margin: 0px;
+                background-color: gray;
                 padding: 5px 15px;
                 border-top-left-radius: 5px;
                 border-top-right-radius: 5px;
-                font-size: 1em;
                 text-align: center;
             }
 
-            article p {
-                margin: 10px;
-            }
-
             article button {
-                margin: 10px;
                 border-radius: 5px;
                 background-color: darkcyan;
                 border: none;
@@ -63,9 +66,11 @@
     </head>
     <body>
         <main id="ui">
-            <article id="selected"><h1>Selected: Pawn</h1></article>
+            <article id="selected">
+                <label>Selected: Pawn</label>
+            </article>
             <article>
-                <h1>Actions</h1>
+                <label>Game Actions</label>
                 <button id="endturn">End Turn</button>
             </article>
         </main>

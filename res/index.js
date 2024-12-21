@@ -38925,12 +38925,34 @@ ${parts.join("\n")}
   function Pawn(coord) {
     return {
       coord,
+      items: [],
       actionsLeft: 3,
       actionsFull: 3
     };
   }
+  function pawnItem(pawn, name) {
+    return pawn.items.find((i2) => i2.name === name);
+  }
+  function givePawnItem(pawn, item) {
+    if (pawnItem(pawn, item.name)) {
+      pawnItem(pawn, item.name).amount += item.amount;
+    } else {
+      pawn.items.push(item);
+    }
+  }
   function pawnOnTile(world, hex) {
     return world.pawns.find((pawn) => hexEqual(pawn.coord, hex));
+  }
+  function hasActionsLeft(pawn) {
+    return pawn.actionsLeft > 0;
+  }
+  function chopwood(pawn) {
+    if (hasActionsLeft(pawn)) {
+      pawn.actionsLeft -= 1;
+      givePawnItem(pawn, { name: "wood", amount: 1 });
+      return 1;
+    }
+    return 0;
   }
 
   // src/utils/gameevents.ts
@@ -39088,13 +39110,22 @@ ${parts.join("\n")}
     use((w2) => w2.pawns[w2.selectedPawn].actionsLeft, () => {
       const pawn = WORLD.pawns[WORLD.selectedPawn];
       el?.replaceChildren(
-        m3("h1", "Selected: Pawn"),
-        m3("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`)
+        m3("label", "Selected: Pawn"),
+        m3("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`),
+        m3("p", `Items: ${pawn.items.map((i2) => `${i2.name} x${i2.amount}`).join(", ")}`),
+        button(`Chop Wood (+1 wood)`, () => {
+          update(() => chopwood(pawn));
+        })
       );
     });
     document.getElementById("endturn").onclick = () => {
       endturn();
     };
+  }
+  function button(text, onclick2) {
+    const el = m3("button", text);
+    el.onclick = onclick2;
+    return el;
   }
   function m3(tag, ...children) {
     const el = document.createElement(tag);
