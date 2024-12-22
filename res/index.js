@@ -38865,7 +38865,7 @@ ${parts.join("\n")}
       });
       this.stage.addChild(this.viewport);
       this.viewport.moveCenter(0, 0);
-      this.viewport;
+      this.viewport.drag().pinch().wheel();
     }
     onkeydown(e2) {
       this.keyboard.set(e2.key, true);
@@ -38884,6 +38884,9 @@ ${parts.join("\n")}
   function Hex(q2, r2) {
     return { q: q2, r: r2 };
   }
+  function hexAdd(hex, vec) {
+    return Hex(hex.q + vec.q, hex.r + vec.r);
+  }
   function hexSub(hex, vec) {
     return Hex(hex.q - vec.q, hex.r - vec.r);
   }
@@ -38898,6 +38901,9 @@ ${parts.join("\n")}
     Hex(-1, 1),
     Hex(0, 1)
   ];
+  function hexNeighbors(hex) {
+    return HexDirectionVectors.map((vec) => hexAdd(hex, vec));
+  }
   function hexDistance(a2, b2) {
     var vec = hexSub(a2, b2);
     return (Math.abs(vec.q) + Math.abs(vec.q + vec.r) + Math.abs(vec.r)) / 2;
@@ -38924,6 +38930,65 @@ ${parts.join("\n")}
   // src/utils/misc.ts
   function capitalize(s2) {
     return s2.charAt(0).toUpperCase() + s2.slice(1);
+  }
+
+  // src/utils/pathfinding.ts
+  function pathfind(start, target) {
+    const open = /* @__PURE__ */ new Set();
+    const data = /* @__PURE__ */ new Map();
+    add(start);
+    while (open.size > 0) {
+      const current = getBestNode(open, data);
+      if (hexEqual(current.tile, target)) {
+        return reconstructPath(data, current);
+      }
+      open.delete(current.id);
+      hexNeighbors(current.tile).map((neighbor) => add(neighbor, current));
+    }
+    function add(tile, prev) {
+      const id = ID(tile);
+      const traveled = (prev?.traveled ?? 0) + 1;
+      const heuristic = traveled + hexDistance(tile, target);
+      if (data.has(id)) {
+        const old = data.get(id);
+        if (old.traveled > traveled) {
+          old.traveled = traveled;
+          old.heuristic = heuristic;
+          old.prev = prev?.id;
+          open.add(id);
+        }
+      } else {
+        data.set(id, {
+          id,
+          tile,
+          prev: prev?.id,
+          traveled,
+          heuristic
+        });
+        open.add(id);
+      }
+    }
+    return [];
+  }
+  function ID(hex) {
+    return JSON.stringify(hex);
+  }
+  function getBestNode(open, data) {
+    return data.get(Array.from(open).reduce((a2, b2) => {
+      if (data.get(a2).heuristic < data.get(b2).heuristic) {
+        return a2;
+      } else {
+        return b2;
+      }
+    }));
+  }
+  function reconstructPath(data, node) {
+    const path2 = [];
+    while (node.prev) {
+      path2.unshift(node.tile);
+      node = data.get(node.prev);
+    }
+    return path2;
   }
 
   // src/utils/gameevents.ts
@@ -38983,8 +39048,18 @@ ${parts.join("\n")}
       actionsFull: 3
     };
   }
+  function movePawn(pawn, hex) {
+    const path2 = pathfind(pawn.coord, hex);
+    while (hasActionsLeft(pawn) && path2.length > 0) {
+      pawn.coord = path2.shift();
+      pawn.actionsLeft -= 1;
+    }
+  }
   function pawnOnTile(world, hex) {
     return world.pawns.find((pawn) => hexEqual(pawn.coord, hex));
+  }
+  function hasActionsLeft(pawn) {
+    return pawn.actionsLeft > 0;
   }
   function pawnCanDoAction(pawn, action) {
     if (pawn.actionsLeft < action.actionCost) {
@@ -39095,12 +39170,7 @@ ${parts.join("\n")}
         w2.selectedPawn = w2.pawns.findIndex((p2) => hexEqual(p2.coord, hex));
       } else {
         const pawn = w2.pawns[w2.selectedPawn];
-        if (pawn.actionsLeft > 0) {
-          if (hexDistance(pawn.coord, hex) <= 1) {
-            pawn.coord = hex;
-          }
-          pawn.actionsLeft -= 1;
-        }
+        movePawn(pawn, hex);
         if (pawn.actionsLeft === 0) {
           w2.selectedPawn = (w2.selectedPawn + 1) % w2.pawns.length;
         }
@@ -39187,8 +39257,7 @@ ${parts.join("\n")}
     app.viewport.addChild(GameView());
     app.viewport.fit();
     const el = document.getElementById("selected");
-    use((w2) => w2.pawns[w2.selectedPawn].actionsLeft, () => {
-      const pawn = WORLD.pawns[WORLD.selectedPawn];
+    use((w2) => w2.pawns[w2.selectedPawn], (pawn) => {
       el?.replaceChildren(
         m3("label", `Selected: ${capitalize(pawn.kind)} Pawn`),
         m3("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`),

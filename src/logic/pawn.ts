@@ -1,5 +1,6 @@
 import { Hex, hexDistance, hexEqual } from "../utils/hex"
 import { capitalize } from "../utils/misc"
+import { pathfind } from "../utils/pathfinding"
 import { update, WORLD, World } from "./world"
 
 export interface Pawn {
@@ -23,13 +24,12 @@ export function Pawn(coord: Hex): Pawn {
 }
 
 export function movePawn(pawn: Pawn, hex: Hex) {
-    if (hasActionsLeft(pawn) && hexDistance(pawn.coord, hex) <= 1) {
-        pawn.coord = hex
-        pawn.actionsLeft -= 1
-        return true
-    }
+    const path = pathfind(pawn.coord, hex)
 
-    return false
+    while (hasActionsLeft(pawn) && path.length > 0) {
+        pawn.coord = path.shift()!
+        pawn.actionsLeft -= 1
+    }
 }
 
 export function pawnOnTile(world: World, hex: Hex) {

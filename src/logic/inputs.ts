@@ -1,5 +1,5 @@
 import { Hex, hexDistance, hexEqual } from "../utils/hex"
-import { pawnOnTile } from "./pawn"
+import { movePawn, pawnOnTile } from "./pawn"
 import { update } from "./world"
 
 export function endturn() {
@@ -15,14 +15,10 @@ export function onclick(hex: Hex) {
         if (pawnOnTile(w, hex)) {
             w.selectedPawn = w.pawns.findIndex((p) => hexEqual(p.coord, hex))
         } else {
-            // Move selected pawn
             const pawn = w.pawns[w.selectedPawn]
-            if (pawn.actionsLeft > 0) {
-                if (hexDistance(pawn.coord, hex) <= 1) {
-                    pawn.coord = hex
-                }
-                pawn.actionsLeft -= 1
-            }
+
+            // Move selected pawn
+            movePawn(pawn, hex)
 
             // Select next pawn
             if (pawn.actionsLeft === 0) {

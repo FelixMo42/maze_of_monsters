@@ -38,9 +38,9 @@ export default class App extends Application {
         this.stage.addChild(this.viewport)
         this.viewport.moveCenter(0, 0) // center
         this.viewport // plugings
-            // .drag()
-            // .pinch()
-            // .wheel()
+            .drag()
+            .pinch()
+            .wheel()
             // .decelerate()
     }
 

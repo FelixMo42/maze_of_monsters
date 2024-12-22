@@ -1,6 +1,6 @@
 import App from './app'
 import { endturn } from './logic/inputs'
-import { getPawnActions, Item, pawnDoAction } from './logic/pawn'
+import { getPawnActions, Item, Pawn, pawnDoAction } from './logic/pawn'
 import { WORLD } from './logic/world'
 import { capitalize } from './utils/misc'
 import { use } from './utils/use'
@@ -14,9 +14,7 @@ async function main() {
 
     // HTML stuff
     const el = document.getElementById("selected")
-    use(w => w.pawns[w.selectedPawn].actionsLeft, () => {
-        const pawn = WORLD.pawns[WORLD.selectedPawn]
-
+    use(w => w.pawns[w.selectedPawn], (pawn: Pawn) => {
         el?.replaceChildren(
             m("label", `Selected: ${capitalize(pawn.kind)} Pawn`),
             m("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`),

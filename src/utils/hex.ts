@@ -42,6 +42,10 @@ export function hexNeighbor(hex: Hex, direction: HexDirection) {
     return hexAdd(hex, hexDirectionVector(direction))
 }
 
+export function hexNeighbors(hex: Hex) {
+    return HexDirectionVectors.map((vec) => hexAdd(hex, vec))
+}
+
 // Distance
 
 export function hexDistance(a: Hex, b: Hex) {
