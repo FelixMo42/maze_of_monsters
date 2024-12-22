@@ -39010,17 +39010,17 @@ ${parts.join("\n")}
       }
     });
   }
-  function PawnJobAction(name, items = []) {
+  function PawnJobAction(name, items, effect = () => {
+  }) {
     return {
       name,
       items,
       type: "job",
       actionCost: 1,
-      effect: () => {
-      }
+      effect
     };
   }
-  function PawnUpgradeAction(name, items = []) {
+  function PawnUpgradeAction(name, items) {
     return {
       name: `UP: ${capitalize(name)}`,
       items,
@@ -39031,30 +39031,41 @@ ${parts.join("\n")}
       }
     };
   }
-  function getPawnActions(pawn) {
+  function getPawnJobActions(pawn) {
     if (pawn.kind === "basic") {
       return [
-        PawnJobAction("Hunt", [{ name: "food", amount: 1 }]),
-        PawnJobAction("Gather", [{ name: "food", amount: 1 }]),
-        PawnJobAction("Chop Wood", [{ name: "wood", amount: 1 }]),
-        PawnUpgradeAction("hunter", [{ name: "wood", amount: -2 }]),
-        PawnUpgradeAction("farmer", [{ name: "wood", amount: -2 }]),
-        PawnUpgradeAction("lumber", [{ name: "wood", amount: -2 }])
+        PawnJobAction("Hunt", [Item("food", 1)]),
+        PawnJobAction("Gather", [Item("food", 1)]),
+        PawnJobAction("Chop Wood", [Item("wood", 1)]),
+        PawnUpgradeAction("hunter", [Item("wood", -2)]),
+        PawnUpgradeAction("farmer", [Item("wood", -2)]),
+        PawnUpgradeAction("lumber", [Item("wood", -2)])
       ];
     } else if (pawn.kind === "hunter") {
       return [
-        PawnJobAction("Hunt", [{ name: "food", amount: 3 }])
+        PawnJobAction("Hunt", [Item("food", 3)])
       ];
     } else if (pawn.kind === "farmer") {
       return [
-        PawnJobAction("Gather", [{ name: "food", amount: 3 }])
+        PawnJobAction("Gather", [Item("food", 3)])
       ];
     } else if (pawn.kind === "lumber") {
       return [
-        PawnJobAction("Chop Wood", [{ name: "food", amount: 3 }])
+        PawnJobAction("Chop Wood", [Item("food", 3)])
       ];
     }
-    return [PawnJobAction("Error!", [])];
+    return [];
+  }
+  function getPawnActions(pawn) {
+    return [
+      ...getPawnJobActions(pawn),
+      PawnJobAction("Make a baby", [], () => {
+        WORLD.pawns.push(Pawn(pawn.coord));
+      })
+    ];
+  }
+  function Item(name, amount = 1) {
+    return { name, amount };
   }
   function pawnGetItemAmount(pawn, name) {
     return pawnItem(pawn, name)?.amount || 0;
@@ -39099,11 +39110,12 @@ ${parts.join("\n")}
 
   // src/utils/use.ts
   function use(data, cb) {
-    let memory = void 0;
+    let memory = "";
     function check(s2) {
-      const current = data(s2);
+      const result = data(s2);
+      const current = JSON.stringify(result);
       if (current !== memory) {
-        cb(current);
+        cb(result);
         memory = current;
       }
     }

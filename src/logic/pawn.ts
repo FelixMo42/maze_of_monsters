@@ -1,6 +1,6 @@
 import { Hex, hexDistance, hexEqual } from "../utils/hex"
 import { capitalize } from "../utils/misc"
-import { update, World } from "./world"
+import { update, WORLD, World } from "./world"
 
 export interface Pawn {
     coord: Hex,
@@ -31,7 +31,6 @@ export function movePawn(pawn: Pawn, hex: Hex) {
 
     return false
 }
-
 
 export function pawnOnTile(world: World, hex: Hex) {
     return world.pawns.find((pawn) => hexEqual(pawn.coord, hex))
@@ -86,17 +85,21 @@ export function pawnDoAction(pawn: Pawn, action: PawnAction) {
     })
 }
 
-export function PawnJobAction(name: string, items: Item[] = []): PawnAction {
+export function PawnJobAction(
+    name: string,
+    items: Item[],
+    effect: (pawn: Pawn) => void = () => {}
+): PawnAction {
     return {
         name,
         items,
         type: "job",
         actionCost: 1,
-        effect: () => {},
+        effect,
     }
 }
 
-export function PawnUpgradeAction(name: PawnKind, items: Item[] = []): PawnAction {
+export function PawnUpgradeAction(name: PawnKind, items: Item[]): PawnAction {
     return {
         name: `UP: ${capitalize(name)}`,
         items,
@@ -108,32 +111,41 @@ export function PawnUpgradeAction(name: PawnKind, items: Item[] = []): PawnActio
     }
 }
 
-export function getPawnActions(pawn: Pawn): PawnAction[] {
+export function getPawnJobActions(pawn: Pawn): PawnAction[] {
     if (pawn.kind === "basic") {
         return [
-            PawnJobAction("Hunt", [{ name: "food", amount: 1 }]),
-            PawnJobAction("Gather", [{ name: "food", amount: 1 }]),
-            PawnJobAction("Chop Wood", [{ name: "wood", amount: 1 }]),
+            PawnJobAction("Hunt", [Item("food", 1)]),
+            PawnJobAction("Gather", [Item("food", 1)]),
+            PawnJobAction("Chop Wood", [Item("wood", 1)]),
 
-            PawnUpgradeAction("hunter", [{ name: "wood", amount: -2 }]),
-            PawnUpgradeAction("farmer", [{ name: "wood", amount: -2 }]),
-            PawnUpgradeAction("lumber", [{ name: "wood", amount: -2 }]),
+            PawnUpgradeAction("hunter", [Item("wood", -2)]),
+            PawnUpgradeAction("farmer", [Item("wood", -2)]),
+            PawnUpgradeAction("lumber", [Item("wood", -2)]),
         ]
     } else if (pawn.kind === "hunter") {
         return [
-            PawnJobAction("Hunt", [{ name: "food", amount: 3 }]),
+            PawnJobAction("Hunt", [Item("food", 3)]),
         ]
     } else if (pawn.kind === "farmer") {
         return [
-            PawnJobAction("Gather", [{ name: "food", amount: 3 }]),
+            PawnJobAction("Gather", [Item("food", 3)]),
         ]
     } else if (pawn.kind === "lumber") {
         return [
-            PawnJobAction("Chop Wood", [{ name: "food", amount: 3 }]),
+            PawnJobAction("Chop Wood", [Item("food", 3)]),
         ]
     }
 
-    return [PawnJobAction("Error!", [])]
+    return []
+}
+
+export function getPawnActions(pawn: Pawn): PawnAction[] {
+    return [
+        ...getPawnJobActions(pawn),
+        PawnJobAction("Make a baby", [], () => {
+            WORLD.pawns.push(Pawn(pawn.coord))
+        }),
+    ]
 }
 
 // Items
@@ -141,6 +153,10 @@ export function getPawnActions(pawn: Pawn): PawnAction[] {
 export interface Item {
     name: "wood" | "food",
     amount: number,
+}
+
+export function Item(name: Item["name"], amount: number = 1): Item {
+    return { name, amount }
 }
 
 export type ItemName = Item["name"]

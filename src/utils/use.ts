@@ -2,12 +2,13 @@ import { update, WORLD, World } from "../logic/world"
 import { on } from "./gameevents"
 
 export function use<T>(data: (s: World) => T, cb: (t: T) => void) {
-    let memory: T | undefined = undefined
+    let memory: string = ""
 
     function check(s: World) {
-        const current = data(s)
+        const result = data(s)
+        const current = JSON.stringify(result)
         if (current !== memory) {
-            cb(current)
+            cb(result)
             memory = current
         }
     }
