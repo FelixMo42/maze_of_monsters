@@ -25,7 +25,7 @@ function createWorld({ mapSize }: { mapSize: number }): World {
         selectedPawn: 0,
         users: [{
             name: "Player 1",
-            items: [],
+            items: [ Item("food", 3) ],
         }],
         tiles,
         pawns,

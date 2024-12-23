@@ -27,7 +27,7 @@ function ResourcesHtml() {
         el.replaceChildren(
             m("label", "Resources"),
             ...user.items.map(item =>
-                m("p", `${item.name}: ${item.amount}`)
+                m("p", `${capitalize(item.name)}: ${item.amount}`)
             )
         )
     })
@@ -46,7 +46,10 @@ function SelectedHtml() {
         el.replaceChildren(
             m("label", `Selected: ${capitalize(pawn.kind)} Pawn`),
             m("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`),
-            m("p", `Statues: ${pawn.statuses.join(", ")}`),
+            m("p", `Population: ${pawn.population}`),
+            
+            pawn.statuses.length === 0 ? "" :
+                m("p", `Statues: ${pawn.statuses.join(", ")}`),
             
             ...getPawnActions(pawn).map(action =>
                 button(
