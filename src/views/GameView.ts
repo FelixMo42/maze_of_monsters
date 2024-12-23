@@ -1,8 +1,9 @@
 import { Container } from "pixi.js"
 import { World } from "../logic/world"
-import { use } from "../utils/use"
+import { captureUses, use } from "../utils/use"
 import { TileView } from "./TileView"
 import { PawnView } from "./PawnView"
+import { clearCBs } from "../utils/gameevents"
 
 export function GameView() {
     const c = new Container()
@@ -16,13 +17,16 @@ export function GameView() {
 function WorldArrayView<T>(data: (w: World) => T[], draw: (t: T) => Container) {
     const sprites = new Map<T, Container>()
     const container = new Container()
+    const callbacks = new Map<T, Function[]>()
 
     use(data, array => {
         // Add new sprites
         for (const t of array) {
             if (!sprites.has(t)) {
-                sprites.set(t, draw(t))
-                container.addChild(sprites.get(t)!)
+                callbacks.set(t, captureUses(() => {
+                    sprites.set(t, draw(t))
+                    container.addChild(sprites.get(t)!)
+                }))
             }
         }
 
@@ -31,6 +35,7 @@ function WorldArrayView<T>(data: (w: World) => T[], draw: (t: T) => Container) {
             if (!array.includes(t)) {
                 sprite.destroy()
                 sprites.delete(t)
+                clearCBs(...callbacks.get(t)!)
             }
         }
     })

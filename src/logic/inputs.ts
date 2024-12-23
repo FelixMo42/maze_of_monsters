@@ -1,12 +1,22 @@
-import { Hex, hexDistance, hexEqual } from "../utils/hex"
-import { movePawn, pawnOnTile } from "./pawn"
+import { Hex, hexEqual } from "../utils/hex"
+import { givePawnItem, givePawnStatus, Item, killPawn, movePawn, pawnGetItemAmount, pawnHasStatus, pawnOnTile } from "./pawn"
 import { update } from "./world"
 
 export function endturn() {
     update((w) => {
         w.pawns.forEach((p) => {
-            p.actionsLeft = p.actionsFull
+            if (pawnGetItemAmount(p, "food") >= 1) {
+                givePawnItem(p, Item("food", -1))
+                p.actionsLeft = p.actionsFull
+            } else if (!pawnHasStatus(p, "starving")) {
+                givePawnStatus(p, "starving")
+                p.actionsLeft = p.actionsFull - 1
+            } else {
+                killPawn(p)
+            }
         })
+        
+        w.selectedPawn = 0
     })
 }
 

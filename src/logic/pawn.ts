@@ -6,10 +6,13 @@ import { update, WORLD, World } from "./world"
 export interface Pawn {
     coord: Hex,
     kind: "basic" | "hunter" | "farmer" | "lumber",
+    statuses: PawnStatus[],
     items: Item[],
     actionsLeft: number,
     actionsFull: number,
 }
+
+export type PawnStatus = "starving"
 
 export type PawnKind = Pawn["kind"]
 
@@ -17,9 +20,10 @@ export function Pawn(coord: Hex): Pawn {
     return {
         coord,
         kind: "basic",
+        statuses: [],
         items: [],
-        actionsLeft: 3,
-        actionsFull: 3,
+        actionsLeft: 2,
+        actionsFull: 2,
     }
 }
 
@@ -38,6 +42,14 @@ export function pawnOnTile(world: World, hex: Hex) {
 
 export function hasActionsLeft(pawn: Pawn) {
     return pawn.actionsLeft > 0
+}
+
+export function killPawn(pawn: Pawn) {
+    WORLD.pawns = WORLD.pawns.filter((p) => p !== pawn)
+}
+
+export function pawnIsDead(pawn: Pawn) {
+    return !WORLD.pawns.includes(pawn)
 }
 
 // Actions
@@ -161,7 +173,7 @@ export function Item(name: Item["name"], amount: number = 1): Item {
 
 export type ItemName = Item["name"]
 
-function pawnGetItemAmount(pawn: Pawn, name: ItemName) {
+export function pawnGetItemAmount(pawn: Pawn, name: ItemName) {
     return pawnItem(pawn, name)?.amount || 0
 }
 
@@ -175,4 +187,20 @@ export function givePawnItem(pawn: Pawn, item: Item) {
     } else {
         pawn.items.push(item)
     }
+}
+
+// Statues
+
+export function pawnHasStatus(pawn: Pawn, status: PawnStatus) {
+    return pawn.statuses.includes(status)
+}
+
+export function givePawnStatus(pawn: Pawn, status: PawnStatus) {
+    if (!pawnHasStatus(pawn, status)) {
+        pawn.statuses.push(status)
+    }
+}
+
+export function removePawnStatus(pawn: Pawn, status: PawnStatus) {
+    pawn.statuses = pawn.statuses.filter((s) => s !== status)
 }

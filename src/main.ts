@@ -1,7 +1,6 @@
 import App from './app'
 import { endturn } from './logic/inputs'
 import { getPawnActions, Item, Pawn, pawnDoAction } from './logic/pawn'
-import { WORLD } from './logic/world'
 import { capitalize } from './utils/misc'
 import { use } from './utils/use'
 import { GameView } from './views/GameView'
@@ -19,6 +18,7 @@ async function main() {
             m("label", `Selected: ${capitalize(pawn.kind)} Pawn`),
             m("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`),
             m("p", `Items: ${pawn.items.filter(i => i.amount).map(i => `${i.name} x${i.amount}`).join(", ")}`),
+            m("p", `Statues: ${pawn.statuses.join(", ")}`),
             
             ...getPawnActions(pawn).map(action =>
                 button(

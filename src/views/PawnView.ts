@@ -1,7 +1,7 @@
 import { Graphics, Text } from "pixi.js"
 import { hex2pixel } from "../utils/hex"
 import { use } from "../utils/use"
-import { Pawn } from "../logic/pawn"
+import { Pawn, pawnIsDead } from "../logic/pawn"
 import { onclick } from "../logic/inputs"
 
 export function PawnView(pawn: Pawn) {
@@ -12,6 +12,10 @@ export function PawnView(pawn: Pawn) {
 
     // Update position
     use(() => pawn.coord, () => {
+        if (pawnIsDead(pawn)) {
+            console.log("DEAD!!!")
+        }
+
         const { x, y } = hex2pixel(pawn.coord)
         g.x = x
         g.y = y
@@ -19,6 +23,10 @@ export function PawnView(pawn: Pawn) {
     
     // Am I selected?
     use((s) => s.pawns[s.selectedPawn] === pawn, (selected) => {
+        if (pawnIsDead(pawn)) {
+            console.log("DEAD!!!")
+        }
+
         if (selected) {
             g   .clear()
                 .circle(0, 0, 30)
