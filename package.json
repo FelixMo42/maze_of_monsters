@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild ./src/main.ts --bundle --minify --outfile=res/index.js --watch"
+    "build": "esbuild ./src/main.ts --bundle --minify --sourcemap --outfile=res/index.js --watch"
   },
   "author": "",
   "license": "ISC",

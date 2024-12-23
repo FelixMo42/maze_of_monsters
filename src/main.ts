@@ -12,9 +12,16 @@ async function main() {
     app.viewport.fit() 
 
     // HTML stuff
-    const el = document.getElementById("selected")
+    const el = document.getElementById("selected")!
     use(w => w.pawns[w.selectedPawn], (pawn: Pawn) => {
-        el?.replaceChildren(
+        if (!pawn) {
+            el.style.display = "none";
+            return
+        } else {
+            el.style.display = "";
+        }
+
+        el.replaceChildren(
             m("label", `Selected: ${capitalize(pawn.kind)} Pawn`),
             m("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`),
             m("p", `Items: ${pawn.items.filter(i => i.amount).map(i => `${i.name} x${i.amount}`).join(", ")}`),

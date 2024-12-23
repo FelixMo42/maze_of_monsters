@@ -26,6 +26,7 @@ export function onclick(hex: Hex) {
             w.selectedPawn = w.pawns.findIndex((p) => hexEqual(p.coord, hex))
         } else {
             const pawn = w.pawns[w.selectedPawn]
+            if (!pawn) return
 
             // Move selected pawn
             movePawn(pawn, hex)

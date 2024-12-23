@@ -19,10 +19,10 @@ export function on<A, B>(hook: (_: A) => B, cb: (_: B) => void) {
 }
 
 export function clearCBs(...cbs: Function[]) {
-    for (const cbs of GAME_EVENTS.values()) {
+    for (const event of GAME_EVENTS.values()) {
         for (const cb of cbs) {
-            if (cbs.includes(cb)) {
-                cbs.splice(cbs.indexOf(cb), 1)
+            if (event.includes(cb)) {
+                event.splice(event.indexOf(cb), 1)
             }
         }
     }
