@@ -1,6 +1,7 @@
 import App from './app'
 import { endturn } from './logic/inputs'
-import { getPawnActions, Item, Pawn, pawnDoAction } from './logic/pawn'
+import { Item } from './logic/item'
+import { getPawnActions, Pawn, pawnDoAction } from './logic/pawn'
 import { capitalize } from './utils/misc'
 import { use } from './utils/use'
 import { GameView } from './views/GameView'
@@ -12,6 +13,27 @@ async function main() {
     app.viewport.fit() 
 
     // HTML stuff
+    SelectedHtml()
+    ResourcesHtml()
+
+    document.getElementById("endturn")!.onclick = () => {
+        endturn()
+    }
+}
+
+function ResourcesHtml() {
+    const el = document.getElementById("items")!
+    use(w => w.users[0], (user) => {
+        el.replaceChildren(
+            m("label", "Resources"),
+            ...user.items.map(item =>
+                m("p", `${item.name}: ${item.amount}`)
+            )
+        )
+    })
+}
+
+function SelectedHtml() {
     const el = document.getElementById("selected")!
     use(w => w.pawns[w.selectedPawn], (pawn: Pawn) => {
         if (!pawn) {
@@ -24,7 +46,6 @@ async function main() {
         el.replaceChildren(
             m("label", `Selected: ${capitalize(pawn.kind)} Pawn`),
             m("p", `Actions: ${pawn.actionsLeft}/${pawn.actionsFull}`),
-            m("p", `Items: ${pawn.items.filter(i => i.amount).map(i => `${i.name} x${i.amount}`).join(", ")}`),
             m("p", `Statues: ${pawn.statuses.join(", ")}`),
             
             ...getPawnActions(pawn).map(action =>
@@ -35,10 +56,6 @@ async function main() {
             ),
         )
     })
-
-    document.getElementById("endturn")!.onclick = () => {
-        endturn()
-    }
 }
 
 function displayItems(o: { items: Item[] }) {

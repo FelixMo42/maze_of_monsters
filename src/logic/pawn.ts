@@ -1,6 +1,7 @@
 import { Hex, hexDistance, hexEqual } from "../utils/hex"
 import { capitalize } from "../utils/misc"
 import { pathfind } from "../utils/pathfinding"
+import { getItemAmount, Item, updateUserItem } from "./item"
 import { update, WORLD, World } from "./world"
 
 export interface Pawn {
@@ -70,7 +71,7 @@ function pawnCanDoAction(pawn: Pawn, action: PawnAction) {
 
     // Make sure we have enough items
     for (const item of action.items) {
-        if (pawnGetItemAmount(pawn, item.name) < -item.amount) {
+        if (getItemAmount(WORLD.users[0], item.name) < -item.amount) {
             return false
         }
     }
@@ -79,7 +80,9 @@ function pawnCanDoAction(pawn: Pawn, action: PawnAction) {
 }
 
 export function pawnDoAction(pawn: Pawn, action: PawnAction) {
-    update((_w) => {
+    update((w) => {
+        const user = w.users[0]
+
         if (pawnCanDoAction(pawn, action)) {
             // Use actions
             pawn.actionsLeft -= action.actionCost
@@ -87,7 +90,7 @@ export function pawnDoAction(pawn: Pawn, action: PawnAction) {
             // Give/use items
             if (action.items) {
                 action.items.forEach((item) => {
-                    givePawnItem(pawn, item)
+                    updateUserItem(user, item)
                 })
             }
 
@@ -158,35 +161,6 @@ export function getPawnActions(pawn: Pawn): PawnAction[] {
             WORLD.pawns.push(Pawn(pawn.coord))
         }),
     ]
-}
-
-// Items
-
-export interface Item {
-    name: "wood" | "food",
-    amount: number,
-}
-
-export function Item(name: Item["name"], amount: number = 1): Item {
-    return { name, amount }
-}
-
-export type ItemName = Item["name"]
-
-export function pawnGetItemAmount(pawn: Pawn, name: ItemName) {
-    return pawnItem(pawn, name)?.amount || 0
-}
-
-export function pawnItem(pawn: Pawn, name: ItemName) {
-    return pawn.items.find((i) => i.name === name)
-}
-
-export function givePawnItem(pawn: Pawn, item: Item) {
-    if (pawnItem(pawn, item.name)) {
-        pawnItem(pawn, item.name)!.amount += item.amount
-    } else {
-        pawn.items.push(item)
-    }
 }
 
 // Statues
