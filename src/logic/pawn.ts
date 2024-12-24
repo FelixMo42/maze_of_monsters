@@ -130,7 +130,7 @@ export function getPawnActions(pawn: Pawn): PawnAction[] {
             })
         }),
 
-        Action("Add Population", [], () => {
+        Action("Increase Population", [], () => {
             pawn.population += 1
         }),
     ]

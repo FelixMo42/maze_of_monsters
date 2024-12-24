@@ -28,7 +28,9 @@ export default class App extends Application {
         // Initilize the Pixijs app, and bind it to the window
         await super.init({
             background: this.background,
-            resizeTo: window
+            resizeTo: window,
+            antialias: true,
+            resolution: devicePixelRatio,
         })
 
         // Set up the camera
@@ -36,7 +38,11 @@ export default class App extends Application {
             events: this.renderer.events
         })
         this.stage.addChild(this.viewport)
-        this.viewport.moveCenter(0, 0) // center
+        this.viewport.moveCorner(
+            -window.innerWidth / 4,
+            -window.innerHeight / 4
+        )
+        this.viewport.scale = 1 / devicePixelRatio
         this.viewport // plugings
             .drag()
             .pinch()

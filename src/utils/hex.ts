@@ -65,14 +65,14 @@ export function hex2pixel(hex: Hex) {
 
 // Range
 
-export function hexsInRange(size: number) {
+export function hexsInRange(size: number, base: Hex = Hex(0, 0)) {
     const hexs: Hex[] = []
     
     for (let q = -size; q <= size; q++) {
         for (let r = -size; r <= size; r++) {
             for (let s = -size; s <= size; s++) {
                 if (q + r + s === 0) {
-                    hexs.push(Hex(q, r))
+                    hexs.push(hexAdd(Hex(q, r), base))
                 }
             }
         }

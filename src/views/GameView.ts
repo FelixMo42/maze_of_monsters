@@ -4,11 +4,13 @@ import { captureUses, use } from "../utils/use"
 import { TileView } from "./TileView"
 import { PawnView } from "./PawnView"
 import { clearCBs } from "../utils/gameevents"
+import { TileOverlayView } from "./TileOverlayView"
 
 export function GameView() {
     const c = new Container()
 
     c.addChild(WorldArrayView(s => s.tiles, TileView))
+    c.addChild(TileOverlayView())
     c.addChild(WorldArrayView(s => s.pawns, PawnView))
 
     return c

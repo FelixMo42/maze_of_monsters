@@ -10,7 +10,6 @@ async function main() {
     // Pixi.js stuff
     const app = await App.createAndInit("black")
     app.viewport.addChild(GameView())
-    app.viewport.fit() 
 
     // HTML stuff
     SelectedHtml()
