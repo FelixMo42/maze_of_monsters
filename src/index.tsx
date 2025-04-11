@@ -108,6 +108,7 @@ function Player({player}: {player: Character}) {
 				onClick={act(action)}
 			/>
 		)}
+			<img src="./assets/face.png"></img>
 	</section>
 }
 
