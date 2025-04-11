@@ -14,6 +14,10 @@
 	-webkit-text-size-adjust: 100%;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	margin: 0;
 	display: flex;
@@ -31,7 +35,6 @@ section {
 	background-color: teal;
 	border-radius: 5px;
 	padding: 10px;
-	margin: 10px;
 }
 
 section *:first-child {
@@ -74,9 +77,4 @@ input[type="button"]:focus {
 	background-color: rgba(0, 0, 0, 0.2);
 	text-align: center;
 	font-weight: bold;
-}
-
-img {
-	width: 450px;
-	height: 200px;
 }

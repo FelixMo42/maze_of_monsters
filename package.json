@@ -1,6 +1,6 @@
 {
-	"private": true,
 	"type": "module",
+	"homepage": "./",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
