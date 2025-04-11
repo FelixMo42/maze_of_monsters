@@ -49,8 +49,8 @@ const MODE = signal<Mode>({ kind: "normal" });
 const STATE = signal<State>({
 	players: [{
 		name: "Peter",
-		hp: 100,
-		maxHp: 100,
+		hp: 120,
+		maxHp: 120,
 		actions: [
 			{
 				name: "KICK ASS",
