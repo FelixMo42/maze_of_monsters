@@ -40,5 +40,6 @@ export function Inventory() {
                 border: "1px solid white",
             }}></div>
         </div>
+        <p>GP: 1</p>
     </Tab>
 }
