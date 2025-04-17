@@ -1,6 +1,5 @@
 import { signal } from "@preact/signals"
-import { clone, Tab } from "./utils"
-import { Inventory } from "./inventory"
+import { clone, Tab } from "../utils"
 
 function dealDamage(amu: number): Effect {
     return {
