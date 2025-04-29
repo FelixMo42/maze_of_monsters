@@ -1,84 +1,44 @@
 import { signal } from "@preact/signals"
-import { clone, Tab } from "../utils"
-
-function dealDamage(amu: number): Effect {
-    return {
-        apply: (t) => {
-            t.hp -= amu
-        }
-    }
-}
-
-function heal(amu: number): Effect {
-    return {
-        apply: (t) => {
-            t.hp = Math.min(t.hp + amu, t.maxHp)
-        }
-    }
-}
-
-interface Effect {
-    apply: (target: Character) => void
-}
-
-interface Action {
-    name: string
-    target: "enemy" | "self"
-    effect: Effect
-}
-
-interface Character {
-    name: string
-    hp: number
-    maxHp: number
-    actions: Action[]
-}
+import { Tab } from "../utils"
+import { Action, Character, Cleric, context, dragData, Enemy, fire, Paladin, Player, Warrior } from "../characters"
 
 interface State {
-    players: Character[],
-    targets: Character[],
+    room: number,
+    players: Player[],
+    enemies: Enemy[],
 }
 
-const STATE = signal<State>({
-    players: [{
-        name: "Peter",
-        hp: 120,
-        maxHp: 120,
-        actions: [
-            {
-                name: "KICK ASS",
-                target: "enemy",
-                effect: dealDamage(10)
-            }
-        ]
-    }],
-    targets: [{
-        name: "Guard",
-        hp: 1000,
-        maxHp: 1000,
-        actions: [],
-    }],
+class Goblin extends Character {
+    name: string = "goblin"
+    hp: number = 100
+
+    constructor(number: number) {
+        super()
+
+        this.name = `goblin #${number}`
+        this.hp = 100 + 10 * (number - 1)
+    }
+}
+
+function init<T extends Character>(...arr: T[]): T[] {
+    arr.forEach(char => char.init())
+    return arr
+}
+
+export const STATE = signal<State>({
+    room: 1,
+    players: init(new Paladin(), new Warrior(), new Cleric()),
+    enemies: init(new Goblin(1)),
 })
 
-function ai() {
-    dealDamage(30).apply(STATE.value.players[0])
+function selectRandom<T>(arr: T[], filter: (t: T) => boolean): T {
+    const a = arr.filter(filter)
+    return a[Math.floor(Math.random() * a.length)]
 }
 
-function act(action: Action) {
-    return () => {
-        // apply player action
-        if (action.target === "self") {
-            action.effect.apply(STATE.value.players[0])
-        } else {
-            action.effect.apply(STATE.value.targets[0])
-        }
-
-        // enemy action
-        ai()
-
-        // trigger update
-        STATE.value = clone(STATE.value)
-    }
+function ai() {
+    const target = selectRandom(STATE.value.players, (t) => t.hp > 0)
+    target.hurt(10)
 }
 
 function HPBar(params: { hp: number, maxHP: number }) {
@@ -90,49 +50,77 @@ function HPBar(params: { hp: number, maxHP: number }) {
     }}>HP: {params.hp}/{params.maxHP}</div>
 }
 
-function Player({player}: {player: Character}) {
-	return <section style={{ height: "100%" }}>
-		<h1>{player.name}</h1>
-		<HPBar hp={player.hp} maxHP={player.maxHp} />
-		{player.actions.map(action =>
-			<input
-				type='button'
-				value={action.name}
-				onClick={act(action)}
-			/>
-		)}
-	</section>
+export function apply(source: Character, action: Action, target: Character) {
+    action.effect(target)
+
+    ai()
+
+    fire({
+        kind: "END_TURN",
+        action,
+        target,
+        source,
+    })
+
+    STATE.value = { ...STATE.value }
 }
 
-function Target({target}: { target: Character }) {
+function PlayerView({player}: {player: Player}) {
+    context.source = player
+
+    if (player.hp <= 0) {
+        return <div
+            style={{ height: "100%", flex: 1 }}
+            onDrop={(e) => {
+                e.preventDefault()
+                dragData.value(player)
+            }}
+            onDragOver={(e) => e.preventDefault()}
+        >
+            <h1 style={{ textAlign: "center" }}>{player.name}</h1>
+            <HPBar hp={player.hp} maxHP={player.maxHp} />
+            <p><b>DEAD</b></p>
+        </div>
+    }
+
+	return <div
+        style={{ height: "100%", flex: 1 }}
+        onDrop={(e) => {
+            e.preventDefault()
+            dragData.value(player)
+        }}
+        onDragOver={(e) => e.preventDefault()}
+    >
+		<h1 style={{ textAlign: "center" }}>{player.name}</h1>
+		<HPBar hp={player.hp} maxHP={player.maxHp} />
+		{player.actions()}
+	</div>
+}
+
+function Target({target}: { target: Enemy }) {
     return <section style={{ backgroundColor: "green" }}>
-        <h1>{target.name}</h1>
+        <h1 style={{ textAlign: "center" }}>{target.name}</h1>
         <HPBar hp={target.hp} maxHP={target.maxHp} />
-        <p>"If you want too ascend <u>The Tower of Gilgamesh</u>, you mush show me your <b><i>POWER</i></b>!!!!!!!!"</p>
-        <img
-            src="https://i.imgflip.com/9qcljw.jpg"
-            width="450"
-            height="200"
-        />
     </section>
 }
 
 export function Combat() {
 	const state = STATE.value
 
-	if (state.players[0].hp <= 0) {
-		return <main>
-			<p>YOU ARE DEAD :(</p>
-		</main>
-	}
+    if (state.enemies[0].hp <= 0) {
+        STATE.value.room += 1
+        STATE.value.enemies = init(new Goblin(STATE.value.room))
+    }
 
-	return <Tab name="COMBAT">
-        <div style={{ flex: 1 }}>
-            {state.players.map(player => <Player player={player} />)}
-        </div>
+	return <div>
+        <div style={{ gap: "10px", display: "flex", flexDirection: "column", flex: 1, }}>
+            <div style={{ flex: 1 }}>
+                {state.enemies.map(target => <Target target={target} />)}
+            </div>
 
-        <div style={{ flex: 1 }}>
-            {state.targets.map(target => <Target target={target} />)}
+            <div style={{ flex: 1, display: "flex", gap: "10px" }}>
+                {state.players.map(player => <PlayerView player={player} />)}
+            </div>
         </div>
-    </Tab>
+    </div>
 }

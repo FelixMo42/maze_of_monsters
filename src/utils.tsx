@@ -4,11 +4,6 @@ export function Tab(props: { name: string, children }) {
         display: "flex",
 		gap: "10px",
     }}>
-        <h1 style={{
-            writingMode: "vertical-rl",
-            transform: "rotate(180deg)",
-            textAlign: "center"
-        }}>{props.name}</h1>
         {props.children}
     </div>
 }
