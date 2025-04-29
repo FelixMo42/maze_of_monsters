@@ -23,13 +23,11 @@ const Action = (action: Action) => {
     const source = context.source
 
     const trigger = (target: Character) => {
-        action.effect(STATE.value.enemies[0])
         apply(source, action, target)
     }
 
-    return <input
-        type='button'
-        value={action.name.toUpperCase()}
+    return <div
+        class="action"
         onClick={() => {
             if (action.target === "enemy") {
                 trigger(STATE.value.enemies[0])
@@ -39,7 +37,7 @@ const Action = (action: Action) => {
         onDragStart={() => {
             dragData.value = trigger
         }}
-    />
+    >{action.name.toUpperCase()}</div>
 }
 
 type GameEvent
@@ -68,6 +66,10 @@ export abstract class Character {
     // EFFECTS //
 
     hurt(damage: number) {
+        if (this.$defender) {
+            return this.$defender.hurt(damage)   
+        }
+
         this.hp = Math.max(Math.round(this.hp - damage), 0)
     }
 
@@ -80,6 +82,21 @@ export abstract class Character {
 
     revive() {
         this.hp = this.maxHp
+    }
+
+    $defending: Character | undefined
+    $defender: Character | undefined
+    defend(defender: Character) {
+        if (this.$defender) {
+            return
+        }
+
+        if (defender.$defending) {
+            defender.$defending.$defender = undefined
+        }
+
+        defender.$defending = this
+        this.$defender = defender
     }
 }
 
@@ -96,10 +113,10 @@ export class Paladin extends Player {
     actions() {
         return <div>
             <Action
-                name="defend"
+                name={this.$defending ? `defending: ${this.$defending.name}` : "defend"}
                 target="player"
                 effect={(target) => {
-                    
+                    target.defend(this)
                 }}
              />
             {/* <Action

@@ -51,7 +51,7 @@ h1 {
 
 /**/
 
-input[type="button"] {
+.action {
 	display: block;
 	border: none;
 	background: none;
@@ -64,6 +64,8 @@ input[type="button"] {
 	font-family: inherit;
 	border: 2px solid white;
 	background-color: rgba(0, 0, 0, 0.2);
+	text-align: center;
+	user-select: none;
 }
 
 input[type="button"]:focus {
