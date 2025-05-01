@@ -6,6 +6,8 @@ export type GameEvent
         action: Action,
         source: Character,
         target: Character,
+    } | {
+        kind: "NEW_ROOM"
     }
 
 const chars: Character[] = []

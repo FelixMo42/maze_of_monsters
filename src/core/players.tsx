@@ -71,6 +71,10 @@ export class Warrior extends Player {
                 this.combo = 1
             }
         }
+
+        if (event.kind === "NEW_ROOM") {
+            this.combo = 1
+        }
     }
 
     actions() {

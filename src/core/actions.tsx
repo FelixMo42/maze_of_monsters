@@ -34,11 +34,23 @@ export const Action = (action: Action) => {
     >{action.name.toUpperCase()}</div>
 }
 
+export function isInCombat() {
+    // We are in combat as long at least one enemey is still alive
+    return STATE.value.enemies.some(enemy => enemy.hp > 0)
+}
+
 export function apply(source: Character, action: Action, target: Character) {
+    // You can only do actions while in combat
+    // Aka: no healing between fights!
+    if (!isInCombat()) return
+
+    // Apply the action to the target
     action.effect(target)
 
+    // Enemy does it's move
     ai()
 
+    // Fire an even telling the world what happened
     fire({
         kind: "END_TURN",
         action,
@@ -46,6 +58,7 @@ export function apply(source: Character, action: Action, target: Character) {
         source,
     })
 
+    // Trigger a graphics redraw
     STATE.value = { ...STATE.value }
 }
 

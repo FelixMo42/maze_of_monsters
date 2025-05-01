@@ -62,7 +62,7 @@ function Target({target}: { target: Enemy }) {
     return <div style={{ backgroundColor: "green",  textAlign: "center", color: "white", padding: "10px", borderRadius: "5px", flex: 1, display: "flex", flexDirection: "column" }}>
         <div style={{flex: 1}}>
             {target.hp > 0
-                ? <h2>"A journy of a thousand miles begins with a single step." <span style={{ fontWeight: "bold", fontStyle: "italics" }}>-Goblin #1</span></h2>
+                ? <h2>"A journy of a thousand miles begins with a single step." <span style={{ fontWeight: "bold", fontStyle: "italics" }}>-{target.name}</span></h2>
                 : <div>
                     <h2>Victory!</h2>
                     <div>
