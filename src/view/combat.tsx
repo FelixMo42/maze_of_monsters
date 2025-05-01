@@ -1,8 +1,9 @@
 import { signal } from "@preact/signals"
 import { Cleric, Paladin, Player, Warrior } from "../core/players"
-import { Goblin, Enemy } from "../core/enemies"
+import { Goblin, Enemy, kickOpenTheDoor } from "../core/enemies"
 import { init } from "../core/characters"
 import { context, dragData } from "../core/actions"
+import { ItemSlot } from "./inventory"
 
 interface State {
     room: number,
@@ -65,8 +66,9 @@ function Target({target}: { target: Enemy }) {
                 : <div>
                     <h2>Victory!</h2>
                     <div>
-                        
+                        <ItemSlot id="reward1" />
                     </div>
+                    <button onClick={kickOpenTheDoor}>Kick open the door</button>
                 </div>
             }
         </div>

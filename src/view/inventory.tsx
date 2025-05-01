@@ -1,5 +1,4 @@
 import { signal } from "@preact/signals";
-import { Tab } from "./utils";
 
 interface Item {
     name: string
@@ -19,7 +18,7 @@ items.set("#1", {
     image: "./pike.png"
 })
 
-function Slot({ id }: { id: string }) {
+export function ItemSlot({ id }: { id: string }) {
     items_signal.value
 
     console.log("RERENDER")
@@ -79,7 +78,7 @@ const rowStyle = {
 }
 
 export function Inventory() {
-    return <Tab name="INVENTORY">
+    return <div>
         <div style={{ display: "flex", flexDirection: "row", flex: 1 }}>
             <div style={{
                 backgroundImage: `url("./peter.png")`,
@@ -92,10 +91,10 @@ export function Inventory() {
                 padding: "10px",
                 ...rowStyle
             }}>
-                <Slot id="head" />
-                <Slot id="chest" />
-                <Slot id="legs" />
-                <Slot id="feet" />
+                <ItemSlot id="head" />
+                <ItemSlot id="chest" />
+                <ItemSlot id="legs" />
+                <ItemSlot id="feet" />
             </div>
             <div style={{
                 backgroundColor: "lightgrey",
@@ -109,10 +108,10 @@ export function Inventory() {
             }}>
                 {Array(5).fill(0).map((_, x) =>
                     <div style={rowStyle}>
-                        {Array(4).fill(0).map((_, y) => <Slot id={`#${x * 5 + y}`} />)}
+                        {Array(4).fill(0).map((_, y) => <ItemSlot id={`#${x * 5 + y}`} />)}
                     </div>
                 )}
             </div>
         </div>
-    </Tab>
+    </div>
 }
