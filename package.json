@@ -1,16 +1,22 @@
 {
-    "name": "idle",
-    "version": "0.4.0",
-    "description": "a dumb little idle name",
-    "main": "src/index.tsx",
-    "scripts": {
-        "build": "node lib/build.mjs",
-        "watch": "node lib/build.mjs --watch",
-        "serve": "python3 -m http.server"
-    },
-    "author": "Felix Moses <FelixMo42>",
-    "license": "WTFPL",
-    "dependencies": {
-        "esbuild": "0.21.4"
-    }
+	"name": "maze_of_monsters",
+	"version": "0.1.0",
+	"homepage": "./",
+	"author": "Felix Moses <felix@tacocat.com>",
+	"license": "CC",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@preact/signals": "^2.0.2",
+		"preact": "^10.25.3"
+	},
+	"devDependencies": {
+		"@preact/preset-vite": "^2.9.3",
+		"typescript": "^5.8.2",
+		"vite": "^6.0.4"
+	}
 }

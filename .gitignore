@@ -1,6 +1,5 @@
-// dependencies
+# npm
 node_modules
-package-lock.json
 
-// build files
-out
+# vscode
+.vscode/*
