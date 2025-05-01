@@ -1,9 +1,15 @@
 import { signal } from "@preact/signals"
 import { Cleric, Paladin, Player, Warrior } from "../core/players"
-import { Goblin, Enemy, kickOpenTheDoor } from "../core/enemies"
+import { Enemy, Goblin, kickOpenTheDoor } from "../core/enemies"
 import { init } from "../core/characters"
-import { context, dragData } from "../core/actions"
+import { context } from "../core/actions"
 import { ItemSlot } from "./inventory"
+import { isOutOfNewItems } from "../core/items"
+import { getDragData } from "../core/drag"
+
+///////////
+// STATE //
+///////////
 
 interface State {
     room: number,
@@ -17,70 +23,104 @@ export const STATE = signal<State>({
     enemies: init(new Goblin(1)),
 })
 
-function HPBar(params: { hp: number, maxHP: number }) {
-    const p = `${Math.floor(params.hp / params.maxHP * 100)}%`
-    const fg = `#C08081`
-    const bg = `rgba(0, 0, 0, 0.2)`
-    return <div class="bar" style={{
-        background: `linear-gradient(to right, ${fg} ${p}, ${bg} ${p})`
-    }}>HP: {params.hp}/{params.maxHP}</div>
+///////////////////////////
+// CAN YOU PASS THE BAR? //
+///////////////////////////
+
+interface BarProps {
+    hp: number
+    maxHP: number
+    fg?: string
+    bg?: string
 }
 
-function PlayerView({player}: {player: Player}) {
-    context.source = player
+function HPBar(props: BarProps) {
+    const p = `${Math.floor(props.hp / props.maxHP * 100)}%`
 
-    if (player.hp <= 0) {
-        return <div
-            style={{ height: "100%", flex: 1 }}
-            onDrop={(e) => {
-                e.preventDefault()
-                dragData.value(player)
-            }}
-            onDragOver={(e) => e.preventDefault()}
-        >
-            <h1 style={{ textAlign: "center" }}>{player.name}</h1>
-            <HPBar hp={player.hp} maxHP={player.maxHp} />
-            <p><b>DEAD</b></p>
-        </div>
+    const fg = props.fg ?? `#C08081`
+    const bg = props.bg ?? `rgba(0, 0, 0, 0.2)`
+    
+    const style = {
+        background: `linear-gradient(to right, ${fg} ${p}, ${bg} ${p})`
     }
+
+    return <div
+        class="bar"
+        style={style}
+    >HP: {props.hp}/{props.maxHP}</div>
+}
+
+/////////////////
+// PLAYER VIEW //
+/////////////////
+
+function PlayerView({ player }: { player: Player }) {
+    context.source = player
 
 	return <div
         style={{ height: "100%", flex: 1 }}
         onDrop={(e) => {
             e.preventDefault()
-            dragData.value(player)
+            getDragData("ACTION_TRIGGER")?.trigger(player)
         }}
         onDragOver={(e) => e.preventDefault()}
     >
 		<h1 style={{ textAlign: "center" }}>{player.name}</h1>
 		<HPBar hp={player.hp} maxHP={player.maxHp} />
-		{player.actions()}
+        <PlayerActionsView player={player} />
 	</div>
 }
 
-function Target({target}: { target: Enemy }) {
+function PlayerActionsView({ player }: { player: Player }) {
+    if (player.hp <= 0) {
+        return <p><b>DEAD</b></p>
+    } else {
+        return player.actions()
+    }
+}
+
+////////////////
+// ENEMY VIEW //
+////////////////
+
+function EnemyView({ enemy }: { enemy: Enemy }) {
     return <div style={{ backgroundColor: "green",  textAlign: "center", color: "white", padding: "10px", borderRadius: "5px", flex: 1, display: "flex", flexDirection: "column" }}>
         <div style={{flex: 1}}>
-            {target.hp > 0
-                ? <h2>"A journy of a thousand miles begins with a single step." <span style={{ fontWeight: "bold", fontStyle: "italics" }}>-{target.name}</span></h2>
-                : <div>
-                    <h2>Victory!</h2>
-                    <div>
-                        <ItemSlot id="reward1" />
-                    </div>
-                    <button onClick={kickOpenTheDoor}>Kick open the door</button>
-                </div>
+            {enemy.hp > 0
+                ? <EnemyTitleCardView enemy={enemy} />
+                : <VictoryView />
             }
         </div>
-        <HPBar hp={target.hp} maxHP={target.maxHp} />
+        <HPBar hp={enemy.hp} maxHP={enemy.maxHp} />
     </div>
 }
+
+function EnemyTitleCardView({ enemy }: { enemy: Enemy }) {
+    const quote = "A journy of a thousand miles begins with a single step."
+    return <h2>{quote} -{enemy.name}</h2>
+}
+
+function VictoryView() {
+    if (isOutOfNewItems()) {
+        return <h2>"You've reached the end of the sidewalk! Draw new items please!!!!!!" -You're loving dom</h2>
+    }
+
+    return <div>
+        <h2>Victory!</h2>
+        <ItemSlot location="reward/0" />
+        <button onClick={kickOpenTheDoor}>Kick open the door</button>
+    </div>
+}
+
+//////////////
+// COMBAT!! //
+//////////////
 
 export function Combat() {
 	const state = STATE.value
 
 	return <div style={{ flex: 1, gap: "10px", display: "flex", flexDirection: "column" }}>
-        {state.enemies.map(target => <Target target={target} />)}
+        {state.enemies.map(target => <EnemyView enemy={target} />)}
 
         <div style={{ display: "flex", gap: "10px", height: "200px" }}>
             {state.players.map(player => <PlayerView player={player} />)}
