@@ -1,6 +1,10 @@
 {
-	"type": "module",
+	"name": "maze_of_monsters",
+	"version": "0.1.0",
 	"homepage": "./",
+	"author": "Felix Moses <felix@tacocat.com>",
+	"license": "CC",
+	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
