@@ -1,28 +1,13 @@
 import { signal } from "@preact/signals"
-import { Tab } from "../utils"
-import { Action, Character, Cleric, context, dragData, Enemy, fire, Paladin, Player, Warrior } from "../characters"
+import { Cleric, Paladin, Player, Warrior } from "../core/players"
+import { Goblin, Enemy } from "../core/enemies"
+import { init } from "../core/characters"
+import { context, dragData } from "../core/actions"
 
 interface State {
     room: number,
     players: Player[],
     enemies: Enemy[],
-}
-
-class Goblin extends Character {
-    name: string = "goblin"
-    hp: number = 100
-
-    constructor(number: number) {
-        super()
-
-        this.name = `goblin #${number}`
-        this.hp = 100 + 10 * (number - 1)
-    }
-}
-
-function init<T extends Character>(...arr: T[]): T[] {
-    arr.forEach(char => char.init())
-    return arr
 }
 
 export const STATE = signal<State>({
@@ -31,16 +16,6 @@ export const STATE = signal<State>({
     enemies: init(new Goblin(1)),
 })
 
-function selectRandom<T>(arr: T[], filter: (t: T) => boolean): T {
-    const a = arr.filter(filter)
-    return a[Math.floor(Math.random() * a.length)]
-}
-
-function ai() {
-    const target = selectRandom(STATE.value.players, (t) => t.hp > 0)
-    target.hurt(10)
-}
-
 function HPBar(params: { hp: number, maxHP: number }) {
     const p = `${Math.floor(params.hp / params.maxHP * 100)}%`
     const fg = `#C08081`
@@ -48,21 +23,6 @@ function HPBar(params: { hp: number, maxHP: number }) {
     return <div class="bar" style={{
         background: `linear-gradient(to right, ${fg} ${p}, ${bg} ${p})`
     }}>HP: {params.hp}/{params.maxHP}</div>
-}
-
-export function apply(source: Character, action: Action, target: Character) {
-    action.effect(target)
-
-    ai()
-
-    fire({
-        kind: "END_TURN",
-        action,
-        target,
-        source,
-    })
-
-    STATE.value = { ...STATE.value }
 }
 
 function PlayerView({player}: {player: Player}) {
@@ -98,29 +58,30 @@ function PlayerView({player}: {player: Player}) {
 }
 
 function Target({target}: { target: Enemy }) {
-    return <section style={{ backgroundColor: "green" }}>
-        <h1 style={{ textAlign: "center" }}>{target.name}</h1>
+    return <div style={{ backgroundColor: "green",  textAlign: "center", color: "white", padding: "10px", borderRadius: "5px", flex: 1, display: "flex", flexDirection: "column" }}>
+        <div style={{flex: 1}}>
+            {target.hp > 0
+                ? <h2>"A journy of a thousand miles begins with a single step." <span style={{ fontWeight: "bold", fontStyle: "italics" }}>-Goblin #1</span></h2>
+                : <div>
+                    <h2>Victory!</h2>
+                    <div>
+                        
+                    </div>
+                </div>
+            }
+        </div>
         <HPBar hp={target.hp} maxHP={target.maxHp} />
-    </section>
+    </div>
 }
 
 export function Combat() {
 	const state = STATE.value
 
-    if (state.enemies[0].hp <= 0) {
-        STATE.value.room += 1
-        STATE.value.enemies = init(new Goblin(STATE.value.room))
-    }
+	return <div style={{ flex: 1, gap: "10px", display: "flex", flexDirection: "column" }}>
+        {state.enemies.map(target => <Target target={target} />)}
 
-	return <div>
-        <div style={{ gap: "10px", display: "flex", flexDirection: "column", flex: 1, }}>
-            <div style={{ flex: 1 }}>
-                {state.enemies.map(target => <Target target={target} />)}
-            </div>
-
-            <div style={{ flex: 1, display: "flex", gap: "10px" }}>
-                {state.players.map(player => <PlayerView player={player} />)}
-            </div>
+        <div style={{ display: "flex", gap: "10px", height: "200px" }}>
+            {state.players.map(player => <PlayerView player={player} />)}
         </div>
     </div>
 }

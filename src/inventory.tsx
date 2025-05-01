@@ -1,5 +1,5 @@
 import { signal } from "@preact/signals";
-import { Tab } from "../utils";
+import { Tab } from "./utils";
 
 interface Item {
     name: string
