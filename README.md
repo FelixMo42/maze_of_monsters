@@ -20,8 +20,6 @@ Okay, let's be friends, we're both weird :)
 
 I am Vara the Seer, a goblin on a quest for revenge. Her family was murdered by a group of monster hunters, but she was spared. After that she managed to get accepted into The Scholomance, a magic academy in the desert that accepts students only once every seven years. Of each entry only seven will graduate, and many will die along the way. She escaped with her life, but is now blind.
 
-The tea leave led you into the maze to hotel Creegmere. The man you seek is inside. A small boat leads you there.
-
 ## The Game!
 
 ### Day 1

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>MofM</title>
+    </head>
+
+    <style>
+        :root {
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 25px;
+        }
+
+        body {
+            background-color: black;
+            overflow: hidden;
+            margin: 0px;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tile {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }
+
+        .tile:hover {
+            outline: 1px solid teal;
+        }
+    </style>
+
+    <body>
+
+    </body>
+
+    <script>
+        const BLOCK_SIZE = 30;
+        const NUM_COLS = Math.ceil(window.innerHeight / BLOCK_SIZE)
+        const NUM_ROWS = Math.ceil(window.innerWidth / BLOCK_SIZE)
+    
+        async function main() {
+            await load()
+            document.body.replaceChildren(
+                ...range(NUM_COLS, y =>
+                    $("div.row", range(NUM_ROWS, x => 
+                        Tile(`${x},${y}`)
+                    ))
+                )
+            )
+        }
+
+        function Tile(id) {
+            const view = $("div.tile", [])
+            const data = tiles.get(id)
+            view.id = id
+            if (!data) return view
+
+            if (data.length == 1) view.innerText = data
+            if (data == "!f") view.style.backgroundColor = cobbleColor()
+
+            return view
+        }
+
+        const mouse = {
+            target: "",
+            mode: "!f"
+        }
+        document.onmouseover = (e) => {
+            if (e.target.id) {
+                mouse.target = e.target.id
+            }
+        }
+
+        document.onmousedown = (e) => {
+            setTile(mouse.target, mouse.mode)
+        }
+
+        document.onkeydown = (e) => {
+            if (e.key == "f") mouse.mode = "!f"
+            if (e.key == " ") mouse.mode = "!w"
+            console.log("selected mode: ", mouse.mode)
+        }
+
+        function setTile(id, value) {
+            tiles.set(id, value)
+            document.getElementById(id).replaceWith(Tile(id))
+            save()
+        }
+
+        async function save() {
+            
+            await fetch(`/data/map.json`, {
+                method: "POST",
+                body: JSON.stringify(Object.fromEntries(tiles.entries()))
+            })
+        }
+
+        async function load() {
+            const data = await fetch(`/data/map.json`)
+                .then(r => r.json())
+            
+            for (const [k, v] of Object.entries(data)) {
+                tiles.set(k, v)
+            }
+        }
+
+        const tiles = new Map()
+        function getTile(x, y) {
+            if (tiles.has(`${x},${y}`)) return tiles.get(`${x},${y}`)
+            return ""
+        }
+
+        document.body.onclick = () => {
+
+        }
+
+        function withRandomBG(e) {
+            const hue = Math.floor(Math.random() * 360);
+            e.style.backgroundColor = `hsl(${hue}, 70%, 60%)`;
+        }
+
+        function range(s, cb) {
+            return Array(s).fill(0).map((_, i) => cb(i))
+        }
+
+        function map(arr, cb) {
+            return [...arr].map(cb)
+        }
+
+        function $(tag, children, mod) {
+            const [tagName, ...classes] = tag.split(".")
+            const e = document.createElement(tagName)
+            e.classList.add(...classes)
+            if (Array.isArray(children)) e.replaceChildren(...children)
+            else e.replaceChildren(children)
+            if (mod) mod.call(e, e)
+            return e
+        }
+
+        function cobbleColor() {
+            const hue = 200 + Math.random() * 20 - 10   // slight blue-grey tint, ~190-210
+            const sat = 5 + Math.random() * 10          // very desaturated, 5-15%
+            const light = 15 + Math.random() * 10       // 30-55%, avoids near-black/near-white
+            return `hsl(${hue.toFixed(0)}, ${sat.toFixed(0)}%, ${light.toFixed(0)}%)`
+        }
+
+        main()
+    </script>
+</html>
