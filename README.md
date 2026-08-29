@@ -23,4 +23,3 @@ I am Vara the Seer, a goblin on a quest for revenge. Her family was murdered by 
 ## The Game!
 
 ### Day 1
-
